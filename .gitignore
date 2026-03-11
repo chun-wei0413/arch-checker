@@ -1,0 +1,17 @@
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Maven build output (will be added when src/ exists)
+target/
+
+# Java
+*.class
+*.jar
+
+# Logs
+*.log
