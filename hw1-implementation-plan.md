@@ -206,7 +206,8 @@ UC-01 / UC-03 的 `<<include>>` 子流程。系統讀取 `--profile <yaml-path>`
 | 術語 | 定義 |
 |-----|------|
 | **Style Profile** | 使用者以 YAML 格式定義的一份架構規則集合，描述目標專案的架構約束 |
-| **ArchitectureConstraint** | Style Profile 中的單條約束規則，為 `NamingRule`、`DependencyRule`、`PackageRule` 的抽象父類別 |
+| **ArchitectureConstraint** | Style Profile 中的單條約束規則，為 `NamingRule`、`DependencyRule`、`SupertypeRule`、`PackageRule` 的抽象父類別 |
+| **SupertypeRule** | 一種 ArchitectureConstraint，要求特定 package 內的 class 必須 implement 指定 interface 或 extend 指定 class；對應實作為 `SupertypeConstraint` 與 `SupertypeChecker`；以 simple name 比對，不進行 fully qualified name resolution |
 | **Violation** | 一筆架構違規紀錄，包含檔案路徑、行號、規則 ID 與說明文字 |
 | **ViolationReport** | 一次 check 執行的完整違規彙整結果 |
 | **AST (Abstract Syntax Tree)** | Java 原始碼的抽象語法樹表示，由 JavaParser 解析產生，供 ConstraintChecker 分析使用 |
@@ -234,6 +235,10 @@ ArchitectureConstraint（抽象）
   ├── NamingConventionConstraint
   │     - targetPackagePattern: String
   │     - classNamePattern: String     ← e.g., "*Controller"
+  ├── SupertypeConstraint
+  │     - targetPackagePattern: String
+  │     - mustImplement: String        ← interface simple name，null 代表不檢查
+  │     - mustExtend: String           ← class simple name，null 代表不檢查
   └── PackageOrganizationConstraint
         - requiredPackagePatterns: List<String>
 
@@ -272,6 +277,7 @@ arch-checker/
 │   ├── ArchitectureConstraint（抽象）
 │   │   ├── LayerDependencyConstraint
 │   │   ├── NamingConventionConstraint
+│   │   ├── SupertypeConstraint
 │   │   └── PackageOrganizationConstraint
 │   ├── StyleProfile
 │   ├── Violation
@@ -282,6 +288,7 @@ arch-checker/
 │   ├── ConstraintChecker（介面，Strategy Pattern）
 │   │   ├── LayerDependencyChecker
 │   │   ├── NamingConventionChecker
+│   │   ├── SupertypeChecker
 │   │   └── PackageOrganizationChecker
 │   └── ArchChecker（協調者）
 ├── ast/
@@ -313,23 +320,30 @@ public interface ConstraintChecker {
     List<Violation> check(SourceFile file, ArchitectureConstraint constraint);
 }
 
-// 具體實作
-public class LayerDependencyChecker   implements ConstraintChecker { ... }
-public class NamingConventionChecker  implements ConstraintChecker { ... }
-public class PackageOrganizationChecker implements ConstraintChecker { ... }
+// 具體實作（檔案層級）
+public class LayerDependencyChecker     implements ConstraintChecker { ... }
+public class NamingConventionChecker    implements ConstraintChecker { ... }
+public class SupertypeChecker           implements ConstraintChecker { ... }
+public class PackageOrganizationChecker implements ConstraintChecker { ... }  // 專案層級
 
 // 協調者：透過 supports() dispatch，完全沒有 if-else / switch
+// PackageOrganizationConstraint 需在所有檔案掃完後才能檢查，分兩階段執行
 public class ArchChecker {
     private final List<ConstraintChecker> checkers;
 
     public ComplianceReport check(Project project, StyleProfile profile) {
+        // 第一階段：逐檔套用檔案層級規則
         for (SourceFile file : project.sourceFiles()) {
-            for (ArchitectureConstraint constraint : profile.constraints()) {
+            for (ArchitectureConstraint constraint : profile.fileLevelConstraints()) {
                 checkers.stream()
                     .filter(c -> c.supports(constraint))
                     .forEach(c -> violations.addAll(c.check(file, constraint)));
             }
         }
+        // 第二階段：整個專案掃完後套用專案層級規則（PackageOrganizationConstraint）
+        Set<String> allPackages = collectAllPackages(project);
+        profile.projectLevelConstraints()
+            .forEach(c -> violations.addAll(packageChecker.checkProject(allPackages, c)));
     }
 }
 ```

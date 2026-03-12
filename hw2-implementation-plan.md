@@ -36,7 +36,7 @@
 | ID | Feature Name | Priority | Description |
 |----|-------------|----------|-------------|
 | SF-01 | Architecture Compliance Checking | High | Scan a Java project directory and detect violations based on a user-defined Style Profile |
-| SF-02 | Style Profile Definition via YAML | High | User defines all architecture style rules in YAML format; no built-in styles are provided by the tool |
+| SF-02 | Style Profile Definition via YAML | High | User defines all architecture style rules in YAML format; supports DependencyRule, NamingRule, SupertypeRule, and PackageRule; no built-in styles are provided by the tool |
 | SF-03 | Violation Report Generation | High | Output a report with file path, line number, rule ID, and description for each violation |
 | SF-04 | Multiple Report Formats | Low | Support Console and JSON output formats |
 | SF-05 | Violation Suppression | Medium | Mark specific violations as "known and accepted" so they are excluded from subsequent reports |
@@ -105,15 +105,15 @@
 | **Scope** | arch-checker CLI |
 | **Level** | User Goal |
 | **Primary Actor** | Developer |
-| **Stakeholders and Interests** | **Developer**: Wants an accurate and detailed violation report with file paths and line numbers to quickly identify non-compliant classes without time-consuming manual review.<br>**Team Lead / Architect**: Wants to ensure the entire codebase conforms to the team-defined architecture rules; zero violations mean architecture consistency is maintained.<br>**CI System** (secondary): Wants a reliable POSIX exit code (0/1/2) to determine pipeline pass/fail without parsing report content. |
-| **Preconditions** | 1. `arch-checker` is installed and available on the system PATH<br>2. The target Java project directory exists and is readable<br>3. The Style Profile YAML file specified by `<yaml-path>` exists and is syntactically valid |
-| **Success Guarantee** | The system produces a complete ViolationReport containing: number of files checked, list of violations found, and suppressedCount; and returns a POSIX exit code (0 = pass, 1 = violations found) |
-| **Main Success Scenario** | 1. Developer executes `arch-checker check --profile <yaml-path> <project-path>`<br>2. System verifies that `project-path` directory exists<br>3. System reads and parses the Style Profile YAML file at `<yaml-path>`<br>4. System recursively scans all `.java` files under `project-path`<br>5. System parses each `.java` file into an AST (CompilationUnit) using JavaParser<br>6. System applies all ArchitectureConstraint rules in the Profile to each CompilationUnit<br>7. System collects all Violations; each record contains: file path, line number, rule ID, and description<br>8. System filters out Violations that have been previously suppressed<br>9. System outputs the ViolationReport in Console format (violation list + summary)<br>10. System returns exit code: 0 if no violations remain, 1 if violations exist |
-| **Extensions** | **2a.** `project-path` does not exist: System outputs `Error: path not found <path>`, exit code 2, terminates<br>**3a.** `<yaml-path>` does not exist: System outputs `Error: profile file not found <path>`, exit code 2, terminates<br>**3b.** YAML is not syntactically valid: System outputs YAML parse error with line number, exit code 2, terminates<br>**3c.** YAML is syntactically valid but contains invalid rule definitions (e.g., unknown rule type): System outputs validation error list, exit code 2, terminates<br>**4a.** No `.java` files found under `project-path`: System outputs `Warning: No Java files found in <path>`, exit code 0, terminates<br>**5a.** A `.java` file cannot be parsed (syntax error): System logs `Warning: skipped <file> (parse error)`, skips that file, continues with remaining files<br>**8a.** All violations have been suppressed: Report displays `All checks passed (N violations suppressed)`, exit code 0 |
-| **Special Requirements** | **NFR-01 (Performance)**: Scanning 1,000 `.java` files must complete within 10 seconds on a standard development machine<br>**NFR-02 (Usability)**: All error messages must include: error reason, location (file/line), and suggested corrective action<br>**NFR-05 (CI Compatibility)**: Exit codes follow POSIX convention; directly integrable with GitHub Actions / Jenkins |
-| **Technology and Data Variations List** | **\*a.** `--profile` accepts any file system path to a YAML file; no built-in profile names are supported<br>**\*b.** Output format can be switched to JSON via `--format json`; default is Console text format<br>**4a.** Java file scanning uses recursive depth-first traversal |
-| **Frequency of Occurrence** | CI environment: triggered on every push, potentially dozens of times per day; local development: several times per hour |
-| **Miscellaneous** | Does the tool need to support multi-module Maven projects (multiple `src/main/java` subdirectories)?<br>Is incremental scanning needed for large projects (>10,000 `.java` files)? |
+| **Stakeholders and Interests** | **Developer**：想要取得準確且詳細的違規報告，包含檔案路徑與行號，以便快速找出不符合規範的類別，避免費時的人工審查。<br>**Team Lead / Architect**：想確保整個程式碼庫符合團隊定義的架構規則，零違規代表架構一致性獲得維護。<br>**CI System**（次要）：想要可靠的 POSIX exit code（0/1/2）來判斷 pipeline 是否通過，不需要解讀報告內文。 |
+| **Preconditions** | 1. `arch-checker` 已安裝並可在系統 PATH 中存取<br>2. 目標 Java 專案目錄存在且可讀取<br>3. `<yaml-path>` 指定的 Style Profile YAML 檔案存在且語法正確 |
+| **Success Guarantee** | 系統產生完整的 ViolationReport，包含：已檢查檔案數、違規清單、suppressedCount；並回傳 POSIX exit code（0 = pass，1 = violations found） |
+| **Main Success Scenario** | 1. Developer 執行 `arch-checker check --profile <yaml-path> <project-path>`<br>2. 系統確認 `project-path` 目錄存在<br>3. 系統讀取並解析 `<yaml-path>` 指定的 Style Profile YAML 檔案<br>4. 系統遞迴掃描 `project-path` 下所有 `.java` 檔案<br>5. 系統以 JavaParser 將每個 `.java` 檔解析為 AST（CompilationUnit）<br>6. 系統對每個 CompilationUnit 套用 Profile 中所有 ArchitectureConstraint 規則<br>7. 系統收集所有 Violation，每筆包含：檔案路徑、行號、規則 ID、說明文字<br>8. 系統過濾已被 suppress 的 Violation<br>9. 系統以 Console 格式輸出 ViolationReport（含違規清單與 summary）<br>10. 系統回傳 exit code：無違規則 0，有違規則 1 |
+| **Extensions** | **2a.** `project-path` 不存在：系統輸出 `Error: path not found <path>`，exit code 2，終止<br>**3a.** `<yaml-path>` 不存在：系統輸出 `Error: profile file not found <path>`，exit code 2，終止<br>**3b.** YAML 語法錯誤：系統輸出 YAML 解析錯誤與行號，exit code 2，終止<br>**3c.** YAML 語法正確但規則定義無效（如未知的 rule type）：系統輸出 validation 錯誤清單，exit code 2，終止<br>**4a.** `project-path` 下無 `.java` 檔：系統輸出 `Warning: No Java files found in <path>`，exit code 0，終止<br>**5a.** 某 `.java` 檔語法錯誤無法解析：系統記錄 `Warning: skipped <file> (parse error)`，跳過該檔，繼續處理其餘檔案<br>**8a.** 所有 Violation 皆已被 suppress：報告顯示 `All checks passed (N violations suppressed)`，exit code 0 |
+| **Special Requirements** | **NFR-01（Performance）**：掃描 1,000 個 `.java` 檔案必須在 10 秒內完成（一般開發機）<br>**NFR-02（Usability）**：所有錯誤訊息必須包含：錯誤原因、位置（檔案/行號）、建議修正動作<br>**NFR-05（CI Compatibility）**：exit code 遵循 POSIX 標準，可直接整合 GitHub Actions / Jenkins |
+| **Technology and Data Variations List** | **\*a.** `--profile` 接受任意 YAML 檔案路徑，不支援內建名稱<br>**\*b.** 輸出格式可透過 `--format json` 切換為 JSON，預設為 Console 文字格式<br>**4a.** Java 檔案掃描採遞迴深度優先走訪 |
+| **Frequency of Occurrence** | CI 環境：每次 push 觸發，每日可達數十次；本地開發：每小時數次 |
+| **Miscellaneous** | 是否需支援 multi-module Maven 專案（多個 `src/main/java` 子目錄）？<br>大型專案（>10,000 個 `.java` 檔）是否需要增量掃描機制？ |
 
 ---
 
@@ -126,15 +126,15 @@
 | **Scope** | arch-checker CLI |
 | **Level** | User Goal |
 | **Primary Actor** | Developer |
-| **Stakeholders and Interests** | **Developer**: Wants to define reusable architecture rules with minimal effort; wants a template to reduce YAML boilerplate and wants immediate feedback on format errors before saving.<br>**Team Lead**: Wants the team to share a single, version-controlled Profile in Git; wants rules to be clearly described and maintainable long-term. |
-| **Preconditions** | 1. `arch-checker` is installed and available on the system PATH<br>2. Developer understands the target project's architecture conventions (knows which packages belong to which layer and which dependencies are forbidden) |
-| **Success Guarantee** | A syntactically valid `.yaml` Profile file containing at least one rule exists on disk and can be successfully loaded by UC-01 |
-| **Main Success Scenario** | 1. Developer executes `arch-checker init-profile --output <file.yaml>`<br>2. System generates a YAML template with default structure and inline comments explaining each field, and writes it to `<file.yaml>`<br>3. Developer opens `<file.yaml>` in a text editor and fills in rules (rule type, package patterns, constraint details)<br>4. Developer executes `arch-checker validate-profile <file.yaml>` to verify syntax and rule definitions<br>5. System reads and parses the YAML file<br>6. System validates each rule's `type` (`NamingRule` / `DependencyRule` / `PackageRule`) and all required fields<br>7. System validates the syntax of each package pattern (only alphanumeric, `*`, and `.` are allowed)<br>8. System outputs `Profile valid: <N> rules loaded`<br>9. Developer uses the profile in UC-01 via `--profile <file.yaml>` |
-| **Extensions** | **4a.** Developer skips `init-profile` and runs `validate-profile` directly on an existing YAML file: execution begins at Step 5, proceeds normally<br>**5a.** `<file.yaml>` does not exist: System outputs `Error: file not found <path>`, terminates<br>**6a.** Top-level YAML structure is invalid (not a valid YAML mapping): System outputs `Invalid YAML structure` with error line number, terminates<br>**6b.** Unknown rule type encountered: System outputs `Unknown rule type: <type>. Allowed: NamingRule, DependencyRule, PackageRule`, terminates<br>**7a.** A package pattern contains illegal characters: System outputs `Invalid package pattern: <pattern>`, terminates<br>**8a.** YAML is valid but the rules list is empty: System outputs `Warning: Profile has no rules. Profile is valid but will produce no violations.`, exit code 0 |
-| **Special Requirements** | **NFR-02 (Usability)**: All validation error messages must clearly indicate the YAML error line number and provide a corrective suggestion<br>**NFR-04 (Extensibility)**: Adding a new rule type must not require modifying the core `ProfileValidator` logic (Open/Closed Principle) |
-| **Technology and Data Variations List** | **\*a.** Profile format is YAML (parsed by SnakeYAML), encoded in UTF-8<br>**\*b.** Developer may use any text editor (VS Code, IntelliJ, Vim, etc.); no IDE plugin is required<br>**2a.** If the directory specified by `--output` does not exist, the system creates it automatically |
-| **Frequency of Occurrence** | Typically executed once per new project; repeated when architecture rules need to be updated; low frequency, on a weekly or monthly basis |
-| **Miscellaneous** | Should the tool publish a JSON Schema to enable IntelliJ / VS Code autocomplete when editing profile YAML?<br>Should profiles support inheritance (`extends: <other-yaml-path>`) to extend existing rule sets? |
+| **Stakeholders and Interests** | **Developer**：想用最少工夫定義出可重複使用的架構規則，希望工具提供模板降低手寫 YAML 的門檻，並在儲存前即時得知格式是否正確。<br>**Team Lead**：想要團隊共享一份統一的 Profile 並版本控制於 Git，確保規則描述清楚且長期可維護。 |
+| **Preconditions** | 1. `arch-checker` 已安裝並可在系統 PATH 中存取<br>2. Developer 了解目標專案的架構規範（知道哪些 package 屬於哪個層、哪些依賴是被禁止的） |
+| **Success Guarantee** | 一個語法正確、至少含 1 條規則的 `.yaml` Profile 檔案存在於磁碟，且可被 UC-01 成功載入使用 |
+| **Main Success Scenario** | 1. Developer 執行 `arch-checker init-profile --output <file.yaml>`<br>2. 系統產生含預設結構與欄位說明註解的空白 YAML 模板，寫入 `<file.yaml>`<br>3. Developer 以文字編輯器開啟 `<file.yaml>`，填入規則（rule type、package pattern、constraint 細節）<br>4. Developer 執行 `arch-checker validate-profile <file.yaml>` 驗證語法與規則定義<br>5. 系統讀取並解析 YAML 檔<br>6. 系統驗證每條規則的 `type`（`NamingRule` / `DependencyRule` / `SupertypeRule` / `PackageRule`）與所有必填欄位<br>7. 系統驗證每個 package pattern 的語法（只允許英數字、`*`、`.`）<br>8. 系統輸出 `Profile valid: <N> rules loaded`<br>9. Developer 在執行 UC-01 時以 `--profile <file.yaml>` 指向此 Profile |
+| **Extensions** | **4a.** Developer 跳過 `init-profile`，直接對已存在的 YAML 執行 `validate-profile`：從 Step 5 開始，正常執行<br>**5a.** `<file.yaml>` 不存在：系統輸出 `Error: file not found <path>`，終止<br>**6a.** YAML 頂層結構錯誤（不是合法的 YAML mapping）：系統輸出 `Invalid YAML structure` 與錯誤行號，終止<br>**6b.** 遇到未知的 rule type：系統輸出 `Unknown rule type: <type>. Allowed: NamingRule, DependencyRule, SupertypeRule, PackageRule`，終止<br>**7a.** package pattern 含非法字元：系統輸出 `Invalid package pattern: <pattern>`，終止<br>**8a.** YAML 格式正確但 rules 清單為空：系統輸出 `Warning: Profile has no rules. Profile is valid but will produce no violations.`，exit code 0 |
+| **Special Requirements** | **NFR-02（Usability）**：所有 validation 錯誤訊息必須清楚指出 YAML 錯誤行號，並提供修正建議<br>**NFR-04（Extensibility）**：新增 rule type 不需修改 `ProfileValidator` 核心邏輯（Open/Closed Principle） |
+| **Technology and Data Variations List** | **\*a.** Profile 格式為 YAML（以 SnakeYAML 解析），採 UTF-8 編碼<br>**\*b.** Developer 可使用任意文字編輯器（VS Code、IntelliJ、Vim 等），不需 IDE plugin<br>**2a.** 若 `--output` 指定的目錄不存在，系統自動建立 |
+| **Frequency of Occurrence** | 每個新專案通常執行一次；規則有異動時重複執行 validate；相對低頻，以週或月為單位 |
+| **Miscellaneous** | 是否提供 JSON Schema 供 IntelliJ / VS Code 在編輯 Profile YAML 時自動補全？<br>Profile 是否支援繼承（`extends: <other-yaml-path>`）以在既有規則上擴充？ |
 
 ---
 
@@ -147,27 +147,27 @@
 | **Scope** | arch-checker CLI |
 | **Level** | User Goal |
 | **Primary Actor** | Developer |
-| **Stakeholders and Interests** | **Developer**: Wants to review each violation one by one and decide whether to suppress it on the spot; wants actionable fix suggestions rather than just a list of errors.<br>**Team Lead**: Wants to know which violations are "known and accepted" technical debt, with a persistent and auditable suppression record rather than silent workarounds. |
-| **Preconditions** | 1. Same preconditions as UC-01<br>2. Developer intends to decide on each violation individually (not a CI batch automation context)<br>3. Terminal supports interactive input (not a pipe-redirected non-TTY mode) |
-| **Success Guarantee** | For each Violation, one of three outcomes applies: (a) a Suppression record is written to `.arch-checker-suppress.yaml`, (b) the Violation is retained in the report, or (c) the process is aborted; the final ComplianceReport reflects all decisions made |
-| **Main Success Scenario** | 1. Developer executes `arch-checker check --interactive --profile <yaml-path> <project-path>`<br>2. System completes the scan (same as UC-01 Steps 2–7): traverses files, parses AST, applies rules, collects all Violations<br>3. System displays the first Violation, showing: file path and line number, violated ArchitectureConstraint ID and description, and RefactoringSuggestion (if one exists)<br>4. System prompts `Accept suppression? [y/n/q]:`<br>5. Developer enters `y`: System writes the Violation's constraint ID and a timestamp to `.arch-checker-suppress.yaml`<br>6. System displays the next Violation (returns to Step 3)<br>7. After all Violations have been processed, System outputs the final ComplianceReport (with accepted suppressions excluded)<br>8. System returns exit code (0 = no unaccepted violations remain, 1 = unaccepted violations exist) |
-| **Extensions** | **3a.** The current Violation has a RefactoringSuggestion: System displays the suggested action (e.g., `Suggestion: Move class to *.service.* package`) before showing the `[y/n/q]` prompt<br>**3b.** No violations were found after scanning: System outputs `All checks passed` immediately without entering the interactive loop, exit code 0<br>**5a.** Developer enters `n`: The Violation is retained in the final report; System continues to the next Violation (Step 6)<br>**5b.** Developer enters `q`: System aborts the interactive loop, outputs a partial report of decisions made so far, exit code 1<br>**5c.** Developer enters an invalid value (not y/n/q): System outputs `Invalid input. Please enter y, n, or q:` and waits for input again<br>**8a.** All Violations were suppressed (Developer entered `y` for all): Report displays `All checks passed (N violations suppressed)`, exit code 0 |
-| **Special Requirements** | **NFR-02 (Usability)**: The interactive prompt must be self-explanatory; Developers should understand the meaning of `[y/n/q]` without consulting documentation<br>**NFR-06 (Testability)**: The interactive flow must be verifiable by unit tests without launching the full CLI (I/O must be mockable) |
-| **Technology and Data Variations List** | **\*a.** Suppression records are written to `.arch-checker-suppress.yaml` and include: constraint ID, reason (default: `suppressed interactively`), and timestamp<br>**4a.** `[y/n/q]` input is case-insensitive (`Y` and `Yes` are treated as accepted)<br>**\*b.** If stdout is pipe-redirected (non-TTY), the system automatically falls back to non-interactive batch mode and outputs a warning |
-| **Frequency of Occurrence** | Used when initially building the suppression list for a new project, typically once per project; used on-demand when new violations appear; low frequency overall |
-| **Miscellaneous** | Should a `--accept-all` option be provided to suppress all violations in one batch?<br>Should suppressions have an expiration date to prevent indefinite accumulation of technical debt? |
+| **Stakeholders and Interests** | **Developer**：想逐條審視每個 Violation 並當場決定是否 suppress，希望系統提供可操作的修復建議，而不只是列出錯誤清單。<br>**Team Lead**：想知道哪些 Violation 是「已知且接受」的技術債，並有持久化且可稽核的 suppression 紀錄，而非無聲地被略過。 |
+| **Preconditions** | 1. 同 UC-01 的前置條件<br>2. Developer 有意願逐條決策每個 Violation（非 CI 批次自動化情境）<br>3. Terminal 支援互動式輸入（非 pipe 重定向的 non-TTY 模式） |
+| **Success Guarantee** | 對每條 Violation，三種結果之一成立：(a) Suppression 記錄寫入 `.arch-checker-suppress.yaml`，(b) Violation 保留在報告中，(c) 流程中止；最終 ComplianceReport 反映所有決策結果 |
+| **Main Success Scenario** | 1. Developer 執行 `arch-checker check --interactive --profile <yaml-path> <project-path>`<br>2. 系統完成掃描流程（同 UC-01 Step 2–7）：走訪檔案、解析 AST、套用規則、收集所有 Violation<br>3. 系統展示第一條 Violation，顯示：檔案路徑與行號、違反的 ArchitectureConstraint ID 與說明、RefactoringSuggestion（若存在）<br>4. 系統提示 `Accept suppression? [y/n/q]:`<br>5. Developer 輸入 `y`：系統將此 Violation 的 constraint ID 與時間戳記寫入 `.arch-checker-suppress.yaml`<br>6. 系統展示下一條 Violation（回到 Step 3）<br>7. 所有 Violation 處理完畢後，系統輸出最終 ComplianceReport（已扣除接受的 suppression）<br>8. 系統回傳 exit code（0 = 無未接受 Violation，1 = 有未接受 Violation） |
+| **Extensions** | **3a.** 此 Violation 有 RefactoringSuggestion：系統在顯示 `[y/n/q]` 提示前，額外顯示建議操作（如 `Suggestion: Move class to *.service.* package`）<br>**3b.** 掃描後無 Violation：系統直接輸出 `All checks passed`，不進入互動迴圈，exit code 0<br>**5a.** Developer 輸入 `n`：此 Violation 保留在最終報告中，系統繼續下一條（Step 6）<br>**5b.** Developer 輸入 `q`：系統中止互動迴圈，輸出已處理部分的 partial report，exit code 1<br>**5c.** Developer 輸入非法值（非 y/n/q）：系統輸出 `Invalid input. Please enter y, n, or q:`，重新等待輸入<br>**8a.** 所有 Violation 均被 suppress（全部輸入 y）：報告顯示 `All checks passed (N violations suppressed)`，exit code 0 |
+| **Special Requirements** | **NFR-02（Usability）**：互動提示須清晰易懂，Developer 無需查閱文件即能理解 `[y/n/q]` 各選項的含義<br>**NFR-06（Testability）**：互動流程必須可在不啟動完整 CLI 的情況下以 unit test 驗證（I/O 需可 mock） |
+| **Technology and Data Variations List** | **\*a.** Suppression 記錄寫入 `.arch-checker-suppress.yaml`，包含：constraint ID、reason（預設為 `suppressed interactively`）、timestamp<br>**4a.** `[y/n/q]` 輸入大小寫不敏感（`Y`、`Yes` 均視為接受）<br>**\*b.** 若 stdout 被 pipe 重定向（non-TTY），系統自動降級為非互動批次模式並輸出警告 |
+| **Frequency of Occurrence** | 本地開發初次建立 suppression 清單時使用，通常每個新專案執行一次；後續違規出現時按需使用，整體低頻 |
+| **Miscellaneous** | 是否需要提供 `--accept-all` 選項，一次 suppress 所有 Violation？<br>Suppression 是否應設有效期限，避免長期堆積技術債？ |
 
 ---
 
 ### UC-04: Suppress a Violation（Brief）
 
-Developer executes `arch-checker suppress --id <constraint-id> --reason <text>`. System appends a suppression record (constraint ID, reason, timestamp) to `.arch-checker-suppress.yaml`. The suppression takes effect at UC-01 Step 8 on the next check run.
+Developer 執行 `arch-checker suppress --id <constraint-id> --reason <text>`。系統將 suppression 記錄（constraint ID、reason、timestamp）以 append 方式寫入 `.arch-checker-suppress.yaml`。下次執行 UC-01 時，於 Step 8 過濾生效。
 
 ---
 
 ### UC-05: Load Style Profile（Brief — Subfunction）
 
-An `<<include>>` subfunction of UC-01 and UC-03. System reads the YAML file specified by `--profile <yaml-path>`, parses it via `ProfileLoader`, and validates rule definitions via `ProfileValidator`. On success, the profile is loaded into memory for use by the constraint checkers.
+UC-01 與 UC-03 的 `<<include>>` 子流程。系統讀取 `--profile <yaml-path>` 指定的 YAML 檔，透過 `ProfileLoader` 解析，並以 `ProfileValidator` 驗證規則定義。成功後將 Profile 載入記憶體，供各 constraint checker 使用。
 
 ---
 
@@ -175,12 +175,12 @@ An `<<include>>` subfunction of UC-01 and UC-03. System reads the YAML file spec
 
 | ID | Category | Requirement |
 |----|----------|-------------|
-| NFR-01 | Performance | A full compliance check (UC-01) scanning 1,000 `.java` files must complete within 10 seconds on a standard development machine |
-| NFR-02 | Usability | All error messages must include: error reason, location (file path / line number), and suggested corrective action |
-| NFR-03 | Portability | The tool must run on JDK 17+ environments (Windows / macOS / Linux) without depending on any specific IDE |
-| NFR-04 | Extensibility | Adding a new `ConstraintChecker` subclass must not require modifying `ArchChecker` or `StyleProfile` (Open/Closed Principle) |
-| NFR-05 | CI Compatibility | Exit codes follow POSIX convention (0 = success, non-zero = failure); directly integrable with GitHub Actions and Jenkins |
-| NFR-06 | Testability | Each `ConstraintChecker` subclass must be independently unit-testable without requiring the full CLI to be running |
+| NFR-01 | Performance | 完整的 compliance check（UC-01）掃描 1,000 個 `.java` 檔案必須在 10 秒內完成（一般開發機） |
+| NFR-02 | Usability | 所有錯誤訊息必須包含：錯誤原因、位置（檔案路徑 / 行號）、建議修正動作 |
+| NFR-03 | Portability | 工具需在 JDK 17+ 環境（Windows / macOS / Linux）上運行，不依賴特定 IDE |
+| NFR-04 | Extensibility | 新增 `ConstraintChecker` 子類別不需修改 `ArchChecker` 或 `StyleProfile`（Open/Closed Principle） |
+| NFR-05 | CI Compatibility | exit code 遵循 POSIX 標準（0 = success，非 0 = failure），可直接整合 GitHub Actions 與 Jenkins |
+| NFR-06 | Testability | 每個 `ConstraintChecker` 子類別必須可在不啟動完整 CLI 的情況下獨立進行 unit test |
 
 ---
 
@@ -188,15 +188,16 @@ An `<<include>>` subfunction of UC-01 and UC-03. System reads the YAML file spec
 
 | Term | Definition |
 |------|------------|
-| **Style Profile** | A YAML file authored by the user that defines a complete set of architecture constraint rules for a specific project; the tool provides no built-in profiles |
-| **ArchitectureConstraint** | A single constraint rule within a Style Profile; the abstract parent of `NamingRule`, `DependencyRule`, and `PackageRule` |
-| **Violation** | A single architecture violation record containing: file path, line number, rule ID, and description text |
-| **ViolationReport** | The complete output of a single check execution, aggregating all violations and a summary |
-| **AST (Abstract Syntax Tree)** | The tree representation of a Java source file's structure, produced by JavaParser and used by ConstraintCheckers for analysis |
-| **CompilationUnit** | The root node object produced by JavaParser when parsing a single `.java` file |
-| **Suppression** | A developer-declared record marking a specific violation as "known and accepted", causing it to be excluded from future reports |
-| **exit code** | The integer value returned by the CLI to the shell upon completion (0 = pass, 1 = violations found, 2 = error) |
-| **Package Pattern** | A wildcard string (e.g., `*.ui.*`) used in rule definitions to match Java package names; only alphanumeric characters, `*`, and `.` are permitted |
+| **Style Profile** | 使用者以 YAML 格式定義的架構規則集合，描述特定專案的架構約束；工具本身不提供任何內建 Profile |
+| **ArchitectureConstraint** | Style Profile 中的單條約束規則，為 `NamingRule`、`DependencyRule`、`SupertypeRule`、`PackageRule` 的抽象父類別 |
+| **SupertypeRule** | 一種 ArchitectureConstraint，要求特定 package 內的 class 必須 implement 指定 interface 或 extend 指定 class；以 simple name 比對，不進行 fully qualified name resolution |
+| **Violation** | 一筆架構違規記錄，包含：檔案路徑、行號、規則 ID、說明文字 |
+| **ViolationReport** | 單次 check 執行的完整輸出，彙整所有 Violation 與 summary |
+| **AST (Abstract Syntax Tree)** | Java 原始碼的抽象語法樹表示，由 JavaParser 解析產生，供各 ConstraintChecker 進行分析 |
+| **CompilationUnit** | JavaParser 解析單一 `.java` 檔案後產生的根節點物件 |
+| **Suppression** | 開發者明確標記「此 Violation 已知且接受」的機制，使其在後續報告中不再出現 |
+| **exit code** | CLI 程式結束時回傳給 shell 的整數碼（0 = pass，1 = violations found，2 = error） |
+| **Package Pattern** | 規則定義中用來比對 Java package 名稱的萬用字元字串（如 `*.ui.*`）；只允許英數字、`*`、`.` |
 
 ---
 
