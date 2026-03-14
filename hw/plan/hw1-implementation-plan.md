@@ -184,6 +184,50 @@
 
 Developer 執行 `arch-checker suppress --id <constraint-id> --reason <text>`。系統將抑制記錄（constraint ID、reason、timestamp）以 append 方式寫入 `.arch-checker-suppress.yaml`。下次 UC-01 Step 8 過濾時生效。
 
+---
+
+#### UC-03 vs UC-04 實際情境範例
+
+**UC-03：互動式修復建議**
+
+情境：第一次對專案跑合規檢查，想逐條審視每個違規。
+
+```bash
+$ arch-checker check --interactive --profile layered.yaml src/
+```
+
+工具掃完後，**逐條**問你怎麼處理每個違規：
+
+```
+[VIOLATION] src/web/UserController.java:42
+  Rule: DEP-01 - web 層不能直接 import persistence 層
+  Suggestion: 改透過 UserService 存取資料
+
+Accept suppression? [y/n/q]:
+```
+
+- 輸入 `y`：這個違規是暫時技術債，先接受 → 寫入 `.arch-checker-suppress.yaml`，下次不再回報
+- 輸入 `n`：這個要真的修 → 保留在報告中
+- 輸入 `q`：不想繼續審了 → 中止互動，輸出已處理部分的報告
+
+**UC-04：手動 suppress 單筆違規**
+
+情境：你已經知道某個違規要 suppress，不想跑互動流程，直接下指令。
+
+```bash
+$ arch-checker suppress --id DEP-01 --reason "legacy code, scheduled for Q3 refactor"
+```
+
+直接把 `DEP-01` 這條規則寫進 suppress 清單，下次 UC-01 執行時自動濾掉。
+
+| | UC-03 | UC-04 |
+|---|---|---|
+| 使用時機 | 第一次建立 suppress 清單，想逐條審視 | 已知哪條要 suppress，直接下指令 |
+| 流程 | 互動式，一條一條問 | 單一指令，一次 suppress 一條 |
+| 適合情境 | 本地開發初始設定 | CI 腳本、快速操作 |
+
+---
+
 #### UC-05: Load Style Profile（Brief，subfunction）
 
 UC-01 / UC-03 的 `<<include>>` 子流程。系統讀取 `--profile <yaml-path>` 指定的 YAML 檔，透過 `ProfileLoader` 解析並以 `ProfileValidator` 驗證規則定義，成功後載入至記憶體供 checker 使用。
