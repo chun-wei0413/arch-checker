@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2026-04-17T14:30:00.000Z" agent="Claude" version="24.0.0">
+<mxfile host="app.diagrams.net" modified="2026-04-17T16:00:00.000Z" agent="Claude" version="24.0.0">
   <diagram id="dcd" name="Design Class Diagram">
     <mxGraphModel dx="2000" dy="1400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1400" math="0" shadow="0">
       <root>
@@ -54,10 +54,10 @@
         </mxCell>
 
         <mxCell id="appBg" value="«Application Layer»" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaf6ea;strokeColor=#82b366;fontSize=14;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
-          <mxGeometry x="1280" y="70" width="330" height="420" as="geometry"/>
+          <mxGeometry x="1280" y="70" width="700" height="620" as="geometry"/>
         </mxCell>
 
-        <mxCell id="c_ccsvc" value="ComplianceCheckService&#10;─────────────&#10;- parser: JavaCodeParser&#10;- profileRepo: ProfileRepository&#10;- suppRepo: SuppressionRepository&#10;- reporter: Reporter&#10;─────────────&#10;+ check(proj, prof): ViolationReport&#10;+ runInteractive(...): ViolationReport" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
+        <mxCell id="c_ccsvc" value="ComplianceCheckService&#10;─────────────&#10;- parser: CodeParser&#10;- profileRepo: ProfileRepository&#10;- suppRepo: SuppressionRepository&#10;- reporter: Reporter&#10;─────────────&#10;+ check(proj, prof): ViolationReport&#10;+ runInteractive(...): ViolationReport" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
           <mxGeometry x="1300" y="110" width="290" height="170" as="geometry"/>
         </mxCell>
 
@@ -65,39 +65,37 @@
           <mxGeometry x="1300" y="300" width="290" height="120" as="geometry"/>
         </mxCell>
 
-        <mxCell id="infraBg" value="«Infrastructure Layer»" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdebec;strokeColor=#b85450;fontSize=14;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
-          <mxGeometry x="1280" y="510" width="700" height="360" as="geometry"/>
+        <mxCell id="i_parser" value="&lt;&lt;interface&gt;&gt;&#10;CodeParser&#10;─────────────&#10;+ parse(path): List&lt;File&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="450" width="210" height="90" as="geometry"/>
         </mxCell>
-
-        <mxCell id="i_parser" value="&lt;&lt;interface&gt;&gt;&#10;JavaCodeParser&#10;─────────────&#10;+ parse(path): List&lt;File&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
-          <mxGeometry x="1300" y="560" width="210" height="90" as="geometry"/>
-        </mxCell>
-        <mxCell id="a_parser" value="JavaParserAdapter" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=10;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1300" y="680" width="210" height="40" as="geometry"/>
-        </mxCell>
-
         <mxCell id="i_profile" value="&lt;&lt;interface&gt;&gt;&#10;ProfileRepository&#10;─────────────&#10;+ load(path): StyleProfile" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
-          <mxGeometry x="1540" y="560" width="210" height="90" as="geometry"/>
+          <mxGeometry x="1540" y="450" width="210" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="i_reporter" value="&lt;&lt;interface&gt;&gt;&#10;Reporter&#10;─────────────&#10;+ render(report): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="450" width="200" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="i_suppRepo" value="&lt;&lt;interface&gt;&gt;&#10;SuppressionRepository&#10;─────────────&#10;+ save(s): String&#10;+ loadAll(): List&lt;Suppression&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="560" width="260" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="infraBg" value="«Infrastructure Layer»" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdebec;strokeColor=#b85450;fontSize=14;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="710" width="700" height="180" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="a_parser" value="JavaParserAdapter" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="760" width="210" height="40" as="geometry"/>
         </mxCell>
         <mxCell id="a_profile" value="YamlProfileRepository" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=10;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1540" y="680" width="210" height="40" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="i_reporter" value="&lt;&lt;interface&gt;&gt;&#10;Reporter&#10;─────────────&#10;+ render(report): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
-          <mxGeometry x="1770" y="560" width="200" height="90" as="geometry"/>
+          <mxGeometry x="1540" y="760" width="210" height="40" as="geometry"/>
         </mxCell>
         <mxCell id="a_reporter1" value="ConsoleReporter" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=10;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1770" y="680" width="100" height="40" as="geometry"/>
+          <mxGeometry x="1770" y="760" width="100" height="40" as="geometry"/>
         </mxCell>
         <mxCell id="a_reporter2" value="JsonReporter" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=10;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1875" y="680" width="95" height="40" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="i_suppRepo" value="&lt;&lt;interface&gt;&gt;&#10;SuppressionRepository&#10;─────────────&#10;+ save(s): String&#10;+ loadAll(): List&lt;Suppression&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
-          <mxGeometry x="1300" y="760" width="260" height="95" as="geometry"/>
+          <mxGeometry x="1875" y="760" width="95" height="40" as="geometry"/>
         </mxCell>
         <mxCell id="a_suppRepo" value="FileSuppressionRepository" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=10;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1600" y="780" width="230" height="40" as="geometry"/>
+          <mxGeometry x="1300" y="830" width="260" height="40" as="geometry"/>
         </mxCell>
 
         <mxCell id="g1" style="endArrow=block;endFill=0;html=1;endSize=14;" edge="1" parent="1" source="c_naming" target="c_ac"><mxGeometry relative="1" as="geometry"/></mxCell>
@@ -128,8 +126,8 @@
         <mxCell id="svc_assoc4" style="endArrow=open;html=1;dashed=1;fontSize=10;endSize=8;" edge="1" parent="1" source="c_ccsvc" target="i_suppRepo"><mxGeometry relative="1" as="geometry"/></mxCell>
         <mxCell id="svc_assoc5" style="endArrow=open;html=1;dashed=1;fontSize=10;endSize=8;" edge="1" parent="1" source="c_supsvc" target="i_suppRepo"><mxGeometry relative="1" as="geometry"/></mxCell>
 
-        <mxCell id="legend" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br/&gt;──▷ generalization (inheritance)&lt;br/&gt;──◆ composition (whole ◆—— part)&lt;br/&gt;──── association (role + multiplicity)&lt;br/&gt;╌╌▷ realization (implements interface)&lt;br/&gt;╌╌▶ dependency / uses interface&lt;br/&gt;&lt;br/&gt;&lt;i&gt;italic&lt;/i&gt; = abstract class / abstract operation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
-          <mxGeometry x="1640" y="110" width="340" height="200" as="geometry"/>
+        <mxCell id="legend" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br/&gt;──▷ generalization (inheritance)&lt;br/&gt;──◆ composition (whole ◆—— part)&lt;br/&gt;──── association (role + multiplicity)&lt;br/&gt;╌╌▷ realization (implements interface)&lt;br/&gt;╌╌▶ dependency / uses interface&lt;br/&gt;&lt;br/&gt;&lt;i&gt;italic&lt;/i&gt; = abstract class / abstract operation&lt;br/&gt;Port interfaces are declared in the Application Layer; Infrastructure adapters realize them (Dependency Inversion)." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="910" width="1200" height="180" as="geometry"/>
         </mxCell>
 
       </root>
