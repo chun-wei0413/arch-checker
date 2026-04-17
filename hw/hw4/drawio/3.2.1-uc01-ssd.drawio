@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" modified="2026-04-17T14:30:00.000Z" agent="Claude" version="24.0.0">
+  <diagram id="uc01-ssd" name="UC-01 SSD">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="System Sequence Diagram — UC-01 Check Architecture Compliance" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="100" y="20" width="900" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="actor" value="Developer" style="shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;outlineConnect=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="140" y="90" width="40" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="system" value=":System" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="620" y="100" width="140" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="actor_lifeline" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#666666;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="180" as="sourcePoint"/>
+            <mxPoint x="160" y="560" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="system_lifeline" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#666666;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="140" as="sourcePoint"/>
+            <mxPoint x="690" y="560" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg1" value="1: runCheck(projectPath, profilePath)" style="endArrow=block;html=1;rounded=0;fontSize=13;endFill=1;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="220" as="sourcePoint"/>
+            <mxPoint x="690" y="220" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="actSystem" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="684" y="220" width="12" height="260" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="msg_return1" value="1.1: violationReport (console output)" style="endArrow=open;html=1;rounded=0;dashed=1;fontSize=13;endFill=0;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="340" as="sourcePoint"/>
+            <mxPoint x="160" y="340" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_return2" value="1.2: exitCode (0=pass / 1=violations / 2=error)" style="endArrow=open;html=1;rounded=0;dashed=1;fontSize=13;endFill=0;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="460" as="sourcePoint"/>
+            <mxPoint x="160" y="460" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="note" value="事件說明：Developer 於終端機呼叫 arch-checker 進行架構合規檢查。&#10;System 載入 Profile、解析 Java 原始碼、執行規則驗證並產出 ViolationReport，&#10;最後以 console 輸出報告並回傳 exit code 供 CI 判讀。" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;align=left;verticalAlign=top;size=14;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="100" y="590" width="900" height="80" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

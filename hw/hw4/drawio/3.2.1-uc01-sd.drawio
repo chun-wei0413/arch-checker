@@ -1,0 +1,107 @@
+<mxfile host="app.diagrams.net" modified="2026-04-17T14:30:00.000Z" agent="Claude" version="24.0.0">
+  <diagram id="uc01-sd" name="UC-01 SD">
+    <mxGraphModel dx="1800" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="Sequence Diagram — UC-01 Check Architecture Compliance (Main Success Scenario)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="1720" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="actor" value="Developer" style="shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="70" y="70" width="30" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="p_cli" value=":CheckCommand" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="180" y="80" width="130" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="p_service" value=":ComplianceCheckService" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="370" y="80" width="180" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="p_loader" value=":ProfileLoader" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="610" y="80" width="140" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="p_parser" value=":JavaParserAdapter" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="810" y="80" width="170" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="p_constraint" value="constraint&#10;:ArchitectureConstraint" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="75" width="180" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="p_suppRepo" value=":SuppressionRepository" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="80" width="180" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="p_reporter" value=":Reporter" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="1490" y="80" width="130" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ll_actor" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="85" y="140" as="sourcePoint"/><mxPoint x="85" y="1100" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll_cli" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="245" y="120" as="sourcePoint"/><mxPoint x="245" y="1100" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll_service" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="460" y="120" as="sourcePoint"/><mxPoint x="460" y="1100" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll_loader" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="680" y="120" as="sourcePoint"/><mxPoint x="680" y="1100" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll_parser" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="895" y="120" as="sourcePoint"/><mxPoint x="895" y="1100" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll_constraint" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1120" y="125" as="sourcePoint"/><mxPoint x="1120" y="1100" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll_suppRepo" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1350" y="120" as="sourcePoint"/><mxPoint x="1350" y="1100" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll_reporter" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1555" y="120" as="sourcePoint"/><mxPoint x="1555" y="1100" as="targetPoint"/></mxGeometry></mxCell>
+
+        <mxCell id="m1" value="1: runCheck(projectPath, profilePath)" style="endArrow=block;html=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="85" y="170" as="sourcePoint"/><mxPoint x="245" y="170" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="m2" value="2: check(projectPath, profilePath)" style="endArrow=block;html=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="245" y="220" as="sourcePoint"/><mxPoint x="460" y="220" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m3" value="3: profile := load(profilePath)" style="endArrow=block;html=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="460" y="270" as="sourcePoint"/><mxPoint x="680" y="270" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="m3r" value="3.1: StyleProfile" style="endArrow=open;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;endFill=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="680" y="310" as="sourcePoint"/><mxPoint x="460" y="310" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m4" value="4: files := parse(projectPath)" style="endArrow=block;html=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="460" y="360" as="sourcePoint"/><mxPoint x="895" y="360" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="m4r" value="4.1: List&lt;File&gt;" style="endArrow=open;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;endFill=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="895" y="400" as="sourcePoint"/><mxPoint x="460" y="400" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <mxCell id="loopFrame" value="loop  [for each constraint in profile]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;fontSize=11;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="420" y="430" width="830" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m5" value="5: violations := validate(files)    «polymorphism: NamingRule/DependencyRule/SupertypeRule/PackageRule»" style="endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="460" y="480" as="sourcePoint"/><mxPoint x="1120" y="480" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="m5r" value="5.1: List&lt;Violation&gt;" style="endArrow=open;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;endFill=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1120" y="520" as="sourcePoint"/><mxPoint x="460" y="520" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m6" value="6: suppressions := loadAll()" style="endArrow=block;html=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="460" y="600" as="sourcePoint"/><mxPoint x="1350" y="600" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="m6r" value="6.1: List&lt;Suppression&gt;" style="endArrow=open;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;endFill=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1350" y="640" as="sourcePoint"/><mxPoint x="460" y="640" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m7" value="7: report := buildReport(violations, suppressions)   «self / Pure Fabrication»" style="endArrow=block;html=1;fontSize=11;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="460" y="690" as="sourcePoint"/><mxPoint x="560" y="690" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m8" value="8: render(report)" style="endArrow=block;html=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="460" y="760" as="sourcePoint"/><mxPoint x="1555" y="760" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m9r" value="9: violationReport, exitCode" style="endArrow=open;html=1;dashed=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="460" y="830" as="sourcePoint"/><mxPoint x="245" y="830" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="m10r" value="10: print to console + exit(code)" style="endArrow=open;html=1;dashed=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="245" y="880" as="sourcePoint"/><mxPoint x="85" y="880" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <mxCell id="grasp_note" value="&lt;b&gt;GRASP 責任分派說明&lt;/b&gt;&#10;• CheckCommand：Controller（系統事件入口）&#10;• ComplianceCheckService：Controller（Façade）+ Pure Fabrication（協調 Profile / Parser / 規則驗證 / 抑制過濾 / 報告輸出）&#10;• ProfileLoader、JavaParserAdapter：Information Expert（擁有各自資料來源的解析知識）&#10;• ArchitectureConstraint.validate()：Polymorphism（由四個子類別覆寫驗證邏輯，避免 switch/if-else）&#10;• SuppressionRepository、Reporter：Indirection（介面位於 Domain，實作位於 Infrastructure，符合 Protected Variations）" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;verticalAlign=top;size=14;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="70" y="930" width="1550" height="150" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
