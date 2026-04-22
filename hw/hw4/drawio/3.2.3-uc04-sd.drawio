@@ -1,77 +1,70 @@
-<mxfile host="app.diagrams.net" modified="2026-04-17T14:30:00.000Z" agent="Claude" version="24.0.0">
+<mxfile host="app.diagrams.net" modified="2026-04-22T08:00:00.000Z" agent="Claude" version="24.0.0">
   <diagram id="uc04-sd" name="UC-04 SD">
-    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="620" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
 
-        <mxCell id="title" value="Sequence Diagram — UC-04 Suppress a Violation" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="40" y="10" width="1320" height="40" as="geometry"/>
+        <mxCell id="title" value="Sequence Diagram — UC-04 Suppress a Violation" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="20" y="10" width="1060" height="28" as="geometry"/>
         </mxCell>
 
-        <mxCell id="actor" value="Developer" style="shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="70" y="70" width="30" height="60" as="geometry"/>
+        <mxCell id="actor" value="Developer" style="shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;outlineConnect=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="58" y="60" width="24" height="48" as="geometry"/>
         </mxCell>
-        <mxCell id="p_cli" value=":SuppressCommand" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=4;" vertex="1" parent="1">
-          <mxGeometry x="180" y="80" width="160" height="40" as="geometry"/>
+        <mxCell id="p_cli" value=":SuppressCommand" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="200" y="62" width="140" height="40" as="geometry"/>
         </mxCell>
-        <mxCell id="p_svc" value=":SuppressionService" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=4;" vertex="1" parent="1">
-          <mxGeometry x="420" y="80" width="170" height="40" as="geometry"/>
+        <mxCell id="p_svc" value=":Suppression&#10;Service" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="470" y="55" width="120" height="50" as="geometry"/>
         </mxCell>
-        <mxCell id="p_validator" value=":InputValidator" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=4;" vertex="1" parent="1">
-          <mxGeometry x="660" y="80" width="140" height="40" as="geometry"/>
+        <mxCell id="p_supp" value="suppression:&#10;Suppression" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="660" y="320" width="120" height="50" as="geometry"/>
         </mxCell>
-        <mxCell id="p_factory" value=":Suppression&#10;(class / factory)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=4;" vertex="1" parent="1">
-          <mxGeometry x="870" y="75" width="160" height="50" as="geometry"/>
-        </mxCell>
-        <mxCell id="p_repo" value=":SuppressionRepository" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=4;" vertex="1" parent="1">
-          <mxGeometry x="1090" y="80" width="200" height="40" as="geometry"/>
+        <mxCell id="p_repo" value=":Suppression&#10;Repository" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="875" y="55" width="130" height="50" as="geometry"/>
         </mxCell>
 
-        <mxCell id="ll_actor" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="85" y="140" as="sourcePoint"/><mxPoint x="85" y="820" as="targetPoint"/></mxGeometry></mxCell>
-        <mxCell id="ll_cli" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="260" y="120" as="sourcePoint"/><mxPoint x="260" y="820" as="targetPoint"/></mxGeometry></mxCell>
-        <mxCell id="ll_svc" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="505" y="120" as="sourcePoint"/><mxPoint x="505" y="820" as="targetPoint"/></mxGeometry></mxCell>
-        <mxCell id="ll_validator" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="730" y="120" as="sourcePoint"/><mxPoint x="730" y="820" as="targetPoint"/></mxGeometry></mxCell>
-        <mxCell id="ll_factory" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="950" y="125" as="sourcePoint"/><mxPoint x="950" y="820" as="targetPoint"/></mxGeometry></mxCell>
-        <mxCell id="ll_repo" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1190" y="120" as="sourcePoint"/><mxPoint x="1190" y="820" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll_actor" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;strokeWidth=2;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="70" y="110" as="sourcePoint"/><mxPoint x="70" y="600" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll_cli" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;strokeWidth=2;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="270" y="105" as="sourcePoint"/><mxPoint x="270" y="600" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll_svc" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;strokeWidth=2;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="530" y="110" as="sourcePoint"/><mxPoint x="530" y="600" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll_supp" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;strokeWidth=2;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="720" y="370" as="sourcePoint"/><mxPoint x="720" y="600" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="ll_repo" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;strokeWidth=2;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="940" y="110" as="sourcePoint"/><mxPoint x="940" y="600" as="targetPoint"/></mxGeometry></mxCell>
 
-        <mxCell id="m1" value="1: suppress(ruleId, filePath, lineNumber, reason)" style="endArrow=block;html=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="85" y="170" as="sourcePoint"/><mxPoint x="260" y="170" as="targetPoint"/></mxGeometry>
+        <mxCell id="m1" value="1: suppress(constraintId, filePath,&#10;lineNumber, reason)" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="70" y="170" as="sourcePoint"/><mxPoint x="270" y="170" as="targetPoint"/></mxGeometry>
         </mxCell>
-        <mxCell id="m2" value="2: createSuppression(...)" style="endArrow=block;html=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="260" y="220" as="sourcePoint"/><mxPoint x="505" y="220" as="targetPoint"/></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m3" value="3: validate(ruleId, filePath, lineNumber)" style="endArrow=block;html=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="505" y="280" as="sourcePoint"/><mxPoint x="730" y="280" as="targetPoint"/></mxGeometry>
-        </mxCell>
-        <mxCell id="m3r" value="3.1: ok" style="endArrow=open;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;endFill=0;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="730" y="320" as="sourcePoint"/><mxPoint x="505" y="320" as="targetPoint"/></mxGeometry>
+        <mxCell id="m2" value="2: createSuppression(constraintId, filePath,&#10;lineNumber, reason)" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="270" y="225" as="sourcePoint"/><mxPoint x="530" y="225" as="targetPoint"/></mxGeometry>
         </mxCell>
 
-        <mxCell id="m4" value="4: suppression := new Suppression(...)    «Creator»" style="endArrow=block;html=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="505" y="380" as="sourcePoint"/><mxPoint x="950" y="380" as="targetPoint"/></mxGeometry>
-        </mxCell>
-        <mxCell id="m4r" value="4.1: suppression" style="endArrow=open;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;endFill=0;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="950" y="420" as="sourcePoint"/><mxPoint x="505" y="420" as="targetPoint"/></mxGeometry>
-        </mxCell>
-
-        <mxCell id="m5" value="5: save(suppression)" style="endArrow=block;html=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="505" y="480" as="sourcePoint"/><mxPoint x="1190" y="480" as="targetPoint"/></mxGeometry>
-        </mxCell>
-        <mxCell id="m5r" value="5.1: suppressionId" style="endArrow=open;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;endFill=0;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="1190" y="520" as="sourcePoint"/><mxPoint x="505" y="520" as="targetPoint"/></mxGeometry>
+        <mxCell id="m3" value="3: validateInput()" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="265" as="sourcePoint"/>
+            <mxPoint x="530" y="300" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="615" y="265"/>
+              <mxPoint x="615" y="300"/>
+            </Array>
+          </mxGeometry>
         </mxCell>
 
-        <mxCell id="m6r" value="6: suppressionId, timestamp" style="endArrow=open;html=1;dashed=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=0;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="505" y="580" as="sourcePoint"/><mxPoint x="260" y="580" as="targetPoint"/></mxGeometry>
-        </mxCell>
-        <mxCell id="m7r" value="7: print confirmation + exit(0)" style="endArrow=open;html=1;dashed=1;fontSize=12;labelBackgroundColor=#ffffff;endFill=0;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="260" y="630" as="sourcePoint"/><mxPoint x="85" y="630" as="targetPoint"/></mxGeometry>
+        <mxCell id="m4" value="4: &amp;laquo;create&amp;raquo;&#10;new Suppression(...)" style="endArrow=open;html=1;dashed=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=0;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="530" y="345" as="sourcePoint"/><mxPoint x="660" y="345" as="targetPoint"/></mxGeometry>
         </mxCell>
 
-        <mxCell id="grasp_note" value="&lt;b&gt;GRASP 責任分派說明&lt;/b&gt;&#10;• SuppressCommand：Controller（非互動式系統事件入口 / Façade Controller）&#10;• SuppressionService：Controller + Information Expert（擁有建立與儲存抑制記錄的完整知識）&#10;• InputValidator：Pure Fabrication + High Cohesion（將輸入驗證邏輯獨立，避免 Service 職責過多）&#10;• SuppressionService → new Suppression：Creator（Service 擁有建構 Suppression 的輸入資料，故負責建立實例）&#10;• SuppressionRepository：Protected Variations（封裝持久化細節，Service 不依賴具體檔案格式）" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;verticalAlign=top;size=14;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
-          <mxGeometry x="70" y="680" width="1250" height="150" as="geometry"/>
+        <mxCell id="m5" value="5: save(suppression)" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="530" y="415" as="sourcePoint"/><mxPoint x="940" y="415" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="m5r" value="5.1: suppressionId" style="endArrow=open;html=1;dashed=1;fontSize=11;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=0;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="940" y="465" as="sourcePoint"/><mxPoint x="530" y="465" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <mxCell id="m6r" value="6: suppressionId, timestamp" style="endArrow=open;html=1;dashed=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=0;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="530" y="515" as="sourcePoint"/><mxPoint x="270" y="515" as="targetPoint"/></mxGeometry>
+        </mxCell>
+        <mxCell id="m7r" value="7: print confirmation + exit(0)" style="endArrow=open;html=1;dashed=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=0;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="270" y="565" as="sourcePoint"/><mxPoint x="70" y="565" as="targetPoint"/></mxGeometry>
         </mxCell>
 
       </root>
