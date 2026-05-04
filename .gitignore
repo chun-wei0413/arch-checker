@@ -22,3 +22,6 @@ __pycache__/
 
 # Midterm slide QA renders (intermediate)
 hw/Midterm/slides_jpg/
+
+# Demo runtime artifact — suppressions written by 'suppress' command
+demo/.arch-checker-suppress.yaml
