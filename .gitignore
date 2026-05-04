@@ -15,3 +15,10 @@ target/
 
 # Logs
 *.log
+
+# Python cache (used by .claude skill scripts)
+__pycache__/
+*.pyc
+
+# Midterm slide QA renders (intermediate)
+hw/Midterm/slides_jpg/
