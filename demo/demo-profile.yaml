@@ -1,23 +1,17 @@
 name: demo-profile
 
 # Style Profile for the OOAD midterm demo.
-# Models a small Shopping system (Customer / Order / Payment / Cart)
-# with one violation per rule. Each violation is engineered to
-# illustrate a real architectural trade-off, not a pedantic typo.
-
+# A small three-layer Java app (service / controller / support), with
+# one violation per rule. Each violation reflects a common code-review
+# concern — not a contrived typo.
 rules:
 
   # ───────────────────────────────────────────────────────────
   # R-NAME-01 · NamingRule
-  #   Avoid generic catch-all suffixes (Manager / Helper / Util /
-  #   Handler) — pick role-specific suffixes that name the
-  #   responsibility (Service, Coordinator, Reservation, Allocator).
+  #   Avoid the catch-all suffixes Manager / Helper / Util / Handler;
+  #   pick a role-specific suffix instead (Service, Reservation, …).
   #
   #   Triggered by:  service/InventoryManager.java
-  #
-  #   Story:  "Manager" hides what the type actually does. Strict
-  #   profile rejects the suffix; the developer either renames or
-  #   suppresses with the reason "legacy name, kept for now".
   # ───────────────────────────────────────────────────────────
   - type: naming
     id: R-NAME-01
@@ -26,34 +20,24 @@ rules:
 
   # ───────────────────────────────────────────────────────────
   # R-DEP-01 · DependencyRule
-  #   Order aggregate must not hold a hard reference to the Customer
-  #   aggregate; it should reference customerId: long instead.
+  #   The service layer must not depend on the controller layer.
+  #   Standard top-down layering: Controller → Service → (Repository).
   #
-  #   Triggered by:  order/Order.java (imports Customer)
-  #
-  #   Story:  cross-aggregate hard references couple lifecycles and
-  #   cross transaction boundaries. The "right" fix is to store
-  #   customerId and look up the Customer via CustomerService when
-  #   needed. The "pragmatic" choice for a small early-stage app is
-  #   to suppress and revisit later — exactly what UC-04 is for.
+  #   Triggered by:  service/AuditService.java imports HomeController
   # ───────────────────────────────────────────────────────────
   - type: dependency
     id: R-DEP-01
-    description: Order aggregate must not hard-reference the Customer aggregate (use customerId)
-    sourcePackage: com.example.order
-    targetPackage: com.example.customer
+    description: Service layer must not depend on the controller layer
+    sourcePackage: com.example.service
+    targetPackage: com.example.controller
     isAllowed: false
 
   # ───────────────────────────────────────────────────────────
   # R-SUP-01 · SupertypeRule
   #   Every type in com.example.controller must extend BaseController
-  #   so it picks up shared error handling / logging / middleware.
+  #   so it inherits common error handling / logging / auth middleware.
   #
   #   Triggered by:  controller/CartController.java (does not extend)
-  #
-  #   Story:  presentation-layer consistency. Suppress reason
-  #   typically: "deprecated endpoint kept for backwards compatibility,
-  #   intentionally bypasses the new middleware".
   # ───────────────────────────────────────────────────────────
   - type: supertype
     id: R-SUP-01
@@ -63,16 +47,12 @@ rules:
 
   # ───────────────────────────────────────────────────────────
   # R-PKG-01 · PackageRule
-  #   DDD-style projects publish domain events under a com.example.event
-  #   package. The sample-project intentionally omits it.
+  #   A typical web app should have a com.example.entity package for
+  #   data models. The sample-project deliberately omits it.
   #
   #   Triggered:  project-level (line 0).
-  #
-  #   Story:  forward-looking architectural intent. Suppress reason
-  #   typically: "v1 uses direct calls between aggregates; event-driven
-  #   integration is planned for v2".
   # ───────────────────────────────────────────────────────────
   - type: package
     id: R-PKG-01
-    description: Project should publish domain events under com.example.event (DDD convention)
-    packagePattern: com.example.event
+    description: Project should contain a com.example.entity package
+    packagePattern: com.example.entity
