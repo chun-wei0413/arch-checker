@@ -47,7 +47,6 @@ demo/
         │   │   └── Payment.java                抽象基底（合規）
         │   └── payment/
         │       ├── CreditCardPayment.java      合規（extends Payment）
-        │       ├── BankTransferPayment.java    合規（extends Payment）
         │       └── CashPayment.java            ❌ R-SUP-01（沒 extend Payment）
         ├── service/
         │   ├── PaymentService.java             合規
@@ -58,7 +57,7 @@ demo/
 ```
 
 `sample-project` 不是 Maven 專案 — arch-checker 只需要遞迴尋找 `.java`，
-所以任意目錄都可作為輸入。共 **8 個 .java 檔，恰好觸發 4 條 rule 各 1 筆違規**
+所以任意目錄都可作為輸入。共 **7 個 .java 檔，恰好觸發 4 條 rule 各 1 筆違規**
 （外加 PackageRule 是 project-level，沒有 `com.example.repository` 套件）。
 
 ---
@@ -139,7 +138,7 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 
 ```json
 {
-  "checkedFiles": 8,
+  "checkedFiles": 7,
   "violationCount": 4,
   "suppressedCount": 0,
   "violations": [
@@ -175,7 +174,7 @@ demo/sample-project/.../service/ChargeService.java:2         [R-DEP-01]  Package
 demo/sample-project/.../domain/payment/CashPayment.java:12   [R-SUP-01]  Class 'CashPayment' must extend/implement 'Payment'
 demo/sample-project/.../controller/PaymentController.java:0  [R-PKG-01]  Required package pattern 'com.example.repository' not present in the project
 --
-Checked 8 file(s); 4 violation(s); 0 suppressed.
+Checked 7 file(s); 4 violation(s); 0 suppressed.
 ```
 
 `exit code = 1`。
@@ -224,7 +223,7 @@ demo/sample-project/.../service/ChargeService.java:2         [R-DEP-01]  ...
 demo/sample-project/.../domain/payment/CashPayment.java:12   [R-SUP-01]  ...
 demo/sample-project/.../controller/PaymentController.java:0  [R-PKG-01]  ...
 --
-Checked 8 file(s); 3 violation(s); 1 suppressed.
+Checked 7 file(s); 3 violation(s); 1 suppressed.
 ```
 
 對應 pptx 中 GRASP **Indirection / Protected Variation**：suppress YAML I/O
@@ -328,23 +327,15 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 ### R-SUP-01 · SupertypeRule（domain 多型基底）
 
 > **規則**：`com.example.domain.payment` 下每個 type 都必須 extend `Payment`，
-> 也就是 domain layer 三種付款方式（CreditCard / BankTransfer / Cash）共用
-> 同一個多型基底。
+> domain layer 各種付款方式共用同一個多型基底。
 > **違規來源**：`domain/payment/CashPayment.java:12`（沒有 `extends Payment`）。
 >
 > **常見 review 提醒**：domain layer 多型 — 每個 concrete payment 都應該
 > 是 `Payment` 的 subclass，這樣 Application service 才能寫成
-> `charge(Payment p)`，靠 polymorphism 處理所有付款方式：
->
-> ```java
-> List<Payment> all = List.of(creditCard, bankTransfer, cash);
-> for (Payment p : all) p.method();   // dispatched per subclass
-> ```
->
-> 沒繼承 `Payment` 表示 `CashPayment` 不能放進 `List<Payment>`、不能用
-> `instanceof Payment` 過濾、`charge(Payment)` 也吃不到 — 強迫 Application
-> 寫一堆 `if-else` 分支。Suppress 理由通常是「v1 cash payment 用獨立流程
-> 處理，v2 統一抽到 Payment 基底」。
+> `charge(Payment p)`，靠 polymorphism 處理所有付款方式。沒繼承 `Payment`
+> 表示 `CashPayment` 不能放進 `List<Payment>`、不能用 `instanceof Payment`
+> 過濾、`charge(Payment)` 也吃不到 — 強迫 Application 寫一堆 `if-else` 分支。
+> Suppress 理由通常是「v1 cash payment 用獨立流程處理，v2 統一抽到 Payment 基底」。
 >
 > **設計細節**：`Payment` 基底放在 `com.example.domain.core` 而非
 > `com.example.domain.payment` — 否則 `targetPackage = com.example.domain.payment`
@@ -378,8 +369,7 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 # 預期輸出：0
 ```
 
-> 對照：`CreditCardPayment` 與 `BankTransferPayment` 通過此規則 — 兩者都
-> `extends Payment`。
+> 對照：`CreditCardPayment` 通過此規則 — 它有 `extends Payment`。
 
 ---
 
@@ -472,7 +462,7 @@ echo "exit=$?"
 
 ```
 --
-Checked 8 file(s); 0 violation(s); 4 suppressed.
+Checked 7 file(s); 0 violation(s); 4 suppressed.
 exit=0
 ```
 
