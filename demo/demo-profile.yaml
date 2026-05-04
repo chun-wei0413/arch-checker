@@ -1,17 +1,17 @@
 name: demo-profile
 
 # Style Profile for the OOAD midterm demo.
-# A small three-layer Java app (service / controller / support), with
-# one violation per rule. Each violation reflects a common code-review
-# concern — not a contrived typo.
+# A small payment-processing app split into three layers
+# (controller / service / domain). One violation per rule, each one
+# echoing a common code-review concern — not a contrived typo.
 rules:
 
   # ───────────────────────────────────────────────────────────
   # R-NAME-01 · NamingRule
   #   Avoid the catch-all suffixes Manager / Helper / Util / Handler;
-  #   pick a role-specific suffix instead (Service, Reservation, …).
+  #   pick a role-specific suffix instead (Service, Reconciler, …).
   #
-  #   Triggered by:  service/InventoryManager.java
+  #   Triggered by:  service/PaymentManager.java
   # ───────────────────────────────────────────────────────────
   - type: naming
     id: R-NAME-01
@@ -21,9 +21,9 @@ rules:
   # ───────────────────────────────────────────────────────────
   # R-DEP-01 · DependencyRule
   #   The service layer must not depend on the controller layer.
-  #   Standard top-down layering: Controller → Service → (Repository).
+  #   Standard top-down layering: Controller → Service → Domain.
   #
-  #   Triggered by:  service/AuditService.java imports HomeController
+  #   Triggered by:  service/ChargeService.java imports PaymentController
   # ───────────────────────────────────────────────────────────
   - type: dependency
     id: R-DEP-01
@@ -34,25 +34,28 @@ rules:
 
   # ───────────────────────────────────────────────────────────
   # R-SUP-01 · SupertypeRule
-  #   Every type in com.example.controller must extend BaseController
-  #   so it inherits common error handling / logging / auth middleware.
+  #   Every concrete payment in com.example.domain.payment must extend
+  #   the abstract Payment base type so the rest of the system can
+  #   treat them polymorphically (List<Payment>, single charge() entry
+  #   point, etc.).
   #
-  #   Triggered by:  controller/CartController.java (does not extend)
+  #   Triggered by:  domain/payment/CashPayment.java does not extend Payment
   # ───────────────────────────────────────────────────────────
   - type: supertype
     id: R-SUP-01
-    description: Classes in com.example.controller must extend BaseController
-    targetPackage: com.example.controller
-    requiredSupertype: BaseController
+    description: Concrete payments in com.example.domain.payment must extend Payment
+    targetPackage: com.example.domain.payment
+    requiredSupertype: Payment
 
   # ───────────────────────────────────────────────────────────
   # R-PKG-01 · PackageRule
-  #   A typical web app should have a com.example.entity package for
-  #   data models. The sample-project deliberately omits it.
+  #   A typical layered project should have a com.example.repository
+  #   package collecting the persistence interfaces. The sample-project
+  #   deliberately omits it.
   #
   #   Triggered:  project-level (line 0).
   # ───────────────────────────────────────────────────────────
   - type: package
     id: R-PKG-01
-    description: Project should contain a com.example.entity package
-    packagePattern: com.example.entity
+    description: Project should contain a com.example.repository package
+    packagePattern: com.example.repository

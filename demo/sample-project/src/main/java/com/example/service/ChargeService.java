@@ -1,14 +1,14 @@
 package com.example.service;
 
-import com.example.controller.HomeController;
+import com.example.controller.PaymentController;
 
 // VIOLATES R-DEP-01: a service must not depend on a controller.
 // Layering convention: Controller calls Service, never the reverse —
 // otherwise the dependency graph cycles and the service becomes
 // untestable without the web layer wired up.
-public final class AuditService {
+public final class ChargeService {
 
-    public String wire(HomeController controller) {
+    public String wire(PaymentController controller) {
         return "wired";
     }
 }

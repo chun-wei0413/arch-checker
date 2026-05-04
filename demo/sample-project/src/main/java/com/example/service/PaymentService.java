@@ -1,10 +1,11 @@
 package com.example.service;
 
-// Charges a customer for a previously booked order.
-// Compliant with every rule in demo-profile.yaml.
+import com.example.domain.core.Payment;
+
+// Application service for charging a payment. Compliant with every rule.
 public final class PaymentService {
 
-    public boolean charge(String orderId, long cents) {
-        return cents > 0;
+    public boolean charge(Payment payment) {
+        return payment.cents() > 0;
     }
 }

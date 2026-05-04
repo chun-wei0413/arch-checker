@@ -1,9 +1,10 @@
 # arch-checker · Demo
 
 OOAD 期中報告（[`hw/Midterm/midterm-team6.pptx`](../hw/Midterm/midterm-team6.pptx)）所示
-demo 場景的可重現範例。本資料夾內含一個小型的三層架構 Java 專案（service /
-controller / support），刻意設計成讓 4 條 rule 各觸發 1 筆違規 — 而且每筆
-違規都對應一個**code review 常見的提醒**，不是為了製造違規而硬湊的 typo。
+demo 場景的可重現範例。本資料夾包含一個小型的**付款 (payment) 處理**三層
+架構 Java 專案（domain / service / controller），刻意設計成讓 4 條 rule
+各觸發 1 筆違規 — 而且每筆違規都對應一個 **code review 常見的提醒**，不是
+為了製造違規而硬湊的 typo。
 
 搭配 README 即可端到端示範 arch-checker 的核心 use cases：
 
@@ -25,8 +26,8 @@ controller / support），刻意設計成讓 4 條 rule 各觸發 1 筆違規 �
 - [各條 Rule 的觸發示範](#各條-rule-的觸發示範)
   - [R-NAME-01 · NamingRule（vague suffix）](#r-name-01--namingrulevague-suffix)
   - [R-DEP-01 · DependencyRule（service 依賴 controller）](#r-dep-01--dependencyruleservice-依賴-controller)
-  - [R-SUP-01 · SupertypeRule（沒繼承 BaseController）](#r-sup-01--supertyperule沒繼承-basecontroller)
-  - [R-PKG-01 · PackageRule（缺 entity 套件）](#r-pkg-01--packagerule缺-entity-套件)
+  - [R-SUP-01 · SupertypeRule（domain 多型基底）](#r-sup-01--supertyperuledomain-多型基底)
+  - [R-PKG-01 · PackageRule（缺 repository 套件）](#r-pkg-01--packagerule缺-repository-套件)
   - [一次 suppress 全部 4 條規則](#一次-suppress-全部-4-條規則)
 - [子指令參考](#子指令參考)
 - [Exit code 對應 NFR-05](#exit-code-對應-nfr-05)
@@ -39,23 +40,26 @@ controller / support），刻意設計成讓 4 條 rule 各觸發 1 筆違規 �
 demo/
 ├── README.md                   ← 本檔
 ├── demo-profile.yaml           ← Style Profile（4 條規則）
-└── sample-project/             ← 三層 Java 專案
+└── sample-project/             ← 三層 Java 專案（payment 處理）
     └── src/main/java/com/example/
+        ├── domain/
+        │   ├── core/
+        │   │   └── Payment.java                抽象基底（合規）
+        │   └── payment/
+        │       ├── CreditCardPayment.java      合規（extends Payment）
+        │       ├── BankTransferPayment.java    合規（extends Payment）
+        │       └── CashPayment.java            ❌ R-SUP-01（沒 extend Payment）
         ├── service/
-        │   ├── OrderService.java        合規
-        │   ├── PaymentService.java      合規
-        │   ├── InventoryManager.java    ❌ R-NAME-01（Manager 後綴）
-        │   └── AuditService.java        ❌ R-DEP-01（import controller）
-        ├── controller/
-        │   ├── HomeController.java      合規（extends BaseController）
-        │   └── CartController.java      ❌ R-SUP-01（沒繼承 BaseController）
-        └── support/
-            └── BaseController.java      合規（基底類別）
+        │   ├── PaymentService.java             合規
+        │   ├── PaymentManager.java             ❌ R-NAME-01（Manager 後綴）
+        │   └── ChargeService.java              ❌ R-DEP-01（import controller）
+        └── controller/
+            └── PaymentController.java          合規
 ```
 
 `sample-project` 不是 Maven 專案 — arch-checker 只需要遞迴尋找 `.java`，
-所以任意目錄都可作為輸入。共 **7 個 .java 檔，恰好觸發 4 條 rule 各 1 筆違規**
-（外加 PackageRule 是 project-level，沒有 `com.example.entity` 套件）。
+所以任意目錄都可作為輸入。共 **8 個 .java 檔，恰好觸發 4 條 rule 各 1 筆違規**
+（外加 PackageRule 是 project-level，沒有 `com.example.repository` 套件）。
 
 ---
 
@@ -64,12 +68,12 @@ demo/
 [`demo-profile.yaml`](./demo-profile.yaml) 定義 4 條規則，**對應 arch-checker
 4 個 `ArchitectureConstraint` 子類別**（GRASP Polymorphism）：
 
-| Rule ID    | Type / 子類別     | 規則內容                                                    | 違規來源                            | Code review 常見的提醒                                         |
-|------------|------------------|------------------------------------------------------------|-------------------------------------|---------------------------------------------------------------|
-| R-NAME-01  | `NamingRule`     | 禁止 `Manager` / `Helper` / `Util` / `Handler` 等模糊後綴     | `service/InventoryManager.java`     | 「Manager 不知道是 read 還是 write，建議改 InventoryService」  |
-| R-DEP-01   | `DependencyRule` | service 不得依賴 controller                                   | `service/AuditService.java`         | 「Controller 呼叫 Service，反過來會循環依賴 + service 不可測試」 |
-| R-SUP-01   | `SupertypeRule`  | `controller` 內 type 須 extend `BaseController`              | `controller/CartController.java`    | 「沒繼承 base controller = 沒有共用的錯誤處理 / 認證」          |
-| R-PKG-01   | `PackageRule`    | 專案應有 `com.example.entity` 套件                            | （project-level）                   | 「典型 web app 結構應有 entity / model 層」                    |
+| Rule ID    | Type / 子類別     | 規則內容                                                       | 違規來源                                | Code review 常見的提醒                                          |
+|------------|------------------|---------------------------------------------------------------|-----------------------------------------|----------------------------------------------------------------|
+| R-NAME-01  | `NamingRule`     | 禁止 `Manager` / `Helper` / `Util` / `Handler` 等模糊後綴        | `service/PaymentManager.java`           | 「Manager 不知道在做啥，建議改 PaymentService / PaymentReconciler」|
+| R-DEP-01   | `DependencyRule` | service 不得依賴 controller                                      | `service/ChargeService.java`            | 「Controller 呼叫 Service，反過來會循環依賴 + service 不可測試」  |
+| R-SUP-01   | `SupertypeRule`  | `domain.payment` 內每個 type 須 extend `Payment`                 | `domain/payment/CashPayment.java`       | 「沒繼承共同基底 = 沒辦法被 List<Payment> 一視同仁處理」         |
+| R-PKG-01   | `PackageRule`    | 專案應有 `com.example.repository` 套件                          | （project-level）                       | 「typical 分層專案應有 repository 套件存放 persistence 介面」   |
 
 ---
 
@@ -135,14 +139,14 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 
 ```json
 {
-  "checkedFiles": 7,
+  "checkedFiles": 8,
   "violationCount": 4,
   "suppressedCount": 0,
   "violations": [
-    { "file": ".../service/InventoryManager.java",   "line": 11, "ruleId": "R-NAME-01", "message": "Class 'InventoryManager' violates naming pattern '(?!.*(?:Manager|Helper|Util|Handler)$).*'" },
-    { "file": ".../service/AuditService.java",       "line": 2,  "ruleId": "R-DEP-01",  "message": "Package 'com.example.service' must not depend on 'com.example.controller' (import: com.example.controller.HomeController)" },
-    { "file": ".../controller/CartController.java",  "line": 8,  "ruleId": "R-SUP-01",  "message": "Class 'CartController' must extend/implement 'BaseController'" },
-    { "file": ".../controller/CartController.java",  "line": 0,  "ruleId": "R-PKG-01",  "message": "Required package pattern 'com.example.entity' not present in the project" }
+    { "file": ".../service/PaymentManager.java",         "line": 12, "ruleId": "R-NAME-01", "message": "Class 'PaymentManager' violates naming pattern '(?!.*(?:Manager|Helper|Util|Handler)$).*'" },
+    { "file": ".../service/ChargeService.java",          "line": 2,  "ruleId": "R-DEP-01",  "message": "Package 'com.example.service' must not depend on 'com.example.controller' (import: com.example.controller.PaymentController)" },
+    { "file": ".../domain/payment/CashPayment.java",     "line": 12, "ruleId": "R-SUP-01",  "message": "Class 'CashPayment' must extend/implement 'Payment'" },
+    { "file": ".../controller/PaymentController.java",   "line": 0,  "ruleId": "R-PKG-01",  "message": "Required package pattern 'com.example.repository' not present in the project" }
   ]
 }
 ```
@@ -166,12 +170,12 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 預期輸出：
 
 ```
-demo/sample-project/.../service/InventoryManager.java:11   [R-NAME-01] Class 'InventoryManager' violates naming pattern '(?!.*(?:Manager|Helper|Util|Handler)$).*'
-demo/sample-project/.../service/AuditService.java:2        [R-DEP-01]  Package 'com.example.service' must not depend on 'com.example.controller' (import: com.example.controller.HomeController)
-demo/sample-project/.../controller/CartController.java:8   [R-SUP-01]  Class 'CartController' must extend/implement 'BaseController'
-demo/sample-project/.../controller/CartController.java:0   [R-PKG-01]  Required package pattern 'com.example.entity' not present in the project
+demo/sample-project/.../service/PaymentManager.java:12       [R-NAME-01] Class 'PaymentManager' violates naming pattern '(?!.*(?:Manager|Helper|Util|Handler)$).*'
+demo/sample-project/.../service/ChargeService.java:2         [R-DEP-01]  Package 'com.example.service' must not depend on 'com.example.controller' (import: com.example.controller.PaymentController)
+demo/sample-project/.../domain/payment/CashPayment.java:12   [R-SUP-01]  Class 'CashPayment' must extend/implement 'Payment'
+demo/sample-project/.../controller/PaymentController.java:0  [R-PKG-01]  Required package pattern 'com.example.repository' not present in the project
 --
-Checked 7 file(s); 4 violation(s); 0 suppressed.
+Checked 8 file(s); 4 violation(s); 0 suppressed.
 ```
 
 `exit code = 1`。
@@ -183,8 +187,8 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
     com.archchecker.cli.Main suppress \
     demo/demo-profile.yaml \
     R-NAME-01 \
-    demo/sample-project/src/main/java/com/example/service/InventoryManager.java \
-    11 \
+    demo/sample-project/src/main/java/com/example/service/PaymentManager.java \
+    12 \
     'legacy name; refactor in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 ```
@@ -192,15 +196,15 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 預期輸出：
 
 ```
-Suppressed: R-NAME-01 at demo/sample-project/src/main/java/com/example/service/InventoryManager.java:11
+Suppressed: R-NAME-01 at demo/sample-project/src/main/java/com/example/service/PaymentManager.java:12
 ```
 
 寫入 `demo/.arch-checker-suppress.yaml`：
 
 ```yaml
 - constraintId: R-NAME-01
-  filePath: demo/sample-project/src/main/java/com/example/service/InventoryManager.java
-  lineNumber: 11
+  filePath: demo/sample-project/src/main/java/com/example/service/PaymentManager.java
+  lineNumber: 12
   reason: legacy name; refactor in v2
   timestamp: '2026-05-04T14:35:11.905073Z'
 ```
@@ -216,11 +220,11 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 預期輸出（剩 3 筆違規）：
 
 ```
-demo/sample-project/.../service/AuditService.java:2        [R-DEP-01]  ...
-demo/sample-project/.../controller/CartController.java:8   [R-SUP-01]  ...
-demo/sample-project/.../controller/CartController.java:0   [R-PKG-01]  ...
+demo/sample-project/.../service/ChargeService.java:2         [R-DEP-01]  ...
+demo/sample-project/.../domain/payment/CashPayment.java:12   [R-SUP-01]  ...
+demo/sample-project/.../controller/PaymentController.java:0  [R-PKG-01]  ...
 --
-Checked 7 file(s); 3 violation(s); 1 suppressed.
+Checked 8 file(s); 3 violation(s); 1 suppressed.
 ```
 
 對應 pptx 中 GRASP **Indirection / Protected Variation**：suppress YAML I/O
@@ -240,10 +244,10 @@ Checked 7 file(s); 3 violation(s); 1 suppressed.
 ### R-NAME-01 · NamingRule（vague suffix）
 
 > **規則**：禁止 `Manager` / `Helper` / `Util` / `Handler` 等模糊後綴。
-> **違規來源**：`service/InventoryManager.java`。
+> **違規來源**：`service/PaymentManager.java`。
 >
-> **常見 review 提醒**：`Manager` 後綴不表達責任 — 是查詢、預留、配發？
-> 改成 `InventoryReservation`、`InventoryAllocator`、`InventoryService`
+> **常見 review 提醒**：`Manager` 後綴不表達責任 — 是 refund? retry? settle?
+> reconcile? 改成 `PaymentService`、`PaymentReconciler`、`PaymentRetryPolicy`
 > 都比 `Manager` 精確。Suppress 理由通常是「這個 class 是 legacy 命名，新
 > 功能用 role-specific suffix；舊 class 暫不重構」。
 
@@ -258,7 +262,7 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 預期輸出：
 
 ```
-demo/sample-project/.../service/InventoryManager.java:11 [R-NAME-01] Class 'InventoryManager' violates naming pattern '(?!.*(?:Manager|Helper|Util|Handler)$).*'
+demo/sample-project/.../service/PaymentManager.java:12 [R-NAME-01] Class 'PaymentManager' violates naming pattern '(?!.*(?:Manager|Helper|Util|Handler)$).*'
 ```
 
 ```bash
@@ -266,7 +270,7 @@ demo/sample-project/.../service/InventoryManager.java:11 [R-NAME-01] Class 'Inve
 java -cp 'target/arch-checker.jar;target/lib/*' \
     com.archchecker.cli.Main suppress demo/demo-profile.yaml \
     R-NAME-01 \
-    demo/sample-project/src/main/java/com/example/service/InventoryManager.java 11 \
+    demo/sample-project/src/main/java/com/example/service/PaymentManager.java 12 \
     'legacy name; refactor in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
@@ -281,9 +285,9 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 
 ### R-DEP-01 · DependencyRule（service 依賴 controller）
 
-> **規則**：service 套件不得依賴 controller 套件（top-down 分層 — Controller 呼叫
-> Service，反過來不行）。
-> **違規來源**：`service/AuditService.java:2`（`import com.example.controller.HomeController;`）。
+> **規則**：service 套件不得依賴 controller 套件（top-down 分層 — Controller
+> 呼叫 Service，反過來不行）。
+> **違規來源**：`service/ChargeService.java:2`（`import com.example.controller.PaymentController;`）。
 >
 > **常見 review 提醒**：service 反向依賴 controller 會導致：
 > 1. 啟動時迴圈依賴
@@ -302,14 +306,14 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 預期輸出：
 
 ```
-demo/sample-project/.../service/AuditService.java:2 [R-DEP-01] Package 'com.example.service' must not depend on 'com.example.controller' (import: com.example.controller.HomeController)
+demo/sample-project/.../service/ChargeService.java:2 [R-DEP-01] Package 'com.example.service' must not depend on 'com.example.controller' (import: com.example.controller.PaymentController)
 ```
 
 ```bash
 java -cp 'target/arch-checker.jar;target/lib/*' \
     com.archchecker.cli.Main suppress demo/demo-profile.yaml \
     R-DEP-01 \
-    demo/sample-project/src/main/java/com/example/service/AuditService.java 2 \
+    demo/sample-project/src/main/java/com/example/service/ChargeService.java 2 \
     'temporary cross-layer wire-up; refactor in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
@@ -321,23 +325,30 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 
 ---
 
-### R-SUP-01 · SupertypeRule（沒繼承 BaseController）
+### R-SUP-01 · SupertypeRule（domain 多型基底）
 
-> **規則**：`com.example.controller` 下每個 type 都必須 extend `BaseController`，
-> 以繼承共同的錯誤處理 / 認證 / logging。
-> **違規來源**：`controller/CartController.java:8`（沒有 `extends BaseController`）。
+> **規則**：`com.example.domain.payment` 下每個 type 都必須 extend `Payment`，
+> 也就是 domain layer 三種付款方式（CreditCard / BankTransfer / Cash）共用
+> 同一個多型基底。
+> **違規來源**：`domain/payment/CashPayment.java:12`（沒有 `extends Payment`）。
 >
-> **常見 review 提醒**：framework convention（Spring MVC、Rails ActionController
-> 都是這個模式）。沒繼承 base controller 表示：
-> - 每個 endpoint 都要自己處理 exception
-> - 沒有統一的 authentication 入口
-> - 共用 helper（`render(view)`、`currentUser()`…）需各自重寫
+> **常見 review 提醒**：domain layer 多型 — 每個 concrete payment 都應該
+> 是 `Payment` 的 subclass，這樣 Application service 才能寫成
+> `charge(Payment p)`，靠 polymorphism 處理所有付款方式：
 >
-> Suppress 理由通常是「deprecated endpoint 留著向後相容，故意不套新的 middleware」。
+> ```java
+> List<Payment> all = List.of(creditCard, bankTransfer, cash);
+> for (Payment p : all) p.method();   // dispatched per subclass
+> ```
 >
-> **設計細節**：`BaseController` 放在 `com.example.support` 而非
-> `com.example.controller` — 否則 `targetPackage = com.example.controller`
-> 會把基底自己也抓出來「`BaseController` 必須 extend `BaseController`」。
+> 沒繼承 `Payment` 表示 `CashPayment` 不能放進 `List<Payment>`、不能用
+> `instanceof Payment` 過濾、`charge(Payment)` 也吃不到 — 強迫 Application
+> 寫一堆 `if-else` 分支。Suppress 理由通常是「v1 cash payment 用獨立流程
+> 處理，v2 統一抽到 Payment 基底」。
+>
+> **設計細節**：`Payment` 基底放在 `com.example.domain.core` 而非
+> `com.example.domain.payment` — 否則 `targetPackage = com.example.domain.payment`
+> 會把基底自己也抓出來「`Payment` 必須 extend `Payment`」。
 > 這是**套件結構決定 SupertypeRule 是否會抓基底自身**的真實 edge case。
 
 ```bash
@@ -350,15 +361,15 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 預期輸出：
 
 ```
-demo/sample-project/.../controller/CartController.java:8 [R-SUP-01] Class 'CartController' must extend/implement 'BaseController'
+demo/sample-project/.../domain/payment/CashPayment.java:12 [R-SUP-01] Class 'CashPayment' must extend/implement 'Payment'
 ```
 
 ```bash
 java -cp 'target/arch-checker.jar;target/lib/*' \
     com.archchecker.cli.Main suppress demo/demo-profile.yaml \
     R-SUP-01 \
-    demo/sample-project/src/main/java/com/example/controller/CartController.java 8 \
-    'deprecated endpoint kept for backwards compatibility' \
+    demo/sample-project/src/main/java/com/example/domain/payment/CashPayment.java 12 \
+    'cash payments are out of scope for v1; will inherit Payment in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
 java -cp 'target/arch-checker.jar;target/lib/*' \
@@ -367,22 +378,24 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 # 預期輸出：0
 ```
 
-> 對照：`HomeController` 通過此規則 — 它有 `extends BaseController`。
+> 對照：`CreditCardPayment` 與 `BankTransferPayment` 通過此規則 — 兩者都
+> `extends Payment`。
 
 ---
 
-### R-PKG-01 · PackageRule（缺 entity 套件）
+### R-PKG-01 · PackageRule（缺 repository 套件）
 
-> **規則**：典型 web app 應有 `com.example.entity` 套件存放 data model。
+> **規則**：典型分層專案應有 `com.example.repository` 套件，集中存放 persistence
+> 介面（`PaymentRepository`、`UserRepository` 等）。
 > **違規附掛點**：line `0`，掛在掃描順序中第一個 `.java` 檔（這裡是
-> `controller/CartController.java`）。
+> `controller/PaymentController.java`）。
 >
 > **常見 review 提醒**：團隊約定的「必有套件」不該被誤刪 / 漏建。
-> PackageRule 用來防止結構偏移 — 例如新成員不知道專案約定，把 entity 跟
-> service 混在同一個套件下。
+> PackageRule 用來防止結構偏移 — 例如新成員不知道專案約定，把 repository
+> interface 跟 service 混在同一個套件下。
 >
-> Suppress 理由通常是「v1 還沒拆 entity 層，v2 重構規劃」或「我們是 CLI tool
-> 不需要 entity 套件」。
+> Suppress 理由通常是「v1 還沒接資料庫，v2 加 persistence 時建立 repository
+> 套件」或「我們是 in-memory CLI tool，不需要 repository」。
 
 ```bash
 rm -f demo/.arch-checker-suppress.yaml
@@ -394,15 +407,15 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 預期輸出：
 
 ```
-demo/sample-project/.../controller/CartController.java:0 [R-PKG-01] Required package pattern 'com.example.entity' not present in the project
+demo/sample-project/.../controller/PaymentController.java:0 [R-PKG-01] Required package pattern 'com.example.repository' not present in the project
 ```
 
 ```bash
 java -cp 'target/arch-checker.jar;target/lib/*' \
     com.archchecker.cli.Main suppress demo/demo-profile.yaml \
     R-PKG-01 \
-    demo/sample-project/src/main/java/com/example/controller/CartController.java 0 \
-    'entity package planned for v2' \
+    demo/sample-project/src/main/java/com/example/controller/PaymentController.java 0 \
+    'repository package planned for v2 once persistence is added' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
 java -cp 'target/arch-checker.jar;target/lib/*' \
@@ -426,26 +439,26 @@ rm -f demo/.arch-checker-suppress.yaml
 
 java -cp 'target/arch-checker.jar;target/lib/*' com.archchecker.cli.Main suppress \
     demo/demo-profile.yaml R-NAME-01 \
-    demo/sample-project/src/main/java/com/example/service/InventoryManager.java 11 \
+    demo/sample-project/src/main/java/com/example/service/PaymentManager.java 12 \
     'legacy name; refactor in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
 java -cp 'target/arch-checker.jar;target/lib/*' com.archchecker.cli.Main suppress \
     demo/demo-profile.yaml R-DEP-01 \
-    demo/sample-project/src/main/java/com/example/service/AuditService.java 2 \
+    demo/sample-project/src/main/java/com/example/service/ChargeService.java 2 \
     'temporary cross-layer wire-up; refactor in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
 java -cp 'target/arch-checker.jar;target/lib/*' com.archchecker.cli.Main suppress \
     demo/demo-profile.yaml R-SUP-01 \
-    demo/sample-project/src/main/java/com/example/controller/CartController.java 8 \
-    'deprecated endpoint kept for backwards compatibility' \
+    demo/sample-project/src/main/java/com/example/domain/payment/CashPayment.java 12 \
+    'cash payments are out of scope for v1; will inherit Payment in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
 java -cp 'target/arch-checker.jar;target/lib/*' com.archchecker.cli.Main suppress \
     demo/demo-profile.yaml R-PKG-01 \
-    demo/sample-project/src/main/java/com/example/controller/CartController.java 0 \
-    'entity package planned for v2' \
+    demo/sample-project/src/main/java/com/example/controller/PaymentController.java 0 \
+    'repository package planned for v2 once persistence is added' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
 # 最終檢查 — 全部通過
@@ -459,7 +472,7 @@ echo "exit=$?"
 
 ```
 --
-Checked 7 file(s); 0 violation(s); 4 suppressed.
+Checked 8 file(s); 0 violation(s); 4 suppressed.
 exit=0
 ```
 
