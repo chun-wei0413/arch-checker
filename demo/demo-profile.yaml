@@ -1,27 +1,53 @@
 name: demo-profile
 
 # Style Profile for the OOAD midterm demo.
-# Three architectural rules; arch-checker validates the sample-project against them.
+# Four architectural rules — one of each rule type that arch-checker supports.
+# The sample-project is engineered so each rule produces exactly one violation.
 rules:
 
-  # NamingRule — every class in the project must end with "Service".
-  # UserManager.java intentionally violates this rule for the demo.
+  # ───────────────────────────────────────────────────────────
+  # R-NAME-01 · NamingRule
+  #   Every class in the project must end with one of the layer
+  #   suffixes: Service / Controller / Entity.
+  #   Triggered by:  service/UserManager.java
+  # ───────────────────────────────────────────────────────────
   - type: naming
     id: R-NAME-01
-    description: Class names must end with the 'Service' suffix
-    classNamePattern: '\w+Service'
+    description: Class names must end with Service, Controller, or Entity
+    classNamePattern: '\w+(?:Service|Controller|Entity)'
 
-  # PackageRule — the project must contain at least one class under com.example.service.
-  - type: package
-    id: R-PKG-01
-    description: Project must contain a com.example.service package
-    packagePattern: com.example.service
-
-  # DependencyRule — the service package must not depend on any controller package.
-  # No violation in the sample-project; serves as a baseline rule that always passes.
+  # ───────────────────────────────────────────────────────────
+  # R-DEP-01 · DependencyRule
+  #   Service layer must not depend on the controller layer
+  #   (top-down layering: presentation -> service, never reverse).
+  #   Triggered by:  service/AuditService.java (imports HomeController)
+  # ───────────────────────────────────────────────────────────
   - type: dependency
     id: R-DEP-01
     description: Service layer must not depend on controllers
     sourcePackage: com.example.service
     targetPackage: com.example.controller
     isAllowed: false
+
+  # ───────────────────────────────────────────────────────────
+  # R-SUP-01 · SupertypeRule
+  #   Classes in com.example.controller must extend BaseController.
+  #   Triggered by:  controller/LegacyController.java
+  # ───────────────────────────────────────────────────────────
+  - type: supertype
+    id: R-SUP-01
+    description: Classes in com.example.controller must extend BaseController
+    targetPackage: com.example.controller
+    requiredSupertype: BaseController
+
+  # ───────────────────────────────────────────────────────────
+  # R-PKG-01 · PackageRule
+  #   The project must contain a com.example.entity package.
+  #   The sample-project intentionally omits that package, so this
+  #   rule reports a project-level violation (line 0, attached to
+  #   the first scanned file).
+  # ───────────────────────────────────────────────────────────
+  - type: package
+    id: R-PKG-01
+    description: Project must contain a com.example.entity package
+    packagePattern: com.example.entity

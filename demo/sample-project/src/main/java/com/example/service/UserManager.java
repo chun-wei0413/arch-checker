@@ -1,8 +1,8 @@
 package com.example.service;
 
-// Legacy entry point — predates the *Service naming rule.
-// Will be flagged by NamingRule R-NAME-01 and then accepted
-// via UC-04 (suppress) for demonstration purposes.
+// Legacy entry point predating the *Service naming convention.
+// Will be flagged by R-NAME-01 and then accepted via UC-04 (suppress)
+// for demonstration purposes.
 
 public class UserManager {
 
