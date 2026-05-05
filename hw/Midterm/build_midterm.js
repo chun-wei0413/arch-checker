@@ -101,6 +101,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("大家好，我是 113598009 李俊威。今天要報告 arch-checker — 給 Java 開發者用的架構合規 CLI 工具。整份報告 19 頁。");
   s.background = { color: NAVY_DARK };
   for (let r = 0; r < 4; r++) {
     for (let c = 0; c < 6; c++) {
@@ -163,6 +164,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("AI 輔助寫程式普及，code review 量爆增。ArchUnit 規則綁進 Java 測試碼，門檻高。arch-checker 用 YAML 解耦規則，任何工程師皆可編輯。");
   chrome(s, "Problem Statement · 問題陳述", "01 · Requirement");
 
   // 左欄 — 痛點
@@ -230,6 +232,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("5 個 use case。M = midterm 已完成（UC-01、UC-04、UC-05），F = 留到 final。Actor：Developer 與 CI System。");
   chrome(s, "Use Case Diagram · 使用案例圖", "01 · Requirement");
 
   const dim = fitImage(7.6, 5.2, 1280, 830);
@@ -284,6 +287,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("UC-01 是核心用例。10 步驟：載 Profile → 解析 AST → 套規則 → 過濾 suppress → 輸出報告 + exit code。Extensions 涵蓋失敗與 --json 替代輸出。");
   chrome(s, "Significant Use Case · UC-01 Check Architecture Compliance", "01 · Requirement");
 
   const headerRows = [
@@ -320,7 +324,7 @@ function fitImage(maxW, maxH, origW, origH) {
       { text: "對每個檔案套用 Profile 中所有 ComplianceRule",       options: { bullet: { type: "number" }, breakLine: true } },
       { text: "收集所有 Violation（檔案、行號、ruleId、訊息）",             options: { bullet: { type: "number" }, breakLine: true } },
       { text: "過濾已被 suppress 的 Violation",                             options: { bullet: { type: "number" }, breakLine: true } },
-      { text: "以 Console 或 JSON 格式輸出 ViolationReport 與 summary",    options: { bullet: { type: "number" }, breakLine: true } },
+      { text: "以 Console 格式輸出 ViolationReport 與 summary",            options: { bullet: { type: "number" }, breakLine: true } },
       { text: "回傳 POSIX exit code（0 = 通過 / 1 = 有違規）",              options: { bullet: { type: "number" } } },
     ],
     { x: 0.55, y: 2.35, w: 6.5, h: 4.6, fontFace: F_BODY, fontSize: 11, color: INK, paraSpaceAfter: 2, margin: 0 }
@@ -338,7 +342,8 @@ function fitImage(maxW, maxH, origW, origH) {
       { text: "3c · 規則型別未知 → 列出 validation 錯誤 → exit 2",  options: { bullet: true, breakLine: true } },
       { text: "4a · 目錄無 .java 檔 → 警告訊息 → exit 0",           options: { bullet: true, breakLine: true } },
       { text: "5a · 某檔語法錯誤無法解析 → 警告並跳過該檔",          options: { bullet: true, breakLine: true } },
-      { text: "8a · 所有違規皆被 suppress → 報告全部通過 → exit 0",  options: { bullet: true } },
+      { text: "8a · 所有違規皆被 suppress → 報告全部通過 → exit 0",  options: { bullet: true, breakLine: true } },
+      { text: "9a · 指定 --json → 改以 JSON 格式輸出（FEA-04）",       options: { bullet: true } },
     ],
     { x: 7.15, y: 2.35, w: 5.6, h: 3.4, fontFace: F_BODY, fontSize: 11, color: INK, paraSpaceAfter: 4, margin: 0 }
   );
@@ -366,6 +371,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("UC-04 讓開發者把已知可接受的違規標為豁免，下次 check 自動過濾但仍以 suppressed 計數。GRASP：Information Expert + Creator + Indirection。");
   chrome(s, "Significant Use Case · UC-04 Suppress a Violation", "01 · Requirement");
 
   const headerRows = [
@@ -388,64 +394,46 @@ function fitImage(maxW, maxH, origW, origH) {
     border: { pt: 0.5, color: RULE },
   });
 
-  s.addText("Main Success Scenario · 主成功流程", {
-    x: 0.55, y: 2.0, w: 6.2, h: 0.32,
+  s.addText("Brief Description · 用例摘要", {
+    x: 0.55, y: 2.0, w: 12.2, h: 0.32,
     fontFace: F_BODY, fontSize: 14, bold: true, color: NAVY, margin: 0
   });
   s.addText(
-    [
-      { text: "Developer 發出 suppress(ruleId, filePath, lineNumber, reason)", options: { bullet: { type: "number" }, breakLine: true } },
-      { text: "SuppressCommand 驗證輸入（不可為空、檔案需存在）",                       options: { bullet: { type: "number" }, breakLine: true } },
-      { text: "SuppressionService 建立新的 Suppression aggregate",                    options: { bullet: { type: "number" }, breakLine: true } },
-      { text: "SuppressionStore 將其持久化至 .arch-checker-suppressions.yaml",   options: { bullet: { type: "number" }, breakLine: true } },
-      { text: "系統回傳 suppressionId 與 timestamp，exit 0",                          options: { bullet: { type: "number" }, breakLine: true } },
-      { text: "下次 UC-01 執行時，該 Violation 將自動被過濾",                          options: { bullet: { type: "number" } } },
-    ],
-    { x: 0.55, y: 2.35, w: 6.5, h: 3.0, fontFace: F_BODY, fontSize: 12, color: INK, paraSpaceAfter: 4, margin: 0 }
+    "Developer 在 UC-01 檢查時發現某筆違規屬於「已知且可接受」的個案（例如：legacy code、暫時性妥協、與業務需求衝突等），透過 arch-checker suppress 子指令傳入 ruleId、檔案路徑、行號與 reason，將該違規標註為已豁免並持久化至 .arch-checker-suppress.yaml。下次執行 UC-01 時，系統會自動過濾此筆違規，但仍於報告中以 suppressed 計數，方便後續審計與管理。",
+    { x: 0.55, y: 2.4, w: 12.2, h: 1.6,
+      fontFace: F_BODY, fontSize: 12, color: INK, margin: 0 }
   );
 
   s.addShape(pres.shapes.RECTANGLE, {
-    x: 0.55, y: 5.55, w: 6.5, h: 1.3,
+    x: 0.55, y: 4.2, w: 12.2, h: 1.4,
     fill: { color: ICE_SOFT }, line: { color: ICE_SOFT }
   });
   s.addShape(pres.shapes.RECTANGLE, {
-    x: 0.55, y: 5.55, w: 0.08, h: 1.3,
+    x: 0.55, y: 4.2, w: 0.08, h: 1.4,
     fill: { color: GOLD }, line: { color: GOLD }
   });
   s.addText("為何重要", {
-    x: 0.78, y: 5.6, w: 6.2, h: 0.30,
-    fontFace: F_BODY, fontSize: 12, bold: true, color: NAVY, margin: 0
+    x: 0.78, y: 4.28, w: 11.9, h: 0.30,
+    fontFace: F_BODY, fontSize: 13, bold: true, color: NAVY, margin: 0
   });
   s.addText(
-    "真實 codebase 必然存在被接受的例外。若無 suppress 機制，每次 CI 執行都會被舊有違規淹沒。UC-04 將「個別接受」的決策固化為團隊知識，跨次執行皆可繼承。",
-    { x: 0.78, y: 5.9, w: 6.2, h: 0.95, fontFace: F_BODY, fontSize: 11, color: INK, margin: 0 }
-  );
-
-  s.addText("Extensions · 失敗流程", {
-    x: 7.15, y: 2.0, w: 5.6, h: 0.32,
-    fontFace: F_BODY, fontSize: 14, bold: true, color: NAVY, margin: 0
-  });
-  s.addText(
-    [
-      { text: "2a · ruleId 為空 → exit 2 (validation error)",               options: { bullet: true, breakLine: true } },
-      { text: "2b · reason 為空 → exit 2（必須留下審計理由）",               options: { bullet: true, breakLine: true } },
-      { text: "2c · 目標檔案不存在 → exit 2",                                options: { bullet: true, breakLine: true } },
-      { text: "4a · SuppressionStore 寫入失敗 → exit 2（避免遺孤 Suppression）", options: { bullet: true } },
-    ],
-    { x: 7.15, y: 2.35, w: 5.6, h: 2.5, fontFace: F_BODY, fontSize: 12, color: INK, paraSpaceAfter: 4, margin: 0 }
+    "真實 codebase 必然存在被接受的例外。若無 suppress 機制，每次 CI 執行都會被舊有違規淹沒。UC-04 將「個別接受」的決策固化為團隊知識，跨次執行皆可繼承並可稽核。",
+    { x: 0.78, y: 4.62, w: 11.9, h: 0.95,
+      fontFace: F_BODY, fontSize: 12, color: INK, margin: 0 }
   );
 
   s.addText("GRASP 模式重點", {
-    x: 7.15, y: 5.0, w: 5.6, h: 0.32,
+    x: 0.55, y: 5.85, w: 12.2, h: 0.32,
     fontFace: F_BODY, fontSize: 14, bold: true, color: NAVY, margin: 0
   });
   s.addText(
     [
       { text: "Information Expert · SuppressionService 主導建立流程", options: { bullet: true, breakLine: true } },
-      { text: "Creator · 由 Service 建立 Suppression aggregate",       options: { bullet: true, breakLine: true } },
+      { text: "Creator · 由 Service 建立 Suppression 紀錄",            options: { bullet: true, breakLine: true } },
       { text: "Indirection / Protected Variation · SuppressionStore 隱藏 YAML I/O", options: { bullet: true } },
     ],
-    { x: 7.15, y: 5.35, w: 5.6, h: 1.7, fontFace: F_BODY, fontSize: 11, color: INK, paraSpaceAfter: 4, margin: 0 }
+    { x: 0.55, y: 6.2, w: 12.2, h: 0.85,
+      fontFace: F_BODY, fontSize: 11, color: INK, paraSpaceAfter: 2, margin: 0 }
   );
 }
 
@@ -454,6 +442,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("接下來實際 demo 三個情境：UC-01 主流程、UC-04 suppress + 重檢、FEA-04 JSON 替代輸出。");
   chrome(s, "Demonstration · 展示流程", "02 · Demo");
 
   const cards = [
@@ -530,6 +519,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("對 demo/sample-project 跑 check，偵測 4 條違規（exit 1）。Profile 中 4 種規則各觸發 1 條。");
   chrome(s, "Demo Snapshot · UC-01 Check Architecture Compliance", "02 · Demo");
 
   // 上半：Maven build 成功
@@ -565,6 +555,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("對 R-NAME-01 呼叫 suppress 寫入 yaml；重新 check，違規由 4 條降為 3 條、1 條計入 suppressed。");
   chrome(s, "Demo Snapshot · UC-04 Suppress + 重檢", "02 · Demo");
 
   // suppress-demo.png（含 suppress 指令、寫入確認、重新 check 結果）
@@ -601,6 +592,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("--json flag 切 JsonReporter，PowerShell 用 > 重導向落地成檔；ConvertFrom-Json 美化呈現。展示 GRASP Polymorphism。");
   chrome(s, "Demo Snapshot · 替代輸出 (FEA-04 JSON)", "02 · Demo");
 
   // json-output-demo.png（PowerShell 重導向 + ConvertFrom-Json 美化）
@@ -646,6 +638,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("12 個概念類別。ComplianceCheck 是流程主體；ComplianceRule 為抽象基底，4 個具體規則繼承之；StyleProfile 持有規則；Suppression 是豁免紀錄。");
   chrome(s, "Domain Model · 領域模型", "03 · Analysis");
 
   const dim = fitImage(8.4, 5.5, 1170, 810);
@@ -679,6 +672,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("4 層 + port-adapter：Presentation / Application / Domain / Infrastructure。Application 定義 4 個 port 介面，Infrastructure 實作，達成 Dependency Inversion。");
   chrome(s, "Logical Architecture · Package Diagram", "04 · Design");
 
   const dim = fitImage(7.6, 5.6, 540, 760);
@@ -723,6 +717,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("黑盒視角：Developer 對 System 下 runCheck，回傳 ViolationReport 與 exit code。CI 讀 exit code，工程師讀報告。");
   chrome(s, "UC-01 · System Sequence Diagram", "04 · Design — Use-Case Realization");
 
   const dim = fitImage(9.0, 5.5, 920, 660);
@@ -756,6 +751,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("白盒視角：CheckCommand 是 Controller、Service 是 Pure Fab、Loader 與 Adapter 是 Indirection、ComplianceRule 是 Polymorphism、Reporter 是 Low Coupling。");
   chrome(s, "UC-01 · Sequence Diagram with GRASP", "04 · Design — Use-Case Realization");
 
   const dim = fitImage(12.5, 3.85, 3122, 1746);
@@ -787,6 +783,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("UC-04 較簡單。Service 是 Creator + Pure Fab，Store 是 Expert，把 YAML I/O 完全隱藏在 adapter 之內。");
   chrome(s, "UC-04 · SSD + Sequence Diagram with GRASP", "04 · Design — Use-Case Realization");
 
   const ssdDim = fitImage(5.4, 4.0, 920, 520);
@@ -827,6 +824,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("12 個概念類別維持不變。DCD 補上 navigability、method 簽章、abstract 等 stereotype。範圍限縮 Domain Layer。");
   chrome(s, "Design Class Diagram · Domain Layer（DCD vs Domain Model）", "04 · Design");
 
   const dim = fitImage(8.6, 5.6, 1100, 700);
@@ -876,6 +874,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("Domain Layer 12 類完全保留，0 個簽章被改。新增方法多為 reporter 用 accessor。唯一移除：ViolationReport.getExitCode 改由 ComplianceCheck 持有，維持單一資料來源。");
   chrome(s, "Implementation Class Diagram (HW5)", "05 · Implementation");
 
   // 新版 ICD 限縮 Domain Layer，與 HW#4 §3.3 DCD 比較對象一致；landscape 2525×1857
@@ -926,6 +925,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("ComplianceRule 是 abstract，validate 是 abstract method。4 個子類各自實作。Service 走訪 List 呼叫 validate — 新增規則只要加子類，符合 Open/Closed。");
   chrome(s, "原始碼節錄 · GRASP Polymorphism", "05 · Implementation");
 
   s.addShape(pres.shapes.RECTANGLE, { x: 0.55, y: 1.1, w: 6.2, h: 5.3, fill: { color: NAVY_DARK }, line: { color: NAVY_DARK } });
@@ -1010,6 +1010,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("21 個 test method 全部通過。涵蓋 4 條 domain 規則、2 個 application service、2 個 infrastructure adapter。");
   chrome(s, "Unit Testing · mvn -B clean test", "06 · Testing");
 
   s.addShape(pres.shapes.RECTANGLE, { x: 0.55, y: 1.15, w: 12.2, h: 1.5, fill: { color: ICE_SOFT }, line: { color: ICE_SOFT } });
@@ -1047,6 +1048,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("三個 test：合規類別不報違規、不合規類別報違規含行號、多檔只報違規者。fixture 用 stub，不依賴檔案系統。");
   chrome(s, "重要測試碼 · NamingRuleTest", "06 · Testing");
 
   s.addShape(pres.shapes.RECTANGLE, { x: 0.55, y: 1.1, w: 12.2, h: 5.3, fill: { color: NAVY_DARK }, line: { color: NAVY_DARK } });
@@ -1096,6 +1098,7 @@ function fitImage(maxW, maxH, origW, origH) {
 // =============================================================
 {
   const s = pres.addSlide();
+  s.addNotes("全新單人專案：827 LOC、26 類、65 method、21 test、test code 418 LOC。HW1 至 HW5 累計約 27.5 小時。敬請指教，Q & A。");
   chrome(s, "Project Information & Team Effort", "07 · Metrics");
 
   s.addText("LOC of code（全新專案，單人團隊）", {
