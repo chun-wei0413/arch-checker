@@ -25,3 +25,6 @@ hw/Midterm/slides_jpg/
 
 # Demo runtime artifact — suppressions written by 'suppress' command
 demo/.arch-checker-suppress.yaml
+
+# docx skill working directory — re-create with scripts/office/unpack.py
+hw/**/unpacked/
