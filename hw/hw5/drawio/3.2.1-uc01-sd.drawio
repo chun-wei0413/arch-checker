@@ -24,10 +24,10 @@
         <mxCell id="p_parser" value=":JavaParser&#10;Adapter" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;fontStyle=4;" vertex="1" parent="1">
           <mxGeometry x="820" y="55" width="100" height="46" as="geometry"/>
         </mxCell>
-        <mxCell id="p_constraint" value="constraint:&#10;Architecture&#10;Constraint" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+        <mxCell id="p_constraint" value="rule:&#10;Compliance&#10;Rule" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=4;" vertex="1" parent="1">
           <mxGeometry x="1020" y="48" width="100" height="58" as="geometry"/>
         </mxCell>
-        <mxCell id="p_suppRepo" value=":Suppression&#10;Repository" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+        <mxCell id="p_suppRepo" value=":Suppression&#10;Store" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;fontStyle=4;" vertex="1" parent="1">
           <mxGeometry x="1220" y="55" width="100" height="46" as="geometry"/>
         </mxCell>
         <mxCell id="p_reporter" value=":Reporter" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;fontStyle=4;" vertex="1" parent="1">
@@ -108,7 +108,7 @@
           <mxGeometry relative="1" as="geometry"><mxPoint x="870" y="380" as="sourcePoint"/><mxPoint x="470" y="380" as="targetPoint"/></mxGeometry>
         </mxCell>
 
-        <mxCell id="loopFrame" value="loop  [for each constraint in profile]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;fontSize=11;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
+        <mxCell id="loopFrame" value="loop  [for each rule in profile]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;fontSize=11;verticalAlign=top;align=left;spacingLeft=8;spacingTop=4;" vertex="1" parent="1">
           <mxGeometry x="445" y="410" width="690" height="120" as="geometry"/>
         </mxCell>
 

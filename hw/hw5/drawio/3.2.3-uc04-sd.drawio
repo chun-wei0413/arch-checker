@@ -21,7 +21,7 @@
         <mxCell id="p_supp" value="suppression:&#10;Suppression" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=4;" vertex="1" parent="1">
           <mxGeometry x="660" y="320" width="120" height="50" as="geometry"/>
         </mxCell>
-        <mxCell id="p_repo" value=":Suppression&#10;Repository" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;fontStyle=4;" vertex="1" parent="1">
+        <mxCell id="p_repo" value=":Suppression&#10;Store" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;fontStyle=4;" vertex="1" parent="1">
           <mxGeometry x="875" y="55" width="130" height="50" as="geometry"/>
         </mxCell>
 
@@ -54,10 +54,10 @@
           <mxGeometry x="934" y="415" width="12" height="55" as="geometry"/>
         </mxCell>
 
-        <mxCell id="m1" value="1: suppress(constraintId, filePath,&#10;lineNumber, reason)" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+        <mxCell id="m1" value="1: suppress(ruleId, filePath,&#10;lineNumber, reason)" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry"><mxPoint x="70" y="170" as="sourcePoint"/><mxPoint x="270" y="170" as="targetPoint"/></mxGeometry>
         </mxCell>
-        <mxCell id="m2" value="2: createSuppression(constraintId, filePath,&#10;lineNumber, reason)" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+        <mxCell id="m2" value="2: createSuppression(ruleId, filePath,&#10;lineNumber, reason)" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry"><mxPoint x="270" y="225" as="sourcePoint"/><mxPoint x="530" y="225" as="targetPoint"/></mxGeometry>
         </mxCell>
 

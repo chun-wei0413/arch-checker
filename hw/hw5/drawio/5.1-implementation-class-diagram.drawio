@@ -71,10 +71,10 @@
         <mxCell id="appCcs_a0" value="- codeParser: CodeParser" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="appCcs">
           <mxGeometry y="26" width="290" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="appCcs_a1" value="- profileRepository: ProfileRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="appCcs">
+        <mxCell id="appCcs_a1" value="- profileLoader: ProfileLoader" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="appCcs">
           <mxGeometry y="46" width="290" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="appCcs_a2" value="- suppressionRepository: SuppressionRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="appCcs">
+        <mxCell id="appCcs_a2" value="- suppressionStore: SuppressionStore" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="appCcs">
           <mxGeometry y="66" width="290" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="appCcs_div" value="" style="line;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="appCcs">
@@ -87,10 +87,10 @@
         <mxCell id="appSus" value="SuppressionService" style="swimlane;fontStyle=1;align=center;startSize=24;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="380" y="285" width="290" height="180" as="geometry"/>
         </mxCell>
-        <mxCell id="appSus_a0" value="- repository: SuppressionRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="appSus">
+        <mxCell id="appSus_a0" value="- repository: SuppressionStore" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="appSus">
           <mxGeometry y="26" width="290" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="appSus_a1" value="- profileRepository: ProfileRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="appSus">
+        <mxCell id="appSus_a1" value="- profileLoader: ProfileLoader" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="appSus">
           <mxGeometry y="46" width="290" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="appSus_div" value="" style="line;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="appSus">
@@ -107,14 +107,14 @@
           <mxGeometry y="34" width="180" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="appPr" value="&lt;i&gt;ProfileRepository&lt;/i&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px&quot;&gt;«interface»&lt;/font&gt;" style="swimlane;fontStyle=0;align=center;startSize=30;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;dashed=1;" vertex="1" parent="1">
+        <mxCell id="appPr" value="&lt;i&gt;ProfileLoader&lt;/i&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px&quot;&gt;«interface»&lt;/font&gt;" style="swimlane;fontStyle=0;align=center;startSize=30;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="900" y="285" width="200" height="60" as="geometry"/>
         </mxCell>
         <mxCell id="appPr_o0" value="+ load(profilePath): StyleProfile" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="appPr">
           <mxGeometry y="34" width="200" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="appSr" value="&lt;i&gt;SuppressionRepository&lt;/i&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px&quot;&gt;«interface»&lt;/font&gt;" style="swimlane;fontStyle=0;align=center;startSize=30;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;dashed=1;" vertex="1" parent="1">
+        <mxCell id="appSr" value="&lt;i&gt;SuppressionStore&lt;/i&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px&quot;&gt;«interface»&lt;/font&gt;" style="swimlane;fontStyle=0;align=center;startSize=30;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="1120" y="285" width="320" height="80" as="geometry"/>
         </mxCell>
         <mxCell id="appSr_o0" value="+ loadAll(supFile, profile): List&amp;lt;Suppression&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="appSr">
@@ -213,13 +213,13 @@
         <mxCell id="domSp_a0" value="- name: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domSp">
           <mxGeometry y="26" width="240" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="domSp_a1" value="- constraints: List&amp;lt;ArchitectureConstraint&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domSp">
+        <mxCell id="domSp_a1" value="- rules: List&amp;lt;ComplianceRule&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domSp">
           <mxGeometry y="46" width="240" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="domSp_div" value="" style="line;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="domSp">
           <mxGeometry y="68" width="240" height="2" as="geometry"/>
         </mxCell>
-        <mxCell id="domSp_o0" value="+ getConstraints(): List" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domSp">
+        <mxCell id="domSp_o0" value="+ getRules(): List" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domSp">
           <mxGeometry y="74" width="240" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="domSp_o1" value="+ getName(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domSp">
@@ -229,7 +229,7 @@
         <mxCell id="domSu" value="Suppression" style="swimlane;fontStyle=1;align=center;startSize=24;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="1140" y="540" width="240" height="160" as="geometry"/>
         </mxCell>
-        <mxCell id="domSu_a0" value="- constraint: ArchitectureConstraint" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domSu">
+        <mxCell id="domSu_a0" value="- rule: ComplianceRule" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domSu">
           <mxGeometry y="26" width="240" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="domSu_a1" value="- filePath: Path" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domSu">
@@ -285,7 +285,7 @@
         <mxCell id="domVi_a2" value="- file: File" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domVi">
           <mxGeometry y="66" width="220" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="domVi_a3" value="- constraint: ArchitectureConstraint" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domVi">
+        <mxCell id="domVi_a3" value="- rule: ComplianceRule" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domVi">
           <mxGeometry y="86" width="220" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="domVi_div" value="" style="line;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="domVi">
@@ -295,7 +295,7 @@
           <mxGeometry y="114" width="220" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="domAc" value="&lt;i&gt;ArchitectureConstraint&lt;/i&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px&quot;&gt;«abstract»&lt;/font&gt;" style="swimlane;fontStyle=0;align=center;startSize=30;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="domAc" value="&lt;i&gt;ComplianceRule&lt;/i&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px&quot;&gt;«abstract»&lt;/font&gt;" style="swimlane;fontStyle=0;align=center;startSize=30;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="700" y="720" width="280" height="120" as="geometry"/>
         </mxCell>
         <mxCell id="domAc_a0" value="# id: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="domAc">
@@ -410,20 +410,20 @@
           <mxGeometry y="54" width="260" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="infYp" value="YamlProfileRepository" style="swimlane;fontStyle=1;align=center;startSize=24;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="infYp" value="YamlProfileLoader" style="swimlane;fontStyle=1;align=center;startSize=24;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="340" y="1220" width="260" height="100" as="geometry"/>
         </mxCell>
         <mxCell id="infYp_o0" value="+ load(profilePath): StyleProfile" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="infYp">
           <mxGeometry y="34" width="260" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="infYp_o1" value="- toConstraint(map): ArchitectureConstraint" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="infYp">
+        <mxCell id="infYp_o1" value="- toConstraint(map): ComplianceRule" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="infYp">
           <mxGeometry y="54" width="260" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="infYp_o2" value="- applyKv(map, entry): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="infYp">
           <mxGeometry y="74" width="260" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="infYs" value="YamlSuppressionRepository" style="swimlane;fontStyle=1;align=center;startSize=24;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="infYs" value="YamlSuppressionStore" style="swimlane;fontStyle=1;align=center;startSize=24;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="620" y="1220" width="280" height="100" as="geometry"/>
         </mxCell>
         <mxCell id="infYs_o0" value="+ loadAll(supFile, profile): List" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="infYs">
