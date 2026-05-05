@@ -65,7 +65,7 @@ demo/
 ## Style Profile 解說
 
 [`demo-profile.yaml`](./demo-profile.yaml) 定義 4 條規則，**對應 arch-checker
-4 個 `ArchitectureConstraint` 子類別**（GRASP Polymorphism）：
+4 個 `ComplianceRule` 子類別**（GRASP Polymorphism）：
 
 | Rule ID    | Type / 子類別     | 規則內容                                                       | 違規來源                                | Code review 常見的提醒                                          |
 |------------|------------------|---------------------------------------------------------------|-----------------------------------------|----------------------------------------------------------------|
@@ -227,7 +227,7 @@ Checked 7 file(s); 3 violation(s); 1 suppressed.
 ```
 
 對應 pptx 中 GRASP **Indirection / Protected Variation**：suppress YAML I/O
-完全由 `YamlSuppressionRepository` 負責。
+完全由 `YamlSuppressionStore` 負責。
 
 > 連續執行多次 demo 前，建議先 `rm demo/.arch-checker-suppress.yaml` 清掉
 > 示範用的 suppression，否則檢查結果會有殘留過濾紀錄。

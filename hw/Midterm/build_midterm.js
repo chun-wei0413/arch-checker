@@ -317,7 +317,7 @@ function fitImage(maxW, maxH, origW, origH) {
       { text: "系統讀取並解析 Style Profile YAML",                          options: { bullet: { type: "number" }, breakLine: true } },
       { text: "系統遞迴掃描所有 .java 檔案",                                options: { bullet: { type: "number" }, breakLine: true } },
       { text: "JavaParser 將每個檔案解析為 AST (CompilationUnit)",          options: { bullet: { type: "number" }, breakLine: true } },
-      { text: "對每個檔案套用 Profile 中所有 ArchitectureConstraint",       options: { bullet: { type: "number" }, breakLine: true } },
+      { text: "對每個檔案套用 Profile 中所有 ComplianceRule",       options: { bullet: { type: "number" }, breakLine: true } },
       { text: "收集所有 Violation（檔案、行號、ruleId、訊息）",             options: { bullet: { type: "number" }, breakLine: true } },
       { text: "過濾已被 suppress 的 Violation",                             options: { bullet: { type: "number" }, breakLine: true } },
       { text: "以 Console 或 JSON 格式輸出 ViolationReport 與 summary",    options: { bullet: { type: "number" }, breakLine: true } },
@@ -397,7 +397,7 @@ function fitImage(maxW, maxH, origW, origH) {
       { text: "Developer 發出 suppress(constraintId, filePath, lineNumber, reason)", options: { bullet: { type: "number" }, breakLine: true } },
       { text: "SuppressCommand 驗證輸入（不可為空、檔案需存在）",                       options: { bullet: { type: "number" }, breakLine: true } },
       { text: "SuppressionService 建立新的 Suppression aggregate",                    options: { bullet: { type: "number" }, breakLine: true } },
-      { text: "SuppressionRepository 將其持久化至 .arch-checker-suppressions.yaml",   options: { bullet: { type: "number" }, breakLine: true } },
+      { text: "SuppressionStore 將其持久化至 .arch-checker-suppressions.yaml",   options: { bullet: { type: "number" }, breakLine: true } },
       { text: "系統回傳 suppressionId 與 timestamp，exit 0",                          options: { bullet: { type: "number" }, breakLine: true } },
       { text: "下次 UC-01 執行時，該 Violation 將自動被過濾",                          options: { bullet: { type: "number" } } },
     ],
@@ -702,8 +702,8 @@ function fitImage(maxW, maxH, origW, origH) {
   s.addText(
     [
       { text: "ComplianceCheck — 整體流程的 aggregate", options: { bullet: true, breakLine: true } },
-      { text: "StyleProfile — 持有 1..* 個 ArchitectureConstraint", options: { bullet: true, breakLine: true } },
-      { text: "ArchitectureConstraint (abstract) → 4 個具體規則", options: { bullet: true, breakLine: true } },
+      { text: "StyleProfile — 持有 1..* 個 ComplianceRule", options: { bullet: true, breakLine: true } },
+      { text: "ComplianceRule (abstract) → 4 個具體規則", options: { bullet: true, breakLine: true } },
       { text: "Project · 持有 1..* 個 File", options: { bullet: true, breakLine: true } },
       { text: "Violation — 包含 file、行號、訊息、ruleId", options: { bullet: true, breakLine: true } },
       { text: "Suppression — 標的某 Constraint，下次執行被忽略", options: { bullet: true } },
@@ -736,11 +736,11 @@ function fitImage(maxW, maxH, origW, origH) {
     { name: "Presentation · cli", color: NAVY,
       desc: "picocli @Command 進入點：CheckCommand、SuppressCommand" },
     { name: "Application", color: TEAL,
-      desc: "use case services 與技術介面（ports）：CodeParser、ProfileRepository、SuppressionRepository、Reporter" },
+      desc: "use case services 與技術介面（ports）：CodeParser、ProfileLoader、SuppressionStore、Reporter" },
     { name: "Domain", color: GOLD,
       desc: "4 個 sub-package — constraint、profile、codebase、compliance — 純業務模型 + 多型 validate(files)" },
     { name: "Infrastructure", color: CORAL,
-      desc: "實作 ports 的 adapters：JavaParserAdapter、YamlProfileRepository、ConsoleReporter / JsonReporter、YamlSuppressionRepository" },
+      desc: "實作 ports 的 adapters：JavaParserAdapter、YamlProfileLoader、ConsoleReporter / JsonReporter、YamlSuppressionStore" },
   ];
   let y = 1.7;
   layers.forEach(L => {
@@ -813,8 +813,8 @@ function fitImage(maxW, maxH, origW, origH) {
     ],
     ["Controller",          ":CheckCommand",             "接收 system event 後委派給 Service（不含業務邏輯）"],
     ["Information Expert",  ":ComplianceCheckService",   "主導檢查流程，整合 Profile + Files + Constraints"],
-    ["Polymorphism",        "ArchitectureConstraint",    "validate(files) 由 Naming/Dependency/Supertype/PackageRule 各自實作"],
-    ["Indirection / PV",    ":Adapter / :Repository",    "JavaParser、YAML 等技術隔離於 ports（CodeParser、ProfileRepository …）"],
+    ["Polymorphism",        "ComplianceRule",    "validate(files) 由 Naming/Dependency/Supertype/PackageRule 各自實作"],
+    ["Indirection / PV",    ":Adapter / :Store",    "JavaParser、YAML 等技術隔離於 ports（CodeParser、ProfileLoader …）"],
     ["Pure Fabrication",    ":Reporter",                 "Console / JSON 格式化從 domain 解耦（同時達成 Low Coupling）"],
   ];
   s.addTable(data, {
@@ -855,7 +855,7 @@ function fitImage(maxW, maxH, origW, origH) {
     ],
     ["Controller",                    ":SuppressCommand",        "將 CLI 參數適配為 service 呼叫"],
     ["Information Expert / Creator",  ":SuppressionService",     "驗證輸入並 «create» Suppression aggregate"],
-    ["Indirection / PV",              ":SuppressionRepository",  "持久化至 .arch-checker-suppressions.yaml；YAML I/O 全部隱藏"],
+    ["Indirection / PV",              ":SuppressionStore",  "持久化至 .arch-checker-suppressions.yaml；YAML I/O 全部隱藏"],
   ];
   s.addTable(data, {
     x: 0.55, y: 5.85, w: 12.2, colW: [2.6, 3.6, 6.0],
@@ -884,7 +884,7 @@ function fitImage(maxW, maxH, origW, origH) {
     [
       { text: "12 個概念維持不變 — 名稱、角色、multiplicity 全部沿用", options: { bullet: true, breakLine: true } },
       { text: "DCD 額外加入 navigability、method 簽章、abstract / interface 等 stereotype", options: { bullet: true, breakLine: true } },
-      { text: "ArchitectureConstraint 升級為 ", options: {} },
+      { text: "ComplianceRule 升級為 ", options: {} },
       { text: "abstract", options: { italic: true } },
       { text: "，提供多型 validate(files)", options: { breakLine: true } },
       { text: "DCD 範圍限縮於 ", options: {} },
@@ -971,17 +971,17 @@ function fitImage(maxW, maxH, origW, origH) {
   chrome(s, "原始碼節錄 · GRASP Polymorphism", "05 · Implementation");
 
   s.addShape(pres.shapes.RECTANGLE, { x: 0.55, y: 1.1, w: 6.2, h: 5.3, fill: { color: NAVY_DARK }, line: { color: NAVY_DARK } });
-  s.addText("domain.constraint.ArchitectureConstraint", {
+  s.addText("domain.rule.ComplianceRule", {
     x: 0.65, y: 1.15, w: 6.0, h: 0.3,
     fontFace: F_MONO, fontSize: 10, color: ICE, margin: 0
   });
   s.addText(
     [
-      { text: "public abstract class ArchitectureConstraint {",                                options: { color: WHITE, breakLine: true } },
+      { text: "public abstract class ComplianceRule {",                                options: { color: WHITE, breakLine: true } },
       { text: "    protected final String id;",                                                options: { color: WHITE, breakLine: true } },
       { text: "    protected final String description;",                                       options: { color: WHITE, breakLine: true } },
       { text: "",                                                                              options: { breakLine: true } },
-      { text: "    protected ArchitectureConstraint(String id, String description) {",        options: { color: WHITE, breakLine: true } },
+      { text: "    protected ComplianceRule(String id, String description) {",        options: { color: WHITE, breakLine: true } },
       { text: "        this.id = id; this.description = description;",                         options: { color: WHITE, breakLine: true } },
       { text: "    }",                                                                          options: { color: WHITE, breakLine: true } },
       { text: "",                                                                              options: { breakLine: true } },
@@ -1007,13 +1007,13 @@ function fitImage(maxW, maxH, origW, origH) {
   );
 
   s.addShape(pres.shapes.RECTANGLE, { x: 6.95, y: 1.1, w: 5.8, h: 5.3, fill: { color: NAVY_DARK }, line: { color: NAVY_DARK } });
-  s.addText("domain.constraint.NamingRule", {
+  s.addText("domain.rule.NamingRule", {
     x: 7.05, y: 1.15, w: 5.6, h: 0.3,
     fontFace: F_MONO, fontSize: 10, color: ICE, margin: 0
   });
   s.addText(
     [
-      { text: "public class NamingRule extends ArchitectureConstraint {",                  options: { color: WHITE, breakLine: true } },
+      { text: "public class NamingRule extends ComplianceRule {",                  options: { color: WHITE, breakLine: true } },
       { text: "    private final String classNamePattern;",                                  options: { color: WHITE, breakLine: true } },
       { text: "",                                                                            options: { breakLine: true } },
       { text: "    public NamingRule(String id, String description,",                       options: { color: WHITE, breakLine: true } },
@@ -1042,7 +1042,7 @@ function fitImage(maxW, maxH, origW, origH) {
     }
   );
 
-  s.addText("Polymorphism — Service 走訪 List<ArchitectureConstraint> 並呼叫 validate(files)，每個子類掌管自己的演算法。",
+  s.addText("Polymorphism — Service 走訪 List<ComplianceRule> 並呼叫 validate(files)，每個子類掌管自己的演算法。",
     { x: 0.55, y: 6.55, w: 12.2, h: 0.32,
       fontFace: F_BODY, fontSize: 10, italic: true, color: MUTED, margin: 0 });
 }
@@ -1086,12 +1086,12 @@ function fitImage(maxW, maxH, origW, origH) {
       { text: "[INFO] -------------------------------------------------------",        options: { color: ICE, breakLine: true } },
       { text: "[INFO] Running com.archchecker.application.ComplianceCheckServiceTest", options: { color: WHITE, breakLine: true } },
       { text: "[INFO] Running com.archchecker.application.SuppressionServiceTest",     options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.domain.constraint.NamingRuleTest",       options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.domain.constraint.DependencyRuleTest",   options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.domain.constraint.SupertypeRuleTest",    options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.domain.constraint.PackageRuleTest",      options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.infrastructure.profile.YamlProfileRepositoryTest", options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.infrastructure.suppression.YamlSuppressionRepositoryTest", options: { color: WHITE, breakLine: true } },
+      { text: "[INFO] Running com.archchecker.domain.rule.NamingRuleTest",       options: { color: WHITE, breakLine: true } },
+      { text: "[INFO] Running com.archchecker.domain.rule.DependencyRuleTest",   options: { color: WHITE, breakLine: true } },
+      { text: "[INFO] Running com.archchecker.domain.rule.SupertypeRuleTest",    options: { color: WHITE, breakLine: true } },
+      { text: "[INFO] Running com.archchecker.domain.rule.PackageRuleTest",      options: { color: WHITE, breakLine: true } },
+      { text: "[INFO] Running com.archchecker.infrastructure.profile.YamlProfileLoaderTest", options: { color: WHITE, breakLine: true } },
+      { text: "[INFO] Running com.archchecker.infrastructure.suppression.YamlSuppressionStoreTest", options: { color: WHITE, breakLine: true } },
       { text: "[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0",               options: { color: "70C77B", bold: true, breakLine: true } },
       { text: "[INFO] BUILD SUCCESS",                                                    options: { color: "70C77B", bold: true } },
     ],
@@ -1137,7 +1137,7 @@ function fitImage(maxW, maxH, origW, origH) {
       { text: "",                                                                                                            options: { breakLine: true } },
       { text: "        assertThat(vs).hasSize(1);",                                                                           options: { color: WHITE, breakLine: true } },
       { text: "        Violation v = vs.get(0);",                                                                             options: { color: WHITE, breakLine: true } },
-      { text: "        assertThat(v.getConstraint().getId()).isEqualTo(\"NR-1\");",                                          options: { color: WHITE, breakLine: true } },
+      { text: "        assertThat(v.getRule().getId()).isEqualTo(\"NR-1\");",                                          options: { color: WHITE, breakLine: true } },
       { text: "        assertThat(v.getMessage()).contains(\"UserManager\").contains(\"*Service\");",                        options: { color: WHITE, breakLine: true } },
       { text: "    }",                                                                                                       options: { color: WHITE, breakLine: true } },
       { text: "",                                                                                                            options: { breakLine: true } },
