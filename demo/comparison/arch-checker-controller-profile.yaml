@@ -1,0 +1,9 @@
+# arch-checker version of "controller classes must end with 'Controller'".
+# 同一條規則以宣告式 YAML 表達 — 任何工程師（含非 Java 開發者）皆可編輯。
+# 不需要 ArchUnit、不需要 JUnit、不需要編譯。
+name: controller-naming-style
+rules:
+  - id: R-CTRL-01
+    type: naming
+    description: Controller 類別必須以 Controller 結尾
+    classNamePattern: ".*Controller"
