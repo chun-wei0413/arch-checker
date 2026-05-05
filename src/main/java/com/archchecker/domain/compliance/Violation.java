@@ -1,29 +1,29 @@
 package com.archchecker.domain.compliance;
 
 import com.archchecker.domain.codebase.File;
-import com.archchecker.domain.constraint.ArchitectureConstraint;
+import com.archchecker.domain.rule.ComplianceRule;
 
 public class Violation {
     private final int lineNumber;
     private final String message;
     private final File file;
-    private final ArchitectureConstraint constraint;
+    private final ComplianceRule rule;
 
     public Violation(int lineNumber, String message, File file,
-                     ArchitectureConstraint constraint) {
+                     ComplianceRule rule) {
         this.lineNumber = lineNumber;
         this.message = message;
         this.file = file;
-        this.constraint = constraint;
+        this.rule = rule;
     }
 
     public int getLineNumber() { return lineNumber; }
     public String getMessage() { return message; }
     public File getFile() { return file; }
-    public ArchitectureConstraint getConstraint() { return constraint; }
+    public ComplianceRule getRule() { return rule; }
 
     public String describe() {
         return file.getFilePath() + ":" + lineNumber
-                + " [" + constraint.getId() + "] " + message;
+                + " [" + rule.getId() + "] " + message;
     }
 }

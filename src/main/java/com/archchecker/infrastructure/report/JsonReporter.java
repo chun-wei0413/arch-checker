@@ -29,7 +29,7 @@ public class JsonReporter implements Reporter {
             if (!first) sb.append(",");
             sb.append("{\"file\":\"").append(escape(v.getFile().getFilePath().toString()));
             sb.append("\",\"line\":").append(v.getLineNumber());
-            sb.append(",\"ruleId\":\"").append(escape(v.getConstraint().getId()));
+            sb.append(",\"ruleId\":\"").append(escape(v.getRule().getId()));
             sb.append("\",\"message\":\"").append(escape(v.getMessage())).append("\"}");
             first = false;
         }

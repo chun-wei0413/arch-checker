@@ -1,4 +1,4 @@
-package com.archchecker.domain.constraint;
+package com.archchecker.domain.rule;
 
 import com.archchecker.domain.codebase.File;
 import com.archchecker.domain.compliance.Violation;
@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class PackageRule extends ArchitectureConstraint {
+public class PackageRule extends ComplianceRule {
     private final String packagePattern;
 
     public PackageRule(String id, String description, String packagePattern) {

@@ -1,7 +1,7 @@
 package com.archchecker.application;
 
 import com.archchecker.domain.compliance.Suppression;
-import com.archchecker.domain.constraint.ArchitectureConstraint;
+import com.archchecker.domain.rule.ComplianceRule;
 import com.archchecker.domain.profile.StyleProfile;
 
 import java.nio.file.Path;
@@ -10,34 +10,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SuppressionService {
-    private final SuppressionRepository repository;
-    private final ProfileRepository profileRepository;
+    private final SuppressionStore store;
+    private final ProfileLoader profileLoader;
 
-    public SuppressionService(SuppressionRepository repository,
-                              ProfileRepository profileRepository) {
-        this.repository = repository;
-        this.profileRepository = profileRepository;
+    public SuppressionService(SuppressionStore store,
+                              ProfileLoader profileLoader) {
+        this.store = store;
+        this.profileLoader = profileLoader;
     }
 
     public Suppression suppress(Path profilePath, Path suppressionFile,
-                                 String constraintId, Path filePath,
+                                 String ruleId, Path filePath,
                                  int lineNumber, String reason) {
-        StyleProfile profile = profileRepository.load(profilePath);
-        ArchitectureConstraint constraint = findConstraint(profile, constraintId);
-        if (constraint == null) {
-            throw new IllegalArgumentException("Unknown constraint id: " + constraintId);
+        StyleProfile profile = profileLoader.load(profilePath);
+        ComplianceRule rule = findRule(profile, ruleId);
+        if (rule == null) {
+            throw new IllegalArgumentException("Unknown rule id: " + ruleId);
         }
         List<Suppression> all = new ArrayList<>(
-                repository.loadAll(suppressionFile, profile));
-        Suppression added = new Suppression(constraint, filePath, lineNumber,
+                store.loadAll(suppressionFile, profile));
+        Suppression added = new Suppression(rule, filePath, lineNumber,
                 reason, Instant.now());
         all.add(added);
-        repository.save(suppressionFile, all);
+        store.save(suppressionFile, all);
         return added;
     }
 
-    private ArchitectureConstraint findConstraint(StyleProfile profile, String id) {
-        for (ArchitectureConstraint c : profile.getConstraints()) {
+    private ComplianceRule findRule(StyleProfile profile, String id) {
+        for (ComplianceRule c : profile.getRules()) {
             if (c.getId().equals(id)) return c;
         }
         return null;

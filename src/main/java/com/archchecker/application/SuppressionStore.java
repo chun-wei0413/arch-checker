@@ -6,7 +6,7 @@ import com.archchecker.domain.profile.StyleProfile;
 import java.nio.file.Path;
 import java.util.List;
 
-public interface SuppressionRepository {
+public interface SuppressionStore {
     List<Suppression> loadAll(Path suppressionFile, StyleProfile profile);
 
     void save(Path suppressionFile, List<Suppression> suppressions);

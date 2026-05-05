@@ -1,24 +1,24 @@
 package com.archchecker.domain.profile;
 
-import com.archchecker.domain.constraint.ArchitectureConstraint;
+import com.archchecker.domain.rule.ComplianceRule;
 
 import java.util.Collections;
 import java.util.List;
 
 public class StyleProfile {
     private final String name;
-    private final List<ArchitectureConstraint> constraints;
+    private final List<ComplianceRule> rules;
 
-    public StyleProfile(String name, List<ArchitectureConstraint> constraints) {
+    public StyleProfile(String name, List<ComplianceRule> rules) {
         this.name = name;
-        this.constraints = constraints == null ? Collections.emptyList() : constraints;
+        this.rules = rules == null ? Collections.emptyList() : rules;
     }
 
     public String getName() {
         return name;
     }
 
-    public List<ArchitectureConstraint> getConstraints() {
-        return Collections.unmodifiableList(constraints);
+    public List<ComplianceRule> getRules() {
+        return Collections.unmodifiableList(rules);
     }
 }

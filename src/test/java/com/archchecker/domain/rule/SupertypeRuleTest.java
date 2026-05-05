@@ -1,4 +1,4 @@
-package com.archchecker.domain.constraint;
+package com.archchecker.domain.rule;
 
 import com.archchecker.domain.codebase.File;
 import com.archchecker.domain.compliance.Violation;
@@ -18,10 +18,10 @@ class SupertypeRuleTest {
     void classWithRequiredSupertypeIsCompliant(@TempDir Path tmp) throws IOException {
         Path src = writeJava(tmp, "DerivedRule",
                 "package com.foo.domain.constraint;\n"
-                + "class DerivedRule extends ArchitectureConstraint {}\n");
+                + "class DerivedRule extends ComplianceRule {}\n");
         SupertypeRule rule = new SupertypeRule("R-SUP-01",
-                "constraint must extend ArchitectureConstraint",
-                "com.foo.domain.constraint", "ArchitectureConstraint");
+                "constraint must extend ComplianceRule",
+                "com.foo.domain.constraint", "ComplianceRule");
 
         List<Violation> result = rule.validate(
                 List.of(new File(src, "com.foo.domain.constraint")));
@@ -34,14 +34,14 @@ class SupertypeRuleTest {
         Path src = writeJava(tmp, "BadRule",
                 "package com.foo.domain.constraint;\nclass BadRule {}\n");
         SupertypeRule rule = new SupertypeRule("R-SUP-01",
-                "constraint must extend ArchitectureConstraint",
-                "com.foo.domain.constraint", "ArchitectureConstraint");
+                "constraint must extend ComplianceRule",
+                "com.foo.domain.constraint", "ComplianceRule");
 
         List<Violation> result = rule.validate(
                 List.of(new File(src, "com.foo.domain.constraint")));
 
         assertEquals(1, result.size());
-        assertTrue(result.get(0).getMessage().contains("ArchitectureConstraint"));
+        assertTrue(result.get(0).getMessage().contains("ComplianceRule"));
     }
 
     private static Path writeJava(Path dir, String name, String body) throws IOException {

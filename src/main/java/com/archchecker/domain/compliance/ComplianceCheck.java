@@ -1,7 +1,7 @@
 package com.archchecker.domain.compliance;
 
 import com.archchecker.domain.codebase.Project;
-import com.archchecker.domain.constraint.ArchitectureConstraint;
+import com.archchecker.domain.rule.ComplianceRule;
 import com.archchecker.domain.profile.StyleProfile;
 
 import java.time.LocalDateTime;
@@ -28,7 +28,7 @@ public class ComplianceCheck {
     public ViolationReport run() {
         ViolationReport report = new ViolationReport();
         report.setCheckedFileCount(project.listFiles().size());
-        for (ArchitectureConstraint c : profile.getConstraints()) {
+        for (ComplianceRule c : profile.getRules()) {
             for (Violation v : c.validate(project.listFiles())) {
                 if (isSuppressed(v)) {
                     report.incrementSuppressed();

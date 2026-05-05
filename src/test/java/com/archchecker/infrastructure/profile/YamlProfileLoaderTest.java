@@ -1,8 +1,8 @@
 package com.archchecker.infrastructure.profile;
 
-import com.archchecker.domain.constraint.ArchitectureConstraint;
-import com.archchecker.domain.constraint.DependencyRule;
-import com.archchecker.domain.constraint.NamingRule;
+import com.archchecker.domain.rule.ComplianceRule;
+import com.archchecker.domain.rule.DependencyRule;
+import com.archchecker.domain.rule.NamingRule;
 import com.archchecker.domain.profile.StyleProfile;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -13,7 +13,7 @@ import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class YamlProfileRepositoryTest {
+class YamlProfileLoaderTest {
 
     @Test
     void loadsNamingAndDependencyRules(@TempDir Path tmp) throws IOException {
@@ -31,16 +31,16 @@ class YamlProfileRepositoryTest {
                 + "    sourcePackage: com.foo.domain\n"
                 + "    targetPackage: com.foo.infra\n"
                 + "    isAllowed: false\n");
-        YamlProfileRepository repo = new YamlProfileRepository();
+        YamlProfileLoader repo = new YamlProfileLoader();
 
         StyleProfile profile = repo.load(file);
 
         assertEquals("demo", profile.getName());
-        assertEquals(2, profile.getConstraints().size());
-        ArchitectureConstraint first = profile.getConstraints().get(0);
+        assertEquals(2, profile.getRules().size());
+        ComplianceRule first = profile.getRules().get(0);
         assertTrue(first instanceof NamingRule);
         assertEquals("R-NAME-01", first.getId());
-        ArchitectureConstraint second = profile.getConstraints().get(1);
+        ComplianceRule second = profile.getRules().get(1);
         assertTrue(second instanceof DependencyRule);
         assertFalse(((DependencyRule) second).isAllowed());
     }
@@ -53,7 +53,7 @@ class YamlProfileRepositoryTest {
                 + "rules:\n"
                 + "  - id: r\n"
                 + "    type: bogus\n");
-        YamlProfileRepository repo = new YamlProfileRepository();
+        YamlProfileLoader repo = new YamlProfileLoader();
 
         assertThrows(IllegalArgumentException.class, () -> repo.load(file));
     }
@@ -61,7 +61,7 @@ class YamlProfileRepositoryTest {
     @Test
     void missingProfileFileIsRejected(@TempDir Path tmp) {
         Path file = tmp.resolve("absent.yaml");
-        YamlProfileRepository repo = new YamlProfileRepository();
+        YamlProfileLoader repo = new YamlProfileLoader();
 
         assertThrows(IllegalArgumentException.class, () -> repo.load(file));
     }

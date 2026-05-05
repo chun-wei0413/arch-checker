@@ -1,4 +1,4 @@
-package com.archchecker.domain.constraint;
+package com.archchecker.domain.rule;
 
 import com.archchecker.domain.codebase.File;
 import com.archchecker.domain.compliance.Violation;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class NamingRule extends ArchitectureConstraint {
+public class NamingRule extends ComplianceRule {
     private static final Pattern CLASS_DECL = Pattern.compile(
             "\\b(?:class|interface|enum)\\s+(\\w+)");
     private final String classNamePattern;

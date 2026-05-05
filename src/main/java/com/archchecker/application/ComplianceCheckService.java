@@ -12,23 +12,23 @@ import java.util.List;
 
 public class ComplianceCheckService {
     private final CodeParser codeParser;
-    private final ProfileRepository profileRepository;
-    private final SuppressionRepository suppressionRepository;
+    private final ProfileLoader profileLoader;
+    private final SuppressionStore suppressionStore;
 
     public ComplianceCheckService(CodeParser codeParser,
-                                  ProfileRepository profileRepository,
-                                  SuppressionRepository suppressionRepository) {
+                                  ProfileLoader profileLoader,
+                                  SuppressionStore suppressionStore) {
         this.codeParser = codeParser;
-        this.profileRepository = profileRepository;
-        this.suppressionRepository = suppressionRepository;
+        this.profileLoader = profileLoader;
+        this.suppressionStore = suppressionStore;
     }
 
     public CheckResult run(Path projectPath, Path profilePath, Path suppressionFile) {
-        StyleProfile profile = profileRepository.load(profilePath);
+        StyleProfile profile = profileLoader.load(profilePath);
         Project project = codeParser.parseProject(projectPath);
         List<Suppression> suppressions = suppressionFile == null
                 ? Collections.emptyList()
-                : suppressionRepository.loadAll(suppressionFile, profile);
+                : suppressionStore.loadAll(suppressionFile, profile);
         ComplianceCheck check = new ComplianceCheck(project, profile, suppressions);
         ViolationReport report = check.run();
         return new CheckResult(report, check.getExitCode());

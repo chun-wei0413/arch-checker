@@ -3,10 +3,10 @@ package com.archchecker.cli;
 import com.archchecker.application.ComplianceCheckService;
 import com.archchecker.application.Reporter;
 import com.archchecker.infrastructure.parser.JavaParserAdapter;
-import com.archchecker.infrastructure.profile.YamlProfileRepository;
+import com.archchecker.infrastructure.profile.YamlProfileLoader;
 import com.archchecker.infrastructure.report.ConsoleReporter;
 import com.archchecker.infrastructure.report.JsonReporter;
-import com.archchecker.infrastructure.suppression.YamlSuppressionRepository;
+import com.archchecker.infrastructure.suppression.YamlSuppressionStore;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
@@ -36,8 +36,8 @@ public class CheckCommand implements Callable<Integer> {
     public Integer call() {
         ComplianceCheckService service = new ComplianceCheckService(
                 new JavaParserAdapter(),
-                new YamlProfileRepository(),
-                new YamlSuppressionRepository());
+                new YamlProfileLoader(),
+                new YamlSuppressionStore());
         Reporter reporter = jsonOutput ? new JsonReporter() : new ConsoleReporter();
         ComplianceCheckService.CheckResult r =
                 service.run(projectPath, profilePath, suppressionFile);

@@ -1,11 +1,11 @@
 package com.archchecker.infrastructure.profile;
 
-import com.archchecker.application.ProfileRepository;
-import com.archchecker.domain.constraint.ArchitectureConstraint;
-import com.archchecker.domain.constraint.DependencyRule;
-import com.archchecker.domain.constraint.NamingRule;
-import com.archchecker.domain.constraint.PackageRule;
-import com.archchecker.domain.constraint.SupertypeRule;
+import com.archchecker.application.ProfileLoader;
+import com.archchecker.domain.rule.ComplianceRule;
+import com.archchecker.domain.rule.DependencyRule;
+import com.archchecker.domain.rule.NamingRule;
+import com.archchecker.domain.rule.PackageRule;
+import com.archchecker.domain.rule.SupertypeRule;
 import com.archchecker.domain.profile.StyleProfile;
 import org.yaml.snakeyaml.Yaml;
 
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class YamlProfileRepository implements ProfileRepository {
+public class YamlProfileLoader implements ProfileLoader {
 
     @Override
     @SuppressWarnings("unchecked")
@@ -37,17 +37,17 @@ public class YamlProfileRepository implements ProfileRepository {
         }
         String name = String.valueOf(root.getOrDefault("name", "default"));
         Object rulesNode = root.get("rules");
-        List<ArchitectureConstraint> constraints = new ArrayList<>();
+        List<ComplianceRule> rules = new ArrayList<>();
         if (rulesNode instanceof List<?>) {
             for (Object entry : (List<?>) rulesNode) {
                 if (!(entry instanceof Map<?, ?>)) continue;
-                constraints.add(toConstraint((Map<String, Object>) entry));
+                rules.add(toRule((Map<String, Object>) entry));
             }
         }
-        return new StyleProfile(name, constraints);
+        return new StyleProfile(name, rules);
     }
 
-    private static ArchitectureConstraint toConstraint(Map<String, Object> m) {
+    private static ComplianceRule toRule(Map<String, Object> m) {
         String type = String.valueOf(m.getOrDefault("type", ""));
         String id = String.valueOf(m.getOrDefault("id", ""));
         String desc = String.valueOf(m.getOrDefault("description", ""));

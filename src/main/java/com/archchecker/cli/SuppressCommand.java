@@ -2,8 +2,8 @@ package com.archchecker.cli;
 
 import com.archchecker.application.SuppressionService;
 import com.archchecker.domain.compliance.Suppression;
-import com.archchecker.infrastructure.profile.YamlProfileRepository;
-import com.archchecker.infrastructure.suppression.YamlSuppressionRepository;
+import com.archchecker.infrastructure.profile.YamlProfileLoader;
+import com.archchecker.infrastructure.suppression.YamlSuppressionStore;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
@@ -15,11 +15,11 @@ import java.util.concurrent.Callable;
         description = "Mark a specific violation as 'known and accepted'.")
 public class SuppressCommand implements Callable<Integer> {
 
-    @Parameters(index = "0", description = "Style Profile YAML file (used to resolve constraint id).")
+    @Parameters(index = "0", description = "Style Profile YAML file (used to resolve rule id).")
     private Path profilePath;
 
-    @Parameters(index = "1", description = "Constraint id (e.g. R-NAME-01).")
-    private String constraintId;
+    @Parameters(index = "1", description = "Rule id (e.g. R-NAME-01).")
+    private String ruleId;
 
     @Parameters(index = "2", description = "Path of the file to suppress in.")
     private Path filePath;
@@ -38,11 +38,11 @@ public class SuppressCommand implements Callable<Integer> {
     @Override
     public Integer call() {
         SuppressionService service = new SuppressionService(
-                new YamlSuppressionRepository(),
-                new YamlProfileRepository());
+                new YamlSuppressionStore(),
+                new YamlProfileLoader());
         Suppression s = service.suppress(profilePath, suppressionFile,
-                constraintId, filePath, lineNumber, reason);
-        System.out.println("Suppressed: " + s.getConstraint().getId() + " at "
+                ruleId, filePath, lineNumber, reason);
+        System.out.println("Suppressed: " + s.getRule().getId() + " at "
                 + s.getFilePath() + ":" + s.getLineNumber());
         return 0;
     }

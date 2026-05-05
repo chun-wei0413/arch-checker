@@ -1,15 +1,15 @@
-package com.archchecker.domain.constraint;
+package com.archchecker.domain.rule;
 
 import com.archchecker.domain.codebase.File;
 import com.archchecker.domain.compliance.Violation;
 
 import java.util.List;
 
-public abstract class ArchitectureConstraint {
+public abstract class ComplianceRule {
     protected final String id;
     protected final String description;
 
-    protected ArchitectureConstraint(String id, String description) {
+    protected ComplianceRule(String id, String description) {
         this.id = id;
         this.description = description;
     }

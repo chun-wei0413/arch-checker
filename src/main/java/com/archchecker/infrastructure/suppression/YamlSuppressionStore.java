@@ -1,8 +1,8 @@
 package com.archchecker.infrastructure.suppression;
 
-import com.archchecker.application.SuppressionRepository;
+import com.archchecker.application.SuppressionStore;
 import com.archchecker.domain.compliance.Suppression;
-import com.archchecker.domain.constraint.ArchitectureConstraint;
+import com.archchecker.domain.rule.ComplianceRule;
 import com.archchecker.domain.profile.StyleProfile;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class YamlSuppressionRepository implements SuppressionRepository {
+public class YamlSuppressionStore implements SuppressionStore {
 
     @Override
     @SuppressWarnings("unchecked")
@@ -49,7 +49,7 @@ public class YamlSuppressionRepository implements SuppressionRepository {
         List<Map<String, Object>> data = new ArrayList<>();
         for (Suppression s : suppressions) {
             Map<String, Object> m = new LinkedHashMap<>();
-            m.put("constraintId", s.getConstraint().getId());
+            m.put("constraintId", s.getRule().getId());
             m.put("filePath", s.getFilePath().toString().replace('\\', '/'));
             m.put("lineNumber", s.getLineNumber());
             m.put("reason", s.getReason());
@@ -66,7 +66,7 @@ public class YamlSuppressionRepository implements SuppressionRepository {
     }
 
     private static Suppression toSuppression(Map<String, Object> m, StyleProfile profile) {
-        ArchitectureConstraint c = lookup(profile, String.valueOf(m.get("constraintId")));
+        ComplianceRule c = lookup(profile, String.valueOf(m.get("constraintId")));
         if (c == null) return null;
         Path file = Paths.get(String.valueOf(m.getOrDefault("filePath", "")));
         int line = ((Number) m.getOrDefault("lineNumber", 0)).intValue();
@@ -76,9 +76,9 @@ public class YamlSuppressionRepository implements SuppressionRepository {
         return new Suppression(c, file, line, reason, ts);
     }
 
-    private static ArchitectureConstraint lookup(StyleProfile profile, String id) {
+    private static ComplianceRule lookup(StyleProfile profile, String id) {
         if (id == null) return null;
-        for (ArchitectureConstraint c : profile.getConstraints()) {
+        for (ComplianceRule c : profile.getRules()) {
             if (c.getId().equals(id)) return c;
         }
         return null;
