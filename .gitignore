@@ -6,6 +6,11 @@
 .DS_Store
 Thumbs.db
 
+# MS Office lock files (auto-created while a doc is open in Word/PowerPoint)
+~$*.docx
+~$*.pptx
+~$*.xlsx
+
 # Maven build output (will be added when src/ exists)
 target/
 
