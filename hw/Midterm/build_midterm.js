@@ -394,7 +394,7 @@ function fitImage(maxW, maxH, origW, origH) {
   });
   s.addText(
     [
-      { text: "Developer 發出 suppress(constraintId, filePath, lineNumber, reason)", options: { bullet: { type: "number" }, breakLine: true } },
+      { text: "Developer 發出 suppress(ruleId, filePath, lineNumber, reason)", options: { bullet: { type: "number" }, breakLine: true } },
       { text: "SuppressCommand 驗證輸入（不可為空、檔案需存在）",                       options: { bullet: { type: "number" }, breakLine: true } },
       { text: "SuppressionService 建立新的 Suppression aggregate",                    options: { bullet: { type: "number" }, breakLine: true } },
       { text: "SuppressionStore 將其持久化至 .arch-checker-suppressions.yaml",   options: { bullet: { type: "number" }, breakLine: true } },
@@ -427,10 +427,10 @@ function fitImage(maxW, maxH, origW, origH) {
   });
   s.addText(
     [
-      { text: "2a · constraintId 為空 → exit 2 (validation error)",         options: { bullet: true, breakLine: true } },
+      { text: "2a · ruleId 為空 → exit 2 (validation error)",               options: { bullet: true, breakLine: true } },
       { text: "2b · reason 為空 → exit 2（必須留下審計理由）",               options: { bullet: true, breakLine: true } },
       { text: "2c · 目標檔案不存在 → exit 2",                                options: { bullet: true, breakLine: true } },
-      { text: "4a · Repository 寫入失敗 → exit 2（避免遺孤 Suppression）",   options: { bullet: true } },
+      { text: "4a · SuppressionStore 寫入失敗 → exit 2（避免遺孤 Suppression）", options: { bullet: true } },
     ],
     { x: 7.15, y: 2.35, w: 5.6, h: 2.5, fontFace: F_BODY, fontSize: 12, color: INK, paraSpaceAfter: 4, margin: 0 }
   );
@@ -443,7 +443,7 @@ function fitImage(maxW, maxH, origW, origH) {
     [
       { text: "Information Expert · SuppressionService 主導建立流程", options: { bullet: true, breakLine: true } },
       { text: "Creator · 由 Service 建立 Suppression aggregate",       options: { bullet: true, breakLine: true } },
-      { text: "Indirection / Protected Variation · Repository 隱藏 YAML I/O", options: { bullet: true } },
+      { text: "Indirection / Protected Variation · SuppressionStore 隱藏 YAML I/O", options: { bullet: true } },
     ],
     { x: 7.15, y: 5.35, w: 5.6, h: 1.7, fontFace: F_BODY, fontSize: 11, color: INK, paraSpaceAfter: 4, margin: 0 }
   );
@@ -526,159 +526,117 @@ function fitImage(maxW, maxH, origW, origH) {
 }
 
 // =============================================================
-// Slide 7 — Demo Snapshot · UC-01 成功
+// Slide 7 — Demo Snapshot · UC-01 主流程（對 sample-project 檢查）
 // =============================================================
 {
   const s = pres.addSlide();
-  chrome(s, "Demo Snapshot · UC-01 成功流程", "02 · Demo");
+  chrome(s, "Demo Snapshot · UC-01 Check Architecture Compliance", "02 · Demo");
 
-  s.addShape(pres.shapes.RECTANGLE, {
-    x: 0.55, y: 1.15, w: 12.2, h: 5.3,
-    fill: { color: NAVY_DARK }, line: { color: NAVY_DARK }
-  });
-  s.addShape(pres.shapes.RECTANGLE, {
-    x: 0.55, y: 1.15, w: 12.2, h: 0.36,
-    fill: { color: NAVY }, line: { color: NAVY }
-  });
-  s.addShape(pres.shapes.OVAL, { x: 0.7, y: 1.23, w: 0.2, h: 0.2, fill: { color: CORAL }, line: { color: CORAL } });
-  s.addShape(pres.shapes.OVAL, { x: 0.95, y: 1.23, w: 0.2, h: 0.2, fill: { color: GOLD }, line: { color: GOLD } });
-  s.addShape(pres.shapes.OVAL, { x: 1.20, y: 1.23, w: 0.2, h: 0.2, fill: { color: "70C77B" }, line: { color: "70C77B" } });
-  s.addText("zsh — arch-checker", {
-    x: 5.0, y: 1.15, w: 3.3, h: 0.36, fontFace: F_BODY, fontSize: 10, color: ICE,
-    align: "center", valign: "middle", margin: 0
+  // 上半：Maven build 成功
+  const buildDim = fitImage(11.0, 2.4, 1165, 1174);
+  s.addImage({ path: path.join(HW5, "arch-checker-build-success.png"),
+    x: (SW - buildDim.w) / 2, y: 1.05, w: buildDim.w, h: buildDim.h });
+  s.addText("① mvn package — BUILD SUCCESS", {
+    x: 0.55, y: 1.05 + buildDim.h + 0.05, w: 12.2, h: 0.3,
+    fontFace: F_BODY, fontSize: 11, italic: true, color: TEAL, align: "center", margin: 0
   });
 
-  s.addText(
-    [
-      { text: "$ mvn -B package -DskipTests dependency:copy-dependencies \\\n      -DincludeScope=runtime -DoutputDirectory=target/lib", options: { color: GOLD, breakLine: true } },
-      { text: "[INFO] BUILD SUCCESS", options: { color: "70C77B", breakLine: true } },
-      { text: "", options: { breakLine: true } },
-      { text: "$ java -cp 'target/arch-checker.jar;target/lib/*' \\\n      com.archchecker.cli.Main check src/main/java arch.yaml", options: { color: GOLD, breakLine: true } },
-      { text: "-- Checked 26 file(s); 0 violation(s); 0 suppressed.", options: { color: WHITE, breakLine: true } },
-      { text: "", options: { breakLine: true } },
-      { text: "$ echo $?", options: { color: GOLD, breakLine: true } },
-      { text: "0", options: { color: "70C77B", bold: true } },
-    ],
-    {
-      x: 0.85, y: 1.7, w: 11.6, h: 4.5,
-      fontFace: F_MONO, fontSize: 14, color: WHITE, margin: 0
-    }
-  );
+  // 下半：對 sample-project 檢查 → 4 violations
+  const checkY = 1.05 + buildDim.h + 0.45;
+  const checkDim = fitImage(12.2, 6.5 - checkY - 0.5, 2351, 239);
+  s.addImage({ path: path.join(HW5, "sample-project-check.png"),
+    x: (SW - checkDim.w) / 2, y: checkY, w: checkDim.w, h: checkDim.h });
+  s.addText("② arch-checker check demo/sample-project — 偵測 4 筆違規（exit 1）", {
+    x: 0.55, y: checkY + checkDim.h + 0.05, w: 12.2, h: 0.3,
+    fontFace: F_BODY, fontSize: 11, italic: true, color: TEAL, align: "center", margin: 0
+  });
 
   s.addText(
-    "arch-checker 將自身 26 個 class 對 arch.yaml 檢查 — 0 violations，exit 0。\n" +
-    "對應 UC-01 主流程（步驟 1-10）以及 NFR-05（POSIX exit code）。",
+    "對應 UC-01 主流程：載入 Profile（UC-05）→ 解析 .java AST → 依序套用 4 條 ComplianceRule → 報告違規與 exit code。",
     {
-      x: 0.55, y: 6.5, w: 12.2, h: 0.55,
-      fontFace: F_BODY, fontSize: 10, italic: true, color: MUTED, margin: 0
+      x: 0.55, y: 6.65, w: 12.2, h: 0.4,
+      fontFace: F_BODY, fontSize: 10, italic: true, color: MUTED, align: "center", margin: 0
     }
   );
 }
 
 // =============================================================
-// Slide 8 — Demo Snapshot · UC-04 + 重檢
+// Slide 8 — Demo Snapshot · UC-04 Suppress + 重檢
 // =============================================================
 {
   const s = pres.addSlide();
-  chrome(s, "Demo Snapshot · UC-04 Suppress + 重檢 (UC-01)", "02 · Demo");
+  chrome(s, "Demo Snapshot · UC-04 Suppress + 重檢", "02 · Demo");
 
-  s.addShape(pres.shapes.RECTANGLE, {
-    x: 0.55, y: 1.15, w: 12.2, h: 5.3,
-    fill: { color: NAVY_DARK }, line: { color: NAVY_DARK }
-  });
-  s.addShape(pres.shapes.RECTANGLE, {
-    x: 0.55, y: 1.15, w: 12.2, h: 0.36,
-    fill: { color: NAVY }, line: { color: NAVY }
-  });
-  s.addShape(pres.shapes.OVAL, { x: 0.7, y: 1.23, w: 0.2, h: 0.2, fill: { color: CORAL }, line: { color: CORAL } });
-  s.addShape(pres.shapes.OVAL, { x: 0.95, y: 1.23, w: 0.2, h: 0.2, fill: { color: GOLD }, line: { color: GOLD } });
-  s.addShape(pres.shapes.OVAL, { x: 1.20, y: 1.23, w: 0.2, h: 0.2, fill: { color: "70C77B" }, line: { color: "70C77B" } });
-  s.addText("zsh — arch-checker", {
-    x: 5.0, y: 1.15, w: 3.3, h: 0.36, fontFace: F_BODY, fontSize: 10, color: ICE,
-    align: "center", valign: "middle", margin: 0
-  });
+  // suppress-demo.png（含 suppress 指令、寫入確認、重新 check 結果）
+  const dim = fitImage(12.2, 5.0, 2344, 477);
+  s.addImage({ path: path.join(HW5, "suppress-demo.png"),
+    x: (SW - dim.w) / 2, y: 1.15, w: dim.w, h: dim.h });
 
+  // 三步驟說明
+  const noteY = 1.15 + dim.h + 0.25;
   s.addText(
     [
-      { text: "# 1. 第一次檢查 — 出現一筆 NamingRule 違規", options: { color: ICE, breakLine: true } },
-      { text: "$ java …Main check sample-project demo.yaml", options: { color: GOLD, breakLine: true } },
-      { text: "[VIOLATION] NamingRule  src/.../UserManager.java:7  Class must end with 'Service'", options: { color: CORAL, breakLine: true } },
-      { text: "-- Checked 3 file(s); 1 violation(s); 0 suppressed.   exit 1", options: { color: WHITE, breakLine: true } },
-      { text: "", options: { breakLine: true } },
-      { text: "# 2. 將該已知個案 suppress 起來 (UC-04)", options: { color: ICE, breakLine: true } },
-      { text: "$ java …Main suppress NamingRule .../UserManager.java 7 \\", options: { color: GOLD, breakLine: true } },
-      { text: "         --reason '舊有進入點，預計 v2 重新命名'", options: { color: GOLD, breakLine: true } },
-      { text: "Suppression saved · id=NamingRule@UserManager.java:7  ts=2026-04-29T10:42Z", options: { color: "70C77B", breakLine: true } },
-      { text: "", options: { breakLine: true } },
-      { text: "# 3. 重新執行 UC-01 — 違規被過濾", options: { color: ICE, breakLine: true } },
-      { text: "$ java …Main check sample-project demo.yaml", options: { color: GOLD, breakLine: true } },
-      { text: "-- Checked 3 file(s); 0 violation(s); 1 suppressed.   exit 0", options: { color: "70C77B", bold: true } },
+      { text: "① ", options: { bold: true, color: NAVY } },
+      { text: "suppress R-NAME-01 @ PaymentManager.java:12（reason: legacy name）→ 寫入 .arch-checker-suppress.yaml", options: { color: INK, breakLine: true } },
+      { text: "② ", options: { bold: true, color: NAVY } },
+      { text: "重新 check：違規由 4 筆降為 3 筆，1 筆計入 suppressed（exit 仍為 1，因仍有未豁免之違規）", options: { color: INK } },
     ],
     {
-      x: 0.85, y: 1.62, w: 11.6, h: 4.7,
-      fontFace: F_MONO, fontSize: 11, color: WHITE, paraSpaceAfter: 2, margin: 0
+      x: 0.55, y: noteY, w: 12.2, h: 1.0,
+      fontFace: F_BODY, fontSize: 11, color: INK, paraSpaceAfter: 2, margin: 0
     }
   );
 
   s.addText(
-    "對應 UC-04 主流程 + UC-01 步驟 8（過濾已 suppress 之違規）。展示 GRASP Indirection：Repository 獨佔 YAML I/O。",
+    "對應 UC-04 主流程 + UC-01 步驟 8（過濾已 suppress 之違規）。GRASP Indirection / Protected Variations · SuppressionStore 獨佔 YAML I/O。",
     {
-      x: 0.55, y: 6.5, w: 12.2, h: 0.45,
-      fontFace: F_BODY, fontSize: 10, italic: true, color: MUTED, margin: 0
+      x: 0.55, y: 6.65, w: 12.2, h: 0.4,
+      fontFace: F_BODY, fontSize: 10, italic: true, color: MUTED, align: "center", margin: 0
     }
   );
 }
 
 // =============================================================
-// Slide 9 — Demo Snapshot · JSON / Help
+// Slide 9 — Demo Snapshot · 替代輸出（FEA-04 JSON）
 // =============================================================
 {
   const s = pres.addSlide();
-  chrome(s, "Demo Snapshot · 替代輸出 (FEA-04)", "02 · Demo");
+  chrome(s, "Demo Snapshot · 替代輸出 (FEA-04 JSON)", "02 · Demo");
 
-  s.addShape(pres.shapes.RECTANGLE, {
-    x: 0.55, y: 1.15, w: 12.2, h: 5.3,
-    fill: { color: NAVY_DARK }, line: { color: NAVY_DARK }
-  });
-  s.addShape(pres.shapes.RECTANGLE, {
-    x: 0.55, y: 1.15, w: 12.2, h: 0.36,
-    fill: { color: NAVY }, line: { color: NAVY }
-  });
-  s.addShape(pres.shapes.OVAL, { x: 0.7, y: 1.23, w: 0.2, h: 0.2, fill: { color: CORAL }, line: { color: CORAL } });
-  s.addShape(pres.shapes.OVAL, { x: 0.95, y: 1.23, w: 0.2, h: 0.2, fill: { color: GOLD }, line: { color: GOLD } });
-  s.addShape(pres.shapes.OVAL, { x: 1.20, y: 1.23, w: 0.2, h: 0.2, fill: { color: "70C77B" }, line: { color: "70C77B" } });
-  s.addText("zsh — arch-checker", {
-    x: 5.0, y: 1.15, w: 3.3, h: 0.36, fontFace: F_BODY, fontSize: 10, color: ICE,
-    align: "center", valign: "middle", margin: 0
-  });
+  // json-output-demo.png（PowerShell 重導向 + ConvertFrom-Json 美化）
+  const dim = fitImage(11.5, 5.0, 1674, 1181);
+  s.addImage({ path: path.join(HW5, "json-output-demo.png"),
+    x: (SW - dim.w) / 2, y: 1.1, w: dim.w, h: dim.h });
 
   s.addText(
     [
-      { text: "# 給 CI dashboard 使用的 JSON 輸出 (--json flag)", options: { color: ICE, breakLine: true } },
-      { text: "$ java …Main check src/main/java arch.yaml --json", options: { color: GOLD, breakLine: true } },
-      { text: '{"checkedFiles":26,"violationCount":0,"suppressedCount":0,"violations":[]}', options: { color: WHITE, breakLine: true } },
-      { text: "", options: { breakLine: true } },
-      { text: "# picocli 自動產生的 help — 可從 CLI 探索可用 use case", options: { color: ICE, breakLine: true } },
-      { text: "$ java …Main --help", options: { color: GOLD, breakLine: true } },
-      { text: "Usage: arch-checker [-hV] [COMMAND]", options: { color: WHITE, breakLine: true } },
-      { text: "A Fluent Architectural Style Compliance Tool for Java.", options: { color: WHITE, breakLine: true } },
-      { text: "  -h, --help     Show this help message and exit.", options: { color: WHITE, breakLine: true } },
-      { text: "  -V, --version  Print version information and exit.", options: { color: WHITE, breakLine: true } },
-      { text: "Commands:", options: { color: WHITE, breakLine: true } },
-      { text: "  check     Check architecture compliance against a Style Profile.", options: { color: WHITE, breakLine: true } },
-      { text: "  suppress  Mark a specific violation as 'known and accepted'.", options: { color: WHITE } },
+      { text: "① ", options: { bold: true, color: NAVY } },
+      { text: "--json", options: { fontFace: F_MONO, color: NAVY } },
+      { text: " flag 切換 ", options: { color: INK } },
+      { text: "JsonReporter", options: { fontFace: F_MONO, color: NAVY } },
+      { text: "（Strategy）；以 ", options: { color: INK } },
+      { text: "PowerShell ", options: { fontFace: F_MONO, color: NAVY } },
+      { text: ">", options: { fontFace: F_MONO, color: GOLD, bold: true } },
+      { text: " 重導向落地為 ", options: { color: INK } },
+      { text: ".json", options: { fontFace: F_MONO, color: NAVY } },
+      { text: " 檔。", options: { color: INK, breakLine: true } },
+      { text: "② ", options: { bold: true, color: NAVY } },
+      { text: "ConvertFrom-Json | ConvertTo-Json", options: { fontFace: F_MONO, color: NAVY } },
+      { text: " 美化呈現結構：", options: { color: INK } },
+      { text: "checkedFiles / violationCount / suppressedCount / violations[]", options: { fontFace: F_MONO, color: TEAL } },
+      { text: "。", options: { color: INK } },
     ],
     {
-      x: 0.85, y: 1.62, w: 11.6, h: 4.7,
-      fontFace: F_MONO, fontSize: 12, color: WHITE, paraSpaceAfter: 2, margin: 0
+      x: 0.55, y: 1.1 + dim.h + 0.15, w: 12.2, h: 0.9,
+      fontFace: F_BODY, fontSize: 10, color: INK, margin: 0
     }
   );
 
   s.addText(
-    "FEA-04 多種報表格式 · Reporter polymorphism — 同一 Service 透過 strategy 產生 Console / JSON。",
+    "FEA-04 多種報表格式 · GRASP Polymorphism — 同一 ComplianceCheckService 透過 Reporter strategy 切換 Console / JSON。",
     {
-      x: 0.55, y: 6.5, w: 12.2, h: 0.45,
-      fontFace: F_BODY, fontSize: 10, italic: true, color: MUTED, margin: 0
+      x: 0.55, y: 6.65, w: 12.2, h: 0.4,
+      fontFace: F_BODY, fontSize: 10, italic: true, color: MUTED, align: "center", margin: 0
     }
   );
 }
@@ -706,7 +664,7 @@ function fitImage(maxW, maxH, origW, origH) {
       { text: "ComplianceRule (abstract) → 4 個具體規則", options: { bullet: true, breakLine: true } },
       { text: "Project · 持有 1..* 個 File", options: { bullet: true, breakLine: true } },
       { text: "Violation — 包含 file、行號、訊息、ruleId", options: { bullet: true, breakLine: true } },
-      { text: "Suppression — 標的某 Constraint，下次執行被忽略", options: { bullet: true } },
+      { text: "Suppression — 標的某 ComplianceRule，下次執行被忽略", options: { bullet: true } },
     ],
     {
       x: RX, y: 1.6, w: 3.6, h: 5.2,
@@ -738,7 +696,7 @@ function fitImage(maxW, maxH, origW, origH) {
     { name: "Application", color: TEAL,
       desc: "use case services 與技術介面（ports）：CodeParser、ProfileLoader、SuppressionStore、Reporter" },
     { name: "Domain", color: GOLD,
-      desc: "4 個 sub-package — constraint、profile、codebase、compliance — 純業務模型 + 多型 validate(files)" },
+      desc: "4 個 sub-package — rule、profile、codebase、compliance — 純業務模型 + 多型 validate(files)" },
     { name: "Infrastructure", color: CORAL,
       desc: "實作 ports 的 adapters：JavaParserAdapter、YamlProfileLoader、ConsoleReporter / JsonReporter、YamlSuppressionStore" },
   ];
@@ -768,7 +726,7 @@ function fitImage(maxW, maxH, origW, origH) {
   chrome(s, "UC-01 · System Sequence Diagram", "04 · Design — Use-Case Realization");
 
   const dim = fitImage(9.0, 5.5, 920, 660);
-  s.addImage({ path: path.join(HW4, "3.2.1-uc01-ssd.png"),
+  s.addImage({ path: path.join(HW5, "3.2.1-uc01-ssd.png"),
     x: 0.55, y: 1.15, w: dim.w, h: dim.h });
 
   const RX = 10.0;
@@ -800,8 +758,8 @@ function fitImage(maxW, maxH, origW, origH) {
   const s = pres.addSlide();
   chrome(s, "UC-01 · Sequence Diagram with GRASP", "04 · Design — Use-Case Realization");
 
-  const dim = fitImage(12.5, 3.85, 1700, 1180);
-  s.addImage({ path: path.join(HW4, "3.2.1-uc01-sd.png"),
+  const dim = fitImage(12.5, 3.85, 3122, 1746);
+  s.addImage({ path: path.join(HW5, "3.2.1-uc01-sd.png"),
     x: (SW - dim.w) / 2, y: 1.0, w: dim.w, h: dim.h });
 
   const tableY = 1.0 + dim.h + 0.15;
@@ -812,7 +770,7 @@ function fitImage(maxW, maxH, origW, origH) {
       { text: "責任",         options: { bold: true, color: WHITE, fill: { color: NAVY }, align: "center" } },
     ],
     ["Controller",          ":CheckCommand",             "接收 system event 後委派給 Service（不含業務邏輯）"],
-    ["Information Expert",  ":ComplianceCheckService",   "主導檢查流程，整合 Profile + Files + Constraints"],
+    ["Information Expert",  ":ComplianceCheckService",   "主導檢查流程，整合 Profile + Files + ComplianceRules"],
     ["Polymorphism",        "ComplianceRule",    "validate(files) 由 Naming/Dependency/Supertype/PackageRule 各自實作"],
     ["Indirection / PV",    ":Adapter / :Store",    "JavaParser、YAML 等技術隔離於 ports（CodeParser、ProfileLoader …）"],
     ["Pure Fabrication",    ":Reporter",                 "Console / JSON 格式化從 domain 解耦（同時達成 Low Coupling）"],
@@ -832,15 +790,15 @@ function fitImage(maxW, maxH, origW, origH) {
   chrome(s, "UC-04 · SSD + Sequence Diagram with GRASP", "04 · Design — Use-Case Realization");
 
   const ssdDim = fitImage(5.4, 4.0, 920, 520);
-  s.addImage({ path: path.join(HW4, "3.2.3-uc04-ssd.png"),
+  s.addImage({ path: path.join(HW5, "3.2.3-uc04-ssd.png"),
     x: 0.55, y: 1.1, w: ssdDim.w, h: ssdDim.h });
   s.addText("System Sequence Diagram", {
     x: 0.55, y: 1.1 + ssdDim.h + 0.05, w: ssdDim.w, h: 0.3,
     fontFace: F_BODY, fontSize: 10, italic: true, color: MUTED, align: "center", margin: 0
   });
 
-  const sdDim = fitImage(7.0, 4.4, 1320, 1100);
-  s.addImage({ path: path.join(HW4, "3.2.3-uc04-sd.png"),
+  const sdDim = fitImage(7.0, 4.4, 2122, 1186);
+  s.addImage({ path: path.join(HW5, "3.2.3-uc04-sd.png"),
     x: 6.2, y: 1.1, w: sdDim.w, h: sdDim.h });
   s.addText("Sequence Diagram", {
     x: 6.2, y: 1.1 + sdDim.h + 0.05, w: sdDim.w, h: 0.3,
@@ -920,14 +878,15 @@ function fitImage(maxW, maxH, origW, origH) {
   const s = pres.addSlide();
   chrome(s, "Implementation Class Diagram (HW5)", "05 · Implementation");
 
-  const dim = fitImage(9.0, 5.6, 600, 660);
+  // 新版 ICD 限縮 Domain Layer，與 HW#4 §3.3 DCD 比較對象一致；landscape 2525×1857
+  const dim = fitImage(8.6, 5.6, 2525, 1857);
   s.addImage({ path: path.join(HW5, "5.1-implementation-class-diagram.png"),
     x: 0.55, y: 1.1, w: dim.w, h: dim.h });
 
-  const RX = 9.8;
-  s.addText("Δ Implementation vs DCD", {
-    x: RX, y: 1.1, w: 3.4, h: 0.32,
-    fontFace: F_BODY, fontSize: 14, bold: true, color: NAVY, margin: 0
+  const RX = 9.4;
+  s.addText("Δ Implementation vs DCD（Domain Layer）", {
+    x: RX, y: 1.1, w: 3.7, h: 0.32,
+    fontFace: F_BODY, fontSize: 13, bold: true, color: NAVY, margin: 0
   });
   const data = [
     [
@@ -938,26 +897,25 @@ function fitImage(maxW, maxH, origW, origH) {
     ],
     [{ text: "Domain · class", options: {} }, { text: "0", options: { align: "center" } },  { text: "0", options: { align: "center" } },  { text: "0", options: { align: "center" } }],
     [{ text: "Domain · method", options: {} },{ text: "23", options: { align: "center", bold: true, color: TEAL } }, { text: "1", options: { align: "center", color: CORAL } },  { text: "0", options: { align: "center" } }],
-    [{ text: "Non-domain · class（HW5 新增）", options: {} },{ text: "14", options: { align: "center", bold: true, color: TEAL } }, { text: "0", options: { align: "center" } }, { text: "0", options: { align: "center" } }],
-    [{ text: "Non-domain · method", options: {} },{ text: "29", options: { align: "center", bold: true, color: TEAL } },  { text: "0", options: { align: "center" } },  { text: "0", options: { align: "center" } }],
   ];
   s.addTable(data, {
-    x: RX, y: 1.5, w: 3.4, colW: [1.8, 0.55, 0.5, 0.55],
+    x: RX, y: 1.5, w: 3.7, colW: [2.0, 0.6, 0.5, 0.6],
     fontFace: F_BODY, fontSize: 10, color: INK,
     border: { pt: 0.5, color: RULE },
   });
 
   s.addText(
     [
-      { text: "Domain class set 完全不變 — 設計通過實作驗證。", options: { bullet: true, breakLine: true } },
-      { text: "新增多為 reporter 所需之 accessor / value getter。", options: { bullet: true, breakLine: true } },
+      { text: "12 個 Domain 類別維持不變 — 設計通過實作驗證。", options: { bullet: true, breakLine: true } },
+      { text: "新增方法多為 reporter 所需之 accessor / value getter。", options: { bullet: true, breakLine: true } },
       { text: "唯一移除：", options: { bullet: true } },
       { text: "ViolationReport.getExitCode()", options: { italic: true } },
-      { text: " 改由 ComplianceCheck 持有（單一資料來源原則）。", options: { breakLine: true } },
-      { text: "0 個 method 簽章被修改。", options: { bullet: true } },
+      { text: " 改由 ComplianceCheck 持有（單一資料來源）。", options: { breakLine: true } },
+      { text: "0 個 method 簽章被修改。", options: { bullet: true, breakLine: true } },
+      { text: "圖聚焦 Domain Layer，便於與 HW#4 §3.3 DCD 逐類比對；Application / Infrastructure / CLI 之 port-adapter 配置詳見 §3.1 Logical Architecture。", options: { bullet: true, italic: true, color: MUTED } },
     ],
     {
-      x: RX, y: 3.7, w: 3.4, h: 3.0,
+      x: RX, y: 3.0, w: 3.7, h: 3.7,
       fontFace: F_BODY, fontSize: 10, color: INK, paraSpaceAfter: 4, margin: 0
     }
   );
@@ -1074,36 +1032,14 @@ function fitImage(maxW, maxH, origW, origH) {
     });
   });
 
-  s.addShape(pres.shapes.RECTANGLE, { x: 0.55, y: 2.85, w: 12.2, h: 3.6, fill: { color: NAVY_DARK }, line: { color: NAVY_DARK } });
-  s.addShape(pres.shapes.RECTANGLE, { x: 0.55, y: 2.85, w: 12.2, h: 0.34, fill: { color: NAVY }, line: { color: NAVY } });
-  s.addText("mvn — JUnit 5", { x: 5.0, y: 2.85, w: 3.3, h: 0.34, fontFace: F_BODY, fontSize: 10, color: ICE, align: "center", valign: "middle", margin: 0 });
-
-  s.addText(
-    [
-      { text: "$ mvn -B clean test",                                                   options: { color: GOLD, breakLine: true } },
-      { text: "[INFO] -------------------------------------------------------",        options: { color: ICE, breakLine: true } },
-      { text: "[INFO]  T E S T S",                                                      options: { color: ICE, breakLine: true } },
-      { text: "[INFO] -------------------------------------------------------",        options: { color: ICE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.application.ComplianceCheckServiceTest", options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.application.SuppressionServiceTest",     options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.domain.rule.NamingRuleTest",       options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.domain.rule.DependencyRuleTest",   options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.domain.rule.SupertypeRuleTest",    options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.domain.rule.PackageRuleTest",      options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.infrastructure.profile.YamlProfileLoaderTest", options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Running com.archchecker.infrastructure.suppression.YamlSuppressionStoreTest", options: { color: WHITE, breakLine: true } },
-      { text: "[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0",               options: { color: "70C77B", bold: true, breakLine: true } },
-      { text: "[INFO] BUILD SUCCESS",                                                    options: { color: "70C77B", bold: true } },
-    ],
-    {
-      x: 0.85, y: 3.25, w: 11.6, h: 3.1,
-      fontFace: F_MONO, fontSize: 11, color: WHITE, margin: 0
-    }
-  );
+  // mvn test 真實執行截圖（test-result.png：1682×754）
+  const testDim = fitImage(12.2, 3.5, 1682, 754);
+  s.addImage({ path: path.join(HW5, "test-result.png"),
+    x: (SW - testDim.w) / 2, y: 2.85, w: testDim.w, h: testDim.h });
 
   s.addText("全部測試通過。Domain 規則皆獨立於 Application / Infrastructure 進行驗證。",
-    { x: 0.55, y: 6.55, w: 12.2, h: 0.32,
-      fontFace: F_BODY, fontSize: 10, italic: true, color: MUTED, margin: 0 });
+    { x: 0.55, y: 2.85 + testDim.h + 0.1, w: 12.2, h: 0.32,
+      fontFace: F_BODY, fontSize: 10, italic: true, color: MUTED, align: "center", margin: 0 });
 }
 
 // =============================================================
@@ -1114,7 +1050,7 @@ function fitImage(maxW, maxH, origW, origH) {
   chrome(s, "重要測試碼 · NamingRuleTest", "06 · Testing");
 
   s.addShape(pres.shapes.RECTANGLE, { x: 0.55, y: 1.1, w: 12.2, h: 5.3, fill: { color: NAVY_DARK }, line: { color: NAVY_DARK } });
-  s.addText("src/test/java/com/archchecker/domain/constraint/NamingRuleTest.java", {
+  s.addText("src/test/java/com/archchecker/domain/rule/NamingRuleTest.java", {
     x: 0.65, y: 1.13, w: 12.0, h: 0.3,
     fontFace: F_MONO, fontSize: 10, color: ICE, margin: 0
   });
