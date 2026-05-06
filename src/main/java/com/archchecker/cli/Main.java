@@ -11,7 +11,12 @@ import picocli.CommandLine.Command;
 public class Main {
 
     public static void main(String[] args) {
-        int exitCode = new CommandLine(new Main()).execute(args);
+        int exitCode = new CommandLine(new Main())
+                .setExecutionExceptionHandler((ex, cmd, parseResult) -> {
+                    cmd.getErr().println("Error: " + ex.getMessage());
+                    return 2;
+                })
+                .execute(args);
         System.exit(exitCode);
     }
 }
