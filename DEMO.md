@@ -130,12 +130,17 @@ exit=1
 背後是投影片 13 的 **Pure Fabrication / Low Coupling** — Reporter 多型，
 Console / JSON 切換對 Service 透明。
 
-### 指令
+### 指令（同時印到 console 與寫入根目錄 `violation-report.json`）
 
 ```bash
 java -cp 'target/arch-checker.jar:target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml --json
+    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml --json \
+    | tee violation-report.json
 ```
+
+> 若不需要 console 輸出，只想產檔，可改用 `> violation-report.json`。
+> `tee` 會同時把 stdout 印到畫面並寫進檔案，demo 時可即時看到內容；
+> 之後可用 `cat violation-report.json | python3 -m json.tool` 開排版過的版本給聽眾看。
 
 ### 預期輸出（單行 JSON，下方手動排版以利閱讀）
 
@@ -153,12 +158,18 @@ java -cp 'target/arch-checker.jar:target/lib/*' \
 }
 ```
 
-> 想看排版過的 JSON，可 pipe 給 `python3 -m json.tool`：
+> 想看排版過的 JSON，可直接讀剛才產出的檔案：
+>
+> ```bash
+> python3 -m json.tool violation-report.json
+> ```
+>
+> 或一次完成「執行 → 寫檔 → 排版」：
 >
 > ```bash
 > java -cp 'target/arch-checker.jar:target/lib/*' \
 >     com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml --json \
->     | python3 -m json.tool
+>     | tee violation-report.json | python3 -m json.tool
 > ```
 
 ### 講解重點
@@ -433,11 +444,12 @@ java -cp "$CP" com.archchecker.cli.Main check demo/sample-project demo/demo-prof
 echo "STEP 1 exit=$?"
 echo
 
-# === 2. Ext 9a · JSON 輸出 ===
+# === 2. Ext 9a · JSON 輸出（同時寫入根目錄 violation-report.json）===
 echo "=== STEP 2 · Ext 9a --json ==="
-java -cp "$CP" com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml --json
+java -cp "$CP" com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml --json \
+    | tee violation-report.json
 echo
-echo "STEP 2 done"
+echo "STEP 2 done (file: violation-report.json)"
 echo
 
 # === 3. UC-04 suppress R-NAME-01 ===
