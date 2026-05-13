@@ -138,6 +138,7 @@ java -cp 'target/arch-checker.jar:target/lib/*' \
     | tee violation-report.json
 ```
 
+- intellij 的 json 排版 -> Cmd + Option + L
 > 若不需要 console 輸出，只想產檔，可改用 `> violation-report.json`。
 > `tee` 會同時把 stdout 印到畫面並寫進檔案，demo 時可即時看到內容；
 > 之後可用 `cat violation-report.json | python3 -m json.tool` 開排版過的版本給聽眾看。
@@ -267,9 +268,8 @@ exit=1
 > 因為團隊已經明確判斷哪些違規可接受並留下追蹤紀錄。
 
 ### 指令
-
+#### 把剩下 3 筆違規分別 suppress（理由就是「常見 review 提醒」中的真實原因）
 ```bash
-# 把剩下 3 筆違規分別 suppress（理由就是「常見 review 提醒」中的真實原因）
 java -cp 'target/arch-checker.jar:target/lib/*' com.archchecker.cli.Main suppress \
     demo/demo-profile.yaml R-DEP-01 \
     demo/sample-project/src/main/java/com/example/service/ChargeService.java 2 \
@@ -287,8 +287,8 @@ java -cp 'target/arch-checker.jar:target/lib/*' com.archchecker.cli.Main suppres
     demo/sample-project/src/main/java/com/example/controller/PaymentController.java 0 \
     'repository package planned for v2 once persistence is added' \
     --suppress-file demo/.arch-checker-suppress.yaml
-
-# 重檢 — 應該全數通過
+```
+```bash
 java -cp 'target/arch-checker.jar:target/lib/*' \
     com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml \
     --suppress-file demo/.arch-checker-suppress.yaml
@@ -323,9 +323,8 @@ exit=0
 > 攔截為 `Error: <msg>` + `exit 2`。
 
 ### 指令 + 預期輸出
-
+#### Ext 2a — 專案目錄不存在
 ```bash
-# Ext 2a — 專案目錄不存在
 java -cp 'target/arch-checker.jar:target/lib/*' \
     com.archchecker.cli.Main check no-such-dir demo/demo-profile.yaml
 echo "exit=$?"
@@ -335,9 +334,8 @@ echo "exit=$?"
 Error: Project path is not a directory: no-such-dir
 exit=2
 ```
-
+#### Ext 3a — Profile 檔案不存在
 ```bash
-# Ext 3a — Profile 檔案不存在
 java -cp 'target/arch-checker.jar:target/lib/*' \
     com.archchecker.cli.Main check demo/sample-project no-such-profile.yaml
 echo "exit=$?"
@@ -347,9 +345,8 @@ echo "exit=$?"
 Error: Profile not found: no-such-profile.yaml
 exit=2
 ```
-
+#### Ext 3c — Profile 內含未知 rule type
 ```bash
-# Ext 3c — Profile 內含未知 rule type
 cat > /tmp/bad-profile.yaml <<'EOF'
 name: bad
 rules:
