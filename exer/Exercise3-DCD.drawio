@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="DCD" id="dcd">
+    <mxGraphModel dx="1800" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Design Class Diagram (DCD) - 台北等公車 (Plan Route + Add Favorite)" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="6" width="1400" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- Row 1: Controllers + User + BusTable, y=40..232 -->
+        <mxCell id="prc_h" value="&lt;b&gt;PlanRouteController&lt;/b&gt;&#10;&lt;i&gt;«Controller»&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="280" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="prc_a" value="- busTable: BusTable&#10;- user: User&#10;- currentTravelPlans: TravelPlans" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6c8ebf;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="84" width="280" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="prc_m" value="+ searchRoutes(start, end, time, pref): List&amp;lt;TravelPlan&amp;gt;&#10;+ selectRoute(routeIdx): TravelPlan" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6c8ebf;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="140" width="280" height="44" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fc_h" value="&lt;b&gt;FavoriteController&lt;/b&gt;&#10;&lt;i&gt;«Controller»&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="400" y="40" width="280" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="fc_a" value="- busTable: BusTable&#10;- user: User&#10;- currentBusLine: BusLine" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6c8ebf;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="400" y="84" width="280" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="fc_m" value="+ searchBusLine(name): BusLine&#10;+ addToFavorite(stopIdx, groupName): SuccessResult" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6c8ebf;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="400" y="140" width="280" height="44" as="geometry" />
+        </mxCell>
+
+        <mxCell id="u_h" value="&lt;b&gt;User&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="820" y="40" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="u_a" value="- currentCoordinate: Coordinate" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9673a6;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="820" y="70" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="u_m" value="+ getCurrentCoordinate(): Coordinate&#10;+ getFavoriteGroups(): FavoriteGroups" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9673a6;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="820" y="100" width="240" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bt_h" value="&lt;b&gt;BusTable&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="40" width="300" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bt_a" value="- busLines: List&amp;lt;BusLine&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="70" width="300" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="bt_m" value="+ findRoutes(start, end, time, pref): List&amp;lt;TravelPlan&amp;gt;&#10;+ findByName(name): BusLine&#10;+ getBusLines(): List&amp;lt;BusLine&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="98" width="300" height="56" as="geometry" />
+        </mxCell>
+
+        <!-- Row 2: TravelPlans, FavoriteGroups, BusLine, y=300..446 -->
+        <mxCell id="tps_h" value="&lt;b&gt;TravelPlans&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="300" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tps_a" value="- date: Date&#10;- travelPlanes: List&amp;lt;TravelPlan&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="330" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="tps_m" value="+ create(routes, time): TravelPlans  «Creator»&#10;+ getTravelPlan(idx): TravelPlan" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="370" width="240" height="44" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fgs_h" value="&lt;b&gt;FavoriteGroups&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="820" y="300" width="270" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fgs_a" value="- favoritesList: List&amp;lt;FavoriteGroup&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="820" y="330" width="270" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="fgs_m" value="+ createGroup(name): FavoriteGroup  «Creator»&#10;+ findGroup(name): FavoriteGroup" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="820" y="358" width="270" height="44" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bl_h" value="&lt;b&gt;BusLine&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="300" width="270" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bl_a" value="- name: String&#10;- busLineDirections: List&amp;lt;BusLineDirection&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="330" width="270" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="bl_m" value="+ hasStop(stop): boolean&#10;+ getStop(idx): Stop&#10;+ getDirections(): List&amp;lt;BusLineDirection&amp;gt;&#10;+ buildBusRoute(start, end): BusRoute" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="370" width="270" height="76" as="geometry" />
+        </mxCell>
+
+        <!-- Row 3: TravelPlan, FavoriteGroup, BusLineDirection, y=500..622 -->
+        <mxCell id="tp_h" value="&lt;b&gt;TravelPlan&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="500" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tp_a" value="- departureTime: Time&#10;- arrivalTime: Time&#10;- routes: List&amp;lt;Route&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="530" width="240" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="tp_m" value="+ getRoutes(): List&amp;lt;Route&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="582" width="240" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fg_h" value="&lt;b&gt;FavoriteGroup&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="820" y="500" width="270" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fg_a" value="- name: String&#10;- favoriteList: List&amp;lt;Favorite&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="820" y="530" width="270" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="fg_m" value="+ addFavorite(bl, s): Favorite  «Creator»" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="820" y="570" width="270" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bld_h" value="&lt;b&gt;BusLineDirection&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="500" width="270" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bld_a" value="- name: String&#10;- stops: List&amp;lt;Stop&amp;gt;&#10;- buses: List&amp;lt;Bus&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="530" width="270" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="bld_m" value="+ getStops(): List&amp;lt;Stop&amp;gt;&#10;+ getBuses(): List&amp;lt;Bus&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="582" width="270" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Row 4: Route (abstract), Favorite, Bus, Stop, y=680..792 -->
+        <mxCell id="r_h" value="&lt;b&gt;&lt;i&gt;Route&lt;/i&gt;&lt;/b&gt;&#10;&lt;i&gt;{abstract}&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="680" width="240" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="r_a" value="# departureTime: Time&#10;# arrivalTime: Time" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="724" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="r_m" value="+ getStepInfo(): StepInfo  {abstract}" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="80" y="764" width="240" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="f_h" value="&lt;b&gt;Favorite&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="820" y="680" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="f_a" value="- busLine: BusLine&#10;- stop: Stop" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="820" y="710" width="240" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="b_h" value="&lt;b&gt;Bus&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="680" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b_a" value="- plate: String&#10;- location: Coordinate" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="710" width="240" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s_h" value="&lt;b&gt;Stop&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1450" y="680" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s_a" value="- name: String&#10;- coordinate: Coordinate" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="1450" y="710" width="240" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Row 5: WalkRoute, BusRoute, y=850..960 -->
+        <mxCell id="wr_h" value="&lt;b&gt;WalkRoute&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="40" y="850" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wr_a" value="- startCoordinate: Coordinate&#10;- endLocation: Coordinate" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="40" y="880" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wr_m" value="+ getStepInfo(): StepInfo" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="40" y="920" width="240" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="br_h" value="&lt;b&gt;BusRoute&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="850" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="br_a" value="- cost: int&#10;- departureStop: Stop&#10;- arrivalStop: Stop" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="320" y="880" width="240" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="br_m" value="+ getStepInfo(): StepInfo" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="320" y="932" width="240" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== RELATIONSHIPS ===================== -->
+
+        <!-- PRC -> BusTable (dashed dep), route over the top -->
+        <mxCell id="rel_prc_bt" value="" style="endArrow=open;endFill=0;html=1;dashed=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="prc_h" target="bt_h">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="20" />
+              <mxPoint x="1250" y="20" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- PRC -> TPs (dashed dep), vertical -->
+        <mxCell id="rel_prc_tps" value="" style="endArrow=open;endFill=0;html=1;dashed=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="prc_m" target="tps_h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- FC -> BusTable (dashed dep), route below User -->
+        <mxCell id="rel_fc_bt" value="" style="endArrow=open;endFill=0;html=1;dashed=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="fc_m" target="bt_m">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="260" />
+              <mxPoint x="1250" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- User to FavoriteGroups (composition, own 1) -->
+        <mxCell id="rel_user_fgs" value="own&#10;1" style="endArrow=none;html=1;startArrow=diamondThin;startFill=1;startSize=14;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="u_m" target="fgs_h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- BusTable to BusLine (composition, include 1..*) -->
+        <mxCell id="rel_bt_bl" value="include&#10;1..*" style="endArrow=none;html=1;startArrow=diamondThin;startFill=1;startSize=14;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bt_m" target="bl_h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- TravelPlans to TravelPlan (composition) -->
+        <mxCell id="rel_tps_tp" value="include&#10;1..*" style="endArrow=none;html=1;startArrow=diamondThin;startFill=1;startSize=14;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="tps_m" target="tp_h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- TravelPlan to Route (composition) -->
+        <mxCell id="rel_tp_r" value="include&#10;1..*" style="endArrow=none;html=1;startArrow=diamondThin;startFill=1;startSize=14;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="tp_m" target="r_h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- WalkRoute -> Route (inheritance) -->
+        <mxCell id="rel_wr_r" value="" style="endArrow=block;endFill=0;endSize=16;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="wr_h" target="r_m">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- BusRoute -> Route (inheritance) -->
+        <mxCell id="rel_br_r" value="" style="endArrow=block;endFill=0;endSize=16;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="br_h" target="r_m">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- BusLine to BusLineDirection (composition) -->
+        <mxCell id="rel_bl_bld" value="include&#10;1..*" style="endArrow=none;html=1;startArrow=diamondThin;startFill=1;startSize=14;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bl_m" target="bld_h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- BusLineDirection to Bus (composition, vertical) -->
+        <mxCell id="rel_bld_b" value="include&#10;0..*" style="endArrow=none;html=1;startArrow=diamondThin;startFill=1;startSize=14;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bld_m" target="b_h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- BusLineDirection to Stop (composition), bend right then down -->
+        <mxCell id="rel_bld_s" value="include&#10;2..*" style="endArrow=none;html=1;startArrow=diamondThin;startFill=1;startSize=14;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bld_m" target="s_h">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1430" y="650" />
+              <mxPoint x="1570" y="650" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- FavoriteGroups to FavoriteGroup (composition) -->
+        <mxCell id="rel_fgs_fg" value="include&#10;0..*" style="endArrow=none;html=1;startArrow=diamondThin;startFill=1;startSize=14;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="fgs_m" target="fg_h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- FavoriteGroup to Favorite (composition) -->
+        <mxCell id="rel_fg_f" value="include&#10;0..*" style="endArrow=none;html=1;startArrow=diamondThin;startFill=1;startSize=14;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="fg_m" target="f_h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Favorite -> BusLine (association), route via gap x=1115 -->
+        <mxCell id="rel_f_bl" value="1" style="endArrow=open;endFill=0;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="f_a" target="bl_a">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1115" y="730" />
+              <mxPoint x="1115" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Favorite -> Stop (association), route via bottom y=820 -->
+        <mxCell id="rel_f_s" value="1" style="endArrow=open;endFill=0;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="f_a" target="s_a">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="820" />
+              <mxPoint x="1570" y="820" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- BusRoute -> BusLine (association, index 1), route via x=600 going up -->
+        <mxCell id="rel_br_bl" value="index&#10;1" style="endArrow=open;endFill=0;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="br_a" target="bl_a">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="905" />
+              <mxPoint x="620" y="270" />
+              <mxPoint x="1090" y="270" />
+              <mxPoint x="1090" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- BusRoute -> Stop (departureStop / arrivalStop, 2), route via y=835 -->
+        <mxCell id="rel_br_s" value="departureStop / arrivalStop&#10;2" style="endArrow=open;endFill=0;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="br_h" target="s_a">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="835" />
+              <mxPoint x="1670" y="835" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Legend (placed in empty area: bottom-left under WR/BR row would conflict, use right of BR) -->
+        <mxCell id="legend_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="700" y="870" width="650" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" value="&lt;b&gt;Legend / GRASP Notes&lt;/b&gt;" style="text;html=1;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="700" y="876" width="650" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_text" value="&lt;b&gt;Colors:&lt;/b&gt;  blue = Controller   |   green = Domain class   |   purple = Aggregate root&#10;&#10;&lt;b&gt;Lines:&lt;/b&gt;&#10;  filled diamond  =  composition (whole/part, owns)&#10;  open arrow      =  navigable association&#10;  dashed arrow    =  dependency / temporary use&#10;  hollow triangle =  inheritance&#10;&#10;&lt;b&gt;GRASP:&lt;/b&gt;  Controller = PlanRouteController, FavoriteController.&#10;  Information Expert = BusTable.findRoutes(), BusLine.hasStop()/getStop(), BusLineDirection.getStops().&#10;  Creator = TravelPlans -&gt; TravelPlan, FavoriteGroups -&gt; FavoriteGroup -&gt; Favorite.&#10;  Polymorphism = Route.getStepInfo() in WalkRoute / BusRoute.&#10;  Low Coupling = controllers depend only on root aggregates (BusTable, User)." style="text;html=1;align=left;verticalAlign=top;fontSize=11;spacingLeft=10;spacingTop=4;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="700" y="896" width="650" height="170" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

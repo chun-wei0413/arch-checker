@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="SD-addToFavorite" id="sd_add_to_favorite">
+    <mxGraphModel dx="1300" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="SD - addToFavorite(stopIdx, groupName)" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="1000" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="GRASP: Controller, Information Expert, Creator (chain)" style="text;html=1;align=center;fontSize=12;fontStyle=2;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="200" y="52" width="1000" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="user" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="40" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ctrl" value=":FavoriteController" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=4;fontSize=13;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="170" y="95" width="170" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="bl" value="bl:BusLine&#10;(= currentBusLine)" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=4;fontSize=13;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="390" y="85" width="170" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="u" value="u:User" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=4;fontSize=13;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="620" y="95" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="fgs" value="fgs:FavoriteGroups" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=4;fontSize=13;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="800" y="95" width="170" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="fg" value="fg:FavoriteGroup" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=4;fontSize=13;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="430" width="170" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="f" value="f:Favorite" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=4;fontSize=13;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="680" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ll_user" style="endArrow=none;html=1;dashed=1;dashPattern=8 8;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="80" y="160" as="sourcePoint" />
+            <mxPoint x="80" y="900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_ctrl" style="endArrow=none;html=1;dashed=1;dashPattern=8 8;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="255" y="135" as="sourcePoint" />
+            <mxPoint x="255" y="900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_bl" style="endArrow=none;html=1;dashed=1;dashPattern=8 8;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="475" y="141" as="sourcePoint" />
+            <mxPoint x="475" y="900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_u" style="endArrow=none;html=1;dashed=1;dashPattern=8 8;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="135" as="sourcePoint" />
+            <mxPoint x="680" y="900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_fgs" style="endArrow=none;html=1;dashed=1;dashPattern=8 8;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="885" y="135" as="sourcePoint" />
+            <mxPoint x="885" y="900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_fg" style="endArrow=none;html=1;dashed=1;dashPattern=8 8;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1115" y="470" as="sourcePoint" />
+            <mxPoint x="1115" y="900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_f" style="endArrow=none;html=1;dashed=1;dashPattern=8 8;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1320" y="720" as="sourcePoint" />
+            <mxPoint x="1320" y="900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1" value="1: addToFavorite(stopIdx, groupName)" style="endArrow=block;html=1;verticalAlign=bottom;align=center;fontSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="80" y="210" as="sourcePoint" />
+            <mxPoint x="255" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" value="2: getStop(stopIdx)" style="endArrow=block;html=1;verticalAlign=bottom;align=center;fontSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="255" y="270" as="sourcePoint" />
+            <mxPoint x="475" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r1" value="s : Stop" style="endArrow=open;endFill=0;endSize=10;html=1;dashed=1;verticalAlign=bottom;align=center;fontSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="475" y="330" as="sourcePoint" />
+            <mxPoint x="255" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" value="3: getFavoriteGroups()" style="endArrow=block;html=1;verticalAlign=bottom;align=center;fontSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="255" y="390" as="sourcePoint" />
+            <mxPoint x="680" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r2" value="fgs : FavoriteGroups" style="endArrow=open;endFill=0;endSize=10;html=1;dashed=1;verticalAlign=bottom;align=center;fontSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="440" as="sourcePoint" />
+            <mxPoint x="255" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" value="4: createGroup(groupName)" style="endArrow=block;html=1;verticalAlign=bottom;align=center;fontSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="255" y="500" as="sourcePoint" />
+            <mxPoint x="885" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" value="4.1: «create»(groupName)" style="endArrow=block;html=1;verticalAlign=bottom;align=center;fontSize=12;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="885" y="560" as="sourcePoint" />
+            <mxPoint x="1115" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r3" value="fg : FavoriteGroup" style="endArrow=open;endFill=0;endSize=10;html=1;dashed=1;verticalAlign=bottom;align=center;fontSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="885" y="620" as="sourcePoint" />
+            <mxPoint x="255" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" value="5: addFavorite(bl, s)" style="endArrow=block;html=1;verticalAlign=bottom;align=center;fontSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="255" y="700" as="sourcePoint" />
+            <mxPoint x="1115" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" value="5.1: «create»(bl, s)" style="endArrow=block;html=1;verticalAlign=bottom;align=center;fontSize=12;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1115" y="760" as="sourcePoint" />
+            <mxPoint x="1320" y="760" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r4" value="ok" style="endArrow=open;endFill=0;endSize=10;html=1;dashed=1;verticalAlign=bottom;align=center;fontSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1115" y="820" as="sourcePoint" />
+            <mxPoint x="255" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r5" value="successMessage" style="endArrow=open;endFill=0;endSize=10;html=1;dashed=1;verticalAlign=bottom;align=center;fontSize=12;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="255" y="880" as="sourcePoint" />
+            <mxPoint x="80" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="desc_title" value="說明 (Description)" style="text;html=1;align=left;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="940" width="1280" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="grasp_note" value="FavoriteController 接到 system event &lt;b&gt;addToFavorite(stopIdx, groupName)&lt;/b&gt; 後的執行流程：&#10;&#10;1.  Controller 呼叫 currentBusLine.getStop(stopIdx)，把 UI 傳來的索引換成具體的 Stop 物件&#10;     (Information Expert - BusLine 擁有自己的 stops)。currentBusLine 是前一個 system event (searchBusLine) 暫存的結果。&#10;2.  Controller 向 User 取得 FavoriteGroups (Information Expert - User 擁有 favoriteGroups)。&#10;3.  Controller 呼叫 fgs.createGroup(groupName)，由 FavoriteGroups 建立新的 FavoriteGroup&#10;     (&lt;b&gt;Creator&lt;/b&gt; - FavoriteGroups 內含 FavoriteGroup 集合，由它負責 new)，並把 fg 加入內部清單。&#10;4.  Controller 對新建的 fg 呼叫 addFavorite(bl, s)，由 FavoriteGroup 建立 Favorite 並加入內部清單&#10;     (&lt;b&gt;Creator&lt;/b&gt; - FavoriteGroup 內含 Favorite 集合)。&#10;5.  Controller 回傳 successMessage，由 UI 跳出「加入成功」通知。&#10;&#10;&lt;b&gt;GRASP 對照：&lt;/b&gt;&#10;  •  Controller         → FavoriteController 接收 addToFavorite 的 system event&#10;  •  Information Expert → BusLine.getStop()；User.getFavoriteGroups()&#10;  •  Creator (鍊)       → FavoriteGroups → FavoriteGroup → Favorite，每一層都由「擁有者」負責建立成員&#10;  •  Low Coupling       → Controller 不直接 new FavoriteGroup 或 Favorite，避免穿透多層領域物件&#10;&#10;&lt;b&gt;備註：&lt;/b&gt;若 groupName 對應到既有群組，第 3 步可改為 fgs.findGroup(groupName) 後直接 addFavorite，&#10;不需要新建 - 此處呈現「新建群組」的 happy path 以同時展示 Creator 鍊。" style="text;html=1;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;spacingLeft=10;spacingTop=8;spacingRight=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="970" width="1280" height="320" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
