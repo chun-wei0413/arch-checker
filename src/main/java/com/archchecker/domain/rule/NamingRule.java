@@ -34,7 +34,9 @@ public class NamingRule extends ComplianceRule {
                     int line = lineOf(content, m.start());
                     String msg = "Class '" + name + "' violates naming pattern '"
                             + classNamePattern + "'";
-                    result.add(new Violation(line, msg, file, this));
+                    String suggestion = "Rename '" + name + "' to match pattern '"
+                            + classNamePattern + "'";
+                    result.add(new Violation(line, msg, file, this, suggestion));
                 }
             }
         }

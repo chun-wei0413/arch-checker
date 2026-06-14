@@ -38,7 +38,10 @@ public class SupertypeRule extends ComplianceRule {
                     int line = content.substring(0, m.start()).split("\n", -1).length;
                     String msg = "Class '" + name + "' must extend/implement '"
                             + requiredSupertype + "'";
-                    result.add(new Violation(line, msg, file, this));
+                    String suggestion = "Add 'extends " + requiredSupertype
+                            + "' or 'implements " + requiredSupertype
+                            + "' to class declaration";
+                    result.add(new Violation(line, msg, file, this, suggestion));
                 }
             }
         }

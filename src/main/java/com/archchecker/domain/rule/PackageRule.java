@@ -33,7 +33,9 @@ public class PackageRule extends ComplianceRule {
         if (matched.isEmpty() && !files.isEmpty()) {
             String msg = "Required package pattern '" + packagePattern
                     + "' not present in the project";
-            result.add(new Violation(0, msg, files.get(0), this));
+            String suggestion = "Create at least one class in a package matching '"
+                    + packagePattern + "'";
+            result.add(new Violation(0, msg, files.get(0), this, suggestion));
         }
         return result;
     }

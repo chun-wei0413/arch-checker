@@ -45,7 +45,11 @@ public class DependencyRule extends ComplianceRule {
                     String msg = "Package '" + file.getPackageName()
                             + "' " + (isAllowed ? "must depend on" : "must not depend on")
                             + " '" + targetPackage + "' (import: " + imported + ")";
-                    result.add(new Violation(line, msg, file, this));
+                    String suggestion = isAllowed
+                            ? "Add a dependency from '" + file.getPackageName()
+                              + "' to '" + targetPackage + "'"
+                            : "Remove import '" + imported + "'";
+                    result.add(new Violation(line, msg, file, this, suggestion));
                 }
             }
         }
