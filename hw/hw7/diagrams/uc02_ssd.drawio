@@ -1,117 +1,77 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="600" math="0" shadow="0">
-  <root>
-    <mxCell id="0" />
-    <mxCell id="1" parent="0" />
+<mxfile host="app.diagrams.net" modified="2026-06-14T20:00:00.000Z" agent="Claude" version="24.0.0">
+  <diagram id="uc02-ssd" name="UC-02 SSD">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="820" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
 
-    <!-- Title -->
-    <mxCell id="title" value="System Sequence Diagram: UC-02 Define Style Profile" style="text;html=1;align=center;fontStyle=1;fontSize=16;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-      <mxGeometry x="80" y="15" width="650" height="30" as="geometry" />
-    </mxCell>
+        <mxCell id="title" value="System Sequence Diagram — UC-02 Define Style Profile" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="100" y="20" width="900" height="40" as="geometry"/>
+        </mxCell>
 
-    <!-- Actor: Developer -->
-    <mxCell id="dev_head" value="Developer" style="shape=mxgraph.uml.actor;html=1;whiteSpace=wrap;fontSize=13;" vertex="1" parent="1">
-      <mxGeometry x="80" y="60" width="50" height="70" as="geometry" />
-    </mxCell>
-    <mxCell id="dev_line" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
-      <mxGeometry relative="1" as="geometry">
-        <mxPoint x="105" y="130" as="sourcePoint" />
-        <mxPoint x="105" y="560" as="targetPoint" />
-      </mxGeometry>
-    </mxCell>
+        <mxCell id="actor" value="Developer" style="shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;outlineConnect=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="140" y="90" width="40" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="system" value=":System" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=4;" vertex="1" parent="1">
+          <mxGeometry x="620" y="100" width="140" height="40" as="geometry"/>
+        </mxCell>
 
-    <!-- System boundary box -->
-    <mxCell id="sys_box" value="arch-checker" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontStyle=1;fontSize=13;verticalAlign=top;" vertex="1" parent="1">
-      <mxGeometry x="480" y="60" width="200" height="40" as="geometry" />
-    </mxCell>
-    <mxCell id="sys_line" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
-      <mxGeometry relative="1" as="geometry">
-        <mxPoint x="580" y="100" as="sourcePoint" />
-        <mxPoint x="580" y="560" as="targetPoint" />
-      </mxGeometry>
-    </mxCell>
+        <mxCell id="actor_lifeline" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#666666;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="180" as="sourcePoint"/>
+            <mxPoint x="160" y="680" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="system_lifeline" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#666666;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="140" as="sourcePoint"/>
+            <mxPoint x="690" y="680" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
 
-    <!-- ===== System Event 1: initProfile ===== -->
-    <!-- Separator label -->
-    <mxCell id="sep1" value="«system event 1»" style="text;html=1;align=left;fontStyle=2;fontSize=11;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-      <mxGeometry x="80" y="145" width="200" height="20" as="geometry" />
-    </mxCell>
+        <mxCell id="scen_a_lbl" value="Scenario A: arch-checker profile init &lt;outputPath&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="100" y="192" width="520" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="msg1" value="1: initProfile(outputPath)" style="endArrow=block;html=1;rounded=0;fontSize=13;endFill=1;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="228" as="sourcePoint"/>
+            <mxPoint x="690" y="228" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actSystem_a" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="684" y="228" width="12" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="msg1r" value="1.1: [template YAML written to outputPath]" style="endArrow=open;html=1;rounded=0;dashed=1;fontSize=13;endFill=0;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="318" as="sourcePoint"/>
+            <mxPoint x="160" y="318" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
 
-    <!-- initProfile(outputPath) call -->
-    <mxCell id="e1_call" value="initProfile(outputPath)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
-      <mxGeometry relative="1" as="geometry">
-        <mxPoint x="105" y="175" as="sourcePoint" />
-        <mxPoint x="580" y="175" as="targetPoint" />
-        <mxPoint x="0" y="-12" as="offset" />
-      </mxGeometry>
-    </mxCell>
+        <mxCell id="scen_b_lbl" value="Scenario B: arch-checker profile validate &lt;yamlPath&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="100" y="365" width="530" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="msg2" value="2: validateProfile(yamlPath)" style="endArrow=block;html=1;rounded=0;fontSize=13;endFill=1;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="400" as="sourcePoint"/>
+            <mxPoint x="690" y="400" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actSystem_b" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="684" y="400" width="12" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="msg2r" value="2.1: ruleCount (+ rule list printed to console)" style="endArrow=open;html=1;rounded=0;dashed=1;fontSize=13;endFill=0;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="490" as="sourcePoint"/>
+            <mxPoint x="160" y="490" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
 
-    <!-- Activation box on system -->
-    <mxCell id="act1" value="" style="fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
-      <mxGeometry x="575" y="175" width="10" height="50" as="geometry" />
-    </mxCell>
+        <mxCell id="note" value="事件說明：UC-02 包含兩個獨立的系統事件：&#xa;Scenario A  initProfile：Developer 呼叫 profile init，System 產生 YAML 範本至指定路徑，供開發者編輯規則。&#xa;Scenario B  validateProfile：Developer 呼叫 profile validate，System 載入並驗證已編輯的 YAML，回傳規則清單與數量。" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;align=left;verticalAlign=top;size=14;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="100" y="600" width="900" height="80" as="geometry"/>
+        </mxCell>
 
-    <!-- Return: profileTemplateWritten(path) -->
-    <mxCell id="e1_ret" value="Profile template written to: outputPath" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" parent="1">
-      <mxGeometry relative="1" as="geometry">
-        <mxPoint x="575" y="225" as="sourcePoint" />
-        <mxPoint x="105" y="225" as="targetPoint" />
-        <mxPoint x="0" y="-12" as="offset" />
-      </mxGeometry>
-    </mxCell>
-
-    <!-- Gap label: Developer edits YAML -->
-    <mxCell id="gap1" value="Developer edits the generated YAML template" style="text;html=1;align=center;fontStyle=2;fontSize=10;strokeColor=#999999;fillColor=#f0f0f0;" vertex="1" parent="1">
-      <mxGeometry x="130" y="245" width="330" height="25" as="geometry" />
-    </mxCell>
-
-    <!-- ===== System Event 2: validateProfile ===== -->
-    <mxCell id="sep2" value="«system event 2»" style="text;html=1;align=left;fontStyle=2;fontSize=11;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-      <mxGeometry x="80" y="285" width="200" height="20" as="geometry" />
-    </mxCell>
-
-    <!-- validateProfile(yamlPath) call -->
-    <mxCell id="e2_call" value="validateProfile(yamlPath)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
-      <mxGeometry relative="1" as="geometry">
-        <mxPoint x="105" y="315" as="sourcePoint" />
-        <mxPoint x="580" y="315" as="targetPoint" />
-        <mxPoint x="0" y="-12" as="offset" />
-      </mxGeometry>
-    </mxCell>
-
-    <!-- Activation box on system -->
-    <mxCell id="act2" value="" style="fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
-      <mxGeometry x="575" y="315" width="10" height="60" as="geometry" />
-    </mxCell>
-
-    <!-- Return: validationResult -->
-    <mxCell id="e2_ret" value="Profile 'name' is valid. Loaded N rule(s):&#xa;  - R-NAME-01 (NamingRule)  - R-DEP-01 (DependencyRule) ..." style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" parent="1">
-      <mxGeometry relative="1" as="geometry">
-        <mxPoint x="575" y="375" as="sourcePoint" />
-        <mxPoint x="105" y="375" as="targetPoint" />
-        <mxPoint x="0" y="-12" as="offset" />
-      </mxGeometry>
-    </mxCell>
-
-    <!-- Alt: Extension 5a - YAML structural error -->
-    <mxCell id="alt_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#888888;dashed=1;" vertex="1" parent="1">
-      <mxGeometry x="115" y="405" width="480" height="70" as="geometry" />
-    </mxCell>
-    <mxCell id="alt_label" value="[alt] YAML error" style="text;html=1;fontStyle=1;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-      <mxGeometry x="120" y="408" width="120" height="18" as="geometry" />
-    </mxCell>
-    <mxCell id="e2_err" value="Validation failed: &lt;error message&gt;  (exit code 2)" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" parent="1">
-      <mxGeometry relative="1" as="geometry">
-        <mxPoint x="575" y="435" as="sourcePoint" />
-        <mxPoint x="115" y="435" as="targetPoint" />
-        <mxPoint x="0" y="-12" as="offset" />
-      </mxGeometry>
-    </mxCell>
-
-    <!-- Note box -->
-    <mxCell id="note" value="Both events are triggered via CLI subcommands:&#xa;  arch-checker profile init &lt;outputPath&gt;&#xa;  arch-checker profile validate &lt;yamlPath&gt;" style="text;html=1;align=left;fontSize=10;strokeColor=#d6b656;fillColor=#fffacd;rounded=1;" vertex="1" parent="1">
-      <mxGeometry x="80" y="500" width="350" height="55" as="geometry" />
-    </mxCell>
-
-  </root>
-</mxGraphModel>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
