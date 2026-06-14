@@ -9,6 +9,8 @@ demo 場景的可重現範例。本資料夾包含一個小型的**付款 (payme
 搭配 README 即可端到端示範 arch-checker 的核心 use cases：
 
 - **UC-01** Check Architecture Compliance（檢查、JSON 輸出）
+- **UC-02** Define Style Profile（`profile init` 產生樣板、`profile validate` 驗證）
+- **UC-03** Check with Interactive Fix Suggestions（`fix` 指令逐筆修正）
 - **UC-04** Suppress a Violation（標記「可接受」並讓下次檢查過濾）
 - **UC-05** Load Style Profile（由 UC-01 include）
 
@@ -22,7 +24,7 @@ demo 場景的可重現範例。本資料夾包含一個小型的**付款 (payme
 - [內容物](#內容物)
 - [Style Profile 解說](#style-profile-解說)
 - [前置作業：build arch-checker](#前置作業build-arch-checker)
-- [Demo 場景對照（pptx Scenario A / B / C）](#demo-場景對照pptx-scenario-a--b--c)
+- [Demo 場景對照（Scenario A–E）](#demo-場景對照scenario-ae)
 - [各條 Rule 的觸發示範](#各條-rule-的觸發示範)
   - [R-NAME-01 · NamingRule（vague suffix）](#r-name-01--namingrulevague-suffix)
   - [R-DEP-01 · DependencyRule（service 依賴 controller）](#r-dep-01--dependencyruleservice-依賴-controller)
@@ -78,36 +80,40 @@ demo/
 
 ## 前置作業：build arch-checker
 
-demo 需要先把 arch-checker 編譯打包到 `target/`。在 repository 根目錄執行：
+在 repository 根目錄執行下列指令（**一次即可**）：
+
+**macOS / Linux**
 
 ```bash
-mvn -B package -DskipTests \
-    dependency:copy-dependencies \
-    -DincludeScope=runtime \
-    -DoutputDirectory=target/lib
+mvn -B package -DskipTests
+chmod +x arch-checker
+export PATH="$PWD:$PATH"
 ```
 
-成功後產生：
+**Windows PowerShell**
 
-- `target/arch-checker.jar`
-- `target/lib/*.jar`（執行期相依：JavaParser、SnakeYAML、picocli）
+```powershell
+mvn -B package -DskipTests
+$env:PATH = "$PWD;$env:PATH"
+```
 
-> Windows PowerShell 使用者：上述指令直接貼入 PowerShell / Git Bash 皆可。
-> 後續所有 `java -cp` 指令的 classpath 在 Windows 用 `;`，POSIX shell 用 `:`。
-> 本 README 範例採 `;`，請依環境調整。
+完成後，**後續所有範例指令都只要打 `arch-checker`**，macOS 與 Windows 完全相同，
+不需要 `./` 或 `.\arch-checker.bat` 前綴。
+
+> `arch-checker`（shell）和 `arch-checker.bat`（bat）是 `java -jar target/arch-checker.jar`
+> 的一行包裝，fat JAR 已內含所有執行期相依，PATH 設完後系統會自動選正確的那支。
 
 ---
 
-## Demo 場景對照（pptx Scenario A / B / C）
+## Demo 場景對照（Scenario A–E）
 
 ### Scenario A · 成功流程（UC-01 happy path）
 
-arch-checker 對自身 26 個 class 進行檢查，預期 0 violations、exit 0。
+arch-checker 對自身 33 個 class 進行檢查，預期 0 violations、exit 0。
 
 ```bash
 # repository 根目錄執行
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check src/main/java arch.yaml
+arch-checker check src/main/java arch.yaml
 echo $?
 ```
 
@@ -115,7 +121,7 @@ echo $?
 
 ```
 --
-Checked 26 file(s); 0 violation(s); 0 suppressed.
+Checked 33 file(s); 0 violation(s); 0 suppressed.
 0
 ```
 
@@ -130,8 +136,7 @@ Checked 26 file(s); 0 violation(s); 0 suppressed.
 service 透過 strategy 切換 Console / JSON。
 
 ```bash
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml --json
+arch-checker check demo/sample-project demo/demo-profile.yaml --json
 ```
 
 預期輸出（單行 JSON，下方手動排版以利閱讀）：
@@ -162,8 +167,7 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 #### 第 1 步：第一次檢查（4 筆違規）
 
 ```bash
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml
+arch-checker check demo/sample-project demo/demo-profile.yaml
 ```
 
 預期輸出：
@@ -182,8 +186,7 @@ Checked 7 file(s); 4 violation(s); 0 suppressed.
 #### 第 2 步：對 R-NAME-01 個案執行 UC-04
 
 ```bash
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main suppress \
+arch-checker suppress \
     demo/demo-profile.yaml \
     R-NAME-01 \
     demo/sample-project/src/main/java/com/example/service/PaymentManager.java \
@@ -211,8 +214,7 @@ Suppressed: R-NAME-01 at demo/sample-project/src/main/java/com/example/service/P
 #### 第 3 步：重新檢查 — R-NAME-01 違規已被過濾
 
 ```bash
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml \
+arch-checker check demo/sample-project demo/demo-profile.yaml \
     --suppress-file demo/.arch-checker-suppress.yaml
 ```
 
@@ -231,6 +233,106 @@ Checked 7 file(s); 3 violation(s); 1 suppressed.
 
 > 連續執行多次 demo 前，建議先 `rm demo/.arch-checker-suppress.yaml` 清掉
 > 示範用的 suppression，否則檢查結果會有殘留過濾紀錄。
+
+---
+
+### Scenario D · UC-02 Define Style Profile（profile init + validate）
+
+UC-02 讓開發者不需手寫 YAML，直接由工具產生包含 4 種規則型別的完整樣板；
+再用 `profile validate` 確認語法無誤並顯示載入了哪些規則。
+
+#### 步驟 1：產生樣板
+
+```bash
+arch-checker profile init demo/my-profile.yaml
+```
+
+預期輸出：
+
+```
+Profile template written to: demo\my-profile.yaml
+```
+
+產生的 `demo/my-profile.yaml` 已包含 `naming`、`dependency`、`supertype`、`package`
+四種規則各一個範例。開發者可直接編輯成專案所需的實際規則。
+
+#### 步驟 2：驗證既有 profile
+
+```bash
+arch-checker profile validate demo/demo-profile.yaml
+```
+
+預期輸出：
+
+```
+Profile 'demo-profile' is valid. Loaded 4 rule(s):
+  - R-NAME-01 (NamingRule)
+  - R-DEP-01 (DependencyRule)
+  - R-SUP-01 (SupertypeRule)
+  - R-PKG-01 (PackageRule)
+```
+
+`exit code = 0`。若 YAML 語法錯誤，會印 `Validation failed: <error>` 並以 exit 2 退出。
+
+> `profile init` 對應 GRASP **Controller**（ProfileInitCommand）+ **Information Expert +
+> Creator**（ProfileTemplateService 擁有樣板知識並負責建立檔案）。
+> `profile validate` 的 GRASP：**Controller**（ProfileValidateCommand）+
+> **Information Expert**（ProfileValidateService）+
+> **Information Expert + Creator**（YamlProfileLoader 解析 YAML 並建立 StyleProfile）+
+> **Low Coupling**（Service 依賴 ProfileLoader 介面，不直接耦合 YamlProfileLoader）。
+
+---
+
+### Scenario E · UC-03 Check with Interactive Fix Suggestions（fix）
+
+`fix` 指令結合「逐條顯示修正建議」與「互動式 suppress」，讓開發者在終端機上逐筆
+決定是否壓制違規：`y` 立即寫入 suppression 檔，`n` 保留（本次不處理），`q` 停止循環。
+
+```bash
+rm -f demo/.arch-checker-suppress.yaml
+
+arch-checker fix \
+    demo/sample-project demo/demo-profile.yaml \
+    --suppress-file demo/.arch-checker-suppress.yaml
+```
+
+互動示範（`>` 代表使用者輸入）：
+
+```
+Violation 1/4:
+  demo/sample-project/.../service/PaymentManager.java:12 [R-NAME-01] Class 'PaymentManager' violates naming pattern '(?!.*(?:Manager|Helper|Util|Handler)$).*'
+  Suggestion: Rename 'PaymentManager' to match pattern '(?!.*(?:Manager|Helper|Util|Handler)$).*'
+Suppress? [y/n/q]: > y
+
+Violation 2/4:
+  demo/sample-project/.../service/ChargeService.java:2 [R-DEP-01] Package 'com.example.service' must not depend on 'com.example.controller' (import: com.example.controller.PaymentController)
+  Suggestion: Remove import 'com.example.controller.PaymentController'
+Suppress? [y/n/q]: > n
+
+Violation 3/4:
+  demo/sample-project/.../domain/payment/CashPayment.java:12 [R-SUP-01] Class 'CashPayment' must extend/implement 'Payment'
+  Suggestion: Add 'extends Payment' or 'implements Payment' to class declaration
+Suppress? [y/n/q]: > q
+
+--
+Checked 7 file(s); 3 violation(s) remaining; 1 suppressed.
+```
+
+`exit code = 1`（仍有殘留違規）。
+
+**互動決策說明：**
+
+| 輸入 | 語意                       | 後續效果                               |
+|------|----------------------------|----------------------------------------|
+| `y`  | 同意壓制此條違規           | 立即寫入 suppression YAML，計入 suppressed |
+| `n`  | 保留（目前不處理）         | 留在 remaining，下次 `fix` 或 `check` 仍會出現 |
+| `q`  | 離開循環                   | 剩餘尚未問答的違規全部列為 remaining   |
+
+若想全部壓制，對所有違規回答 `y`，最終輸出為 `0 violation(s) remaining; 4 suppressed; exit 0`。
+
+> UC-03 GRASP：**Controller**（FixCommand）+ **Information Expert**（InteractiveFixer
+> 知道如何展示違規並解讀使用者輸入）+ **Creator**（InteractiveFixer 建立 Suppression
+> 物件並委派 YamlSuppressionStore 持久化）。
 
 ---
 
@@ -254,8 +356,7 @@ Checked 7 file(s); 3 violation(s); 1 suppressed.
 rm -f demo/.arch-checker-suppress.yaml
 
 # (1) 檢查 — 出現 R-NAME-01 違規
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml | grep R-NAME-01
+arch-checker check demo/sample-project demo/demo-profile.yaml | grep R-NAME-01
 ```
 
 預期輸出：
@@ -266,16 +367,14 @@ demo/sample-project/.../service/PaymentManager.java:12 [R-NAME-01] Class 'Paymen
 
 ```bash
 # (2) 標記為「可接受」
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main suppress demo/demo-profile.yaml \
+arch-checker suppress demo/demo-profile.yaml \
     R-NAME-01 \
     demo/sample-project/src/main/java/com/example/service/PaymentManager.java 12 \
     'legacy name; refactor in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
 # (3) 重檢 — 不應再出現 R-NAME-01 違規
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml \
+arch-checker check demo/sample-project demo/demo-profile.yaml \
     --suppress-file demo/.arch-checker-suppress.yaml | grep -c R-NAME-01
 # 預期輸出：0
 ```
@@ -298,8 +397,7 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 ```bash
 rm -f demo/.arch-checker-suppress.yaml
 
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml | grep R-DEP-01
+arch-checker check demo/sample-project demo/demo-profile.yaml | grep R-DEP-01
 ```
 
 預期輸出：
@@ -309,15 +407,13 @@ demo/sample-project/.../service/ChargeService.java:2 [R-DEP-01] Package 'com.exa
 ```
 
 ```bash
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main suppress demo/demo-profile.yaml \
+arch-checker suppress demo/demo-profile.yaml \
     R-DEP-01 \
     demo/sample-project/src/main/java/com/example/service/ChargeService.java 2 \
     'temporary cross-layer wire-up; refactor in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml \
+arch-checker check demo/sample-project demo/demo-profile.yaml \
     --suppress-file demo/.arch-checker-suppress.yaml | grep -c R-DEP-01
 # 預期輸出：0
 ```
@@ -345,8 +441,7 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 ```bash
 rm -f demo/.arch-checker-suppress.yaml
 
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml | grep R-SUP-01
+arch-checker check demo/sample-project demo/demo-profile.yaml | grep R-SUP-01
 ```
 
 預期輸出：
@@ -356,15 +451,13 @@ demo/sample-project/.../domain/payment/CashPayment.java:12 [R-SUP-01] Class 'Cas
 ```
 
 ```bash
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main suppress demo/demo-profile.yaml \
+arch-checker suppress demo/demo-profile.yaml \
     R-SUP-01 \
     demo/sample-project/src/main/java/com/example/domain/payment/CashPayment.java 12 \
     'cash payments are out of scope for v1; will inherit Payment in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml \
+arch-checker check demo/sample-project demo/demo-profile.yaml \
     --suppress-file demo/.arch-checker-suppress.yaml | grep -c R-SUP-01
 # 預期輸出：0
 ```
@@ -390,8 +483,7 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 ```bash
 rm -f demo/.arch-checker-suppress.yaml
 
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml | grep R-PKG-01
+arch-checker check demo/sample-project demo/demo-profile.yaml | grep R-PKG-01
 ```
 
 預期輸出：
@@ -401,15 +493,13 @@ demo/sample-project/.../controller/PaymentController.java:0 [R-PKG-01] Required 
 ```
 
 ```bash
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main suppress demo/demo-profile.yaml \
+arch-checker suppress demo/demo-profile.yaml \
     R-PKG-01 \
     demo/sample-project/src/main/java/com/example/controller/PaymentController.java 0 \
     'repository package planned for v2 once persistence is added' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml \
+arch-checker check demo/sample-project demo/demo-profile.yaml \
     --suppress-file demo/.arch-checker-suppress.yaml | grep -c R-PKG-01
 # 預期輸出：0
 ```
@@ -427,33 +517,32 @@ java -cp 'target/arch-checker.jar;target/lib/*' \
 ```bash
 rm -f demo/.arch-checker-suppress.yaml
 
-java -cp 'target/arch-checker.jar;target/lib/*' com.archchecker.cli.Main suppress \
+arch-checker suppress \
     demo/demo-profile.yaml R-NAME-01 \
     demo/sample-project/src/main/java/com/example/service/PaymentManager.java 12 \
     'legacy name; refactor in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
-java -cp 'target/arch-checker.jar;target/lib/*' com.archchecker.cli.Main suppress \
+arch-checker suppress \
     demo/demo-profile.yaml R-DEP-01 \
     demo/sample-project/src/main/java/com/example/service/ChargeService.java 2 \
     'temporary cross-layer wire-up; refactor in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
-java -cp 'target/arch-checker.jar;target/lib/*' com.archchecker.cli.Main suppress \
+arch-checker suppress \
     demo/demo-profile.yaml R-SUP-01 \
     demo/sample-project/src/main/java/com/example/domain/payment/CashPayment.java 12 \
     'cash payments are out of scope for v1; will inherit Payment in v2' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
-java -cp 'target/arch-checker.jar;target/lib/*' com.archchecker.cli.Main suppress \
+arch-checker suppress \
     demo/demo-profile.yaml R-PKG-01 \
     demo/sample-project/src/main/java/com/example/controller/PaymentController.java 0 \
     'repository package planned for v2 once persistence is added' \
     --suppress-file demo/.arch-checker-suppress.yaml
 
 # 最終檢查 — 全部通過
-java -cp 'target/arch-checker.jar;target/lib/*' \
-    com.archchecker.cli.Main check demo/sample-project demo/demo-profile.yaml \
+arch-checker check demo/sample-project demo/demo-profile.yaml \
     --suppress-file demo/.arch-checker-suppress.yaml
 echo "exit=$?"
 ```
@@ -473,8 +562,10 @@ exit=0
 ```
 Usage: arch-checker [-hV] [COMMAND]
 Commands:
-  check     Check architecture compliance of a Java project against a Style Profile.
-  suppress  Mark a specific violation as 'known and accepted'.
+  check    Check architecture compliance of a Java project against a Style Profile.
+  suppress Mark a specific violation as 'known and accepted'.
+  fix      Check architecture compliance with interactive fix suggestions.
+  profile  Manage Style Profile files.
 ```
 
 `check` 參數：
@@ -490,6 +581,23 @@ Commands:
 
 ```
 suppress <profile-path> <constraint-id> <file-path> <line> <reason> [--suppress-file <path>]
+```
+
+`fix` 參數：
+
+| 位置 / 旗標            | 必填 | 說明                                                           |
+|-------------------------|------|----------------------------------------------------------------|
+| `<project-path>`        | 是   | 被檢查 Java 專案根目錄                                         |
+| `<profile-path>`        | 是   | Style Profile YAML                                            |
+| `-s, --suppress-file`   | 否   | suppression 檔案（預設 `.arch-checker-suppress.yaml`）         |
+
+互動期間可輸入 `y`（suppress）、`n`（跳過）、`q`（結束循環）。
+
+`profile` 子指令群：
+
+```
+profile init     <output-path>   產生 YAML 樣板（含 4 種規則類型各一範例）
+profile validate <profile-path>  驗證並顯示已載入的規則清單（exit 2 = 語法錯誤）
 ```
 
 ---
