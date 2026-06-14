@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="950" pageHeight="550" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="title" value="SD for initProfile(outputPath)  —  UC-02 System Event 1" style="text;html=1;align=center;fontStyle=1;fontSize=15;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="60" y="10" width="780" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- Lifeline headers -->
+    <mxCell id="lh_picoc" value=":Main&#xa;[picocli]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="60" y="50" width="110" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="lh_pic_line" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="115" y="100" as="sourcePoint" />
+        <mxPoint x="115" y="520" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="lh_cmd" value=":ProfileInitCommand&#xa;[Controller]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="230" y="50" width="150" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="lh_cmd_line" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="305" y="100" as="sourcePoint" />
+        <mxPoint x="305" y="520" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="lh_svc" value=":ProfileTemplateService&#xa;[Information Expert, Creator]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="460" y="50" width="200" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="lh_svc_line" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="560" y="100" as="sourcePoint" />
+        <mxPoint x="560" y="520" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="lh_fs" value="«FileSystem»" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="740" y="50" width="130" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="lh_fs_line" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="805" y="100" as="sourcePoint" />
+        <mxPoint x="805" y="520" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ===== Messages ===== -->
+
+    <!-- picocli → ProfileInitCommand: call() -->
+    <mxCell id="m1" value="call()" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="115" y="150" as="sourcePoint" />
+        <mxPoint x="305" y="150" as="targetPoint" />
+        <mxPoint x="0" y="-14" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Activation box ProfileInitCommand -->
+    <mxCell id="act_cmd" value="" style="fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+      <mxGeometry x="301" y="150" width="8" height="200" as="geometry" />
+    </mxCell>
+
+    <!-- GRASP note: Controller -->
+    <mxCell id="grasp_ctrl" value="GRASP: Controller&#xa;ProfileInitCommand handles&#xa;the initProfile system event" style="text;html=1;align=left;fontSize=10;strokeColor=#6c8ebf;fillColor=#dae8fc;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="175" y="155" width="120" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- ProfileInitCommand → ProfileTemplateService: new ProfileTemplateService() -->
+    <mxCell id="m2" value="new ProfileTemplateService()" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=11;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="309" y="220" as="sourcePoint" />
+        <mxPoint x="560" y="220" as="targetPoint" />
+        <mxPoint x="0" y="-14" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ProfileInitCommand → ProfileTemplateService: generateTemplate(outputPath) -->
+    <mxCell id="m3" value="generateTemplate(outputPath)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="309" y="265" as="sourcePoint" />
+        <mxPoint x="560" y="265" as="targetPoint" />
+        <mxPoint x="0" y="-14" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Activation box ProfileTemplateService -->
+    <mxCell id="act_svc" value="" style="fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+      <mxGeometry x="556" y="265" width="8" height="100" as="geometry" />
+    </mxCell>
+
+    <!-- GRASP note: Information Expert + Creator -->
+    <mxCell id="grasp_ie" value="GRASP: Information Expert + Creator&#xa;ProfileTemplateService knows the&#xa;template structure and creates the file" style="text;html=1;align=left;fontSize=10;strokeColor=#82b366;fillColor=#d5e8d4;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="570" y="270" width="230" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- ProfileTemplateService → FileSystem: writeString(outputPath, TEMPLATE) -->
+    <mxCell id="m4" value="Files.writeString(outputPath, TEMPLATE)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="564" y="310" as="sourcePoint" />
+        <mxPoint x="805" y="310" as="targetPoint" />
+        <mxPoint x="0" y="-14" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- FileSystem → ProfileTemplateService: return -->
+    <mxCell id="m5" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=11;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="805" y="345" as="sourcePoint" />
+        <mxPoint x="564" y="345" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ProfileTemplateService → ProfileInitCommand: return -->
+    <mxCell id="m6" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=11;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="556" y="365" as="sourcePoint" />
+        <mxPoint x="309" y="365" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ProfileInitCommand → out: println("Profile template written...") -->
+    <mxCell id="m7" value='System.out.println("Profile template written to: " + outputPath)' style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=10;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="309" y="400" as="sourcePoint" />
+        <mxPoint x="115" y="400" as="targetPoint" />
+        <mxPoint x="0" y="-14" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- return 0 to picocli -->
+    <mxCell id="m8" value="return 0" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="301" y="435" as="sourcePoint" />
+        <mxPoint x="115" y="435" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+  </root>
+</mxGraphModel>

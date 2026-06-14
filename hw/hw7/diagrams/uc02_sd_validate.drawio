@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1000" pageHeight="600" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="title" value="SD for validateProfile(yamlPath)  —  UC-02 System Event 2" style="text;html=1;align=center;fontStyle=1;fontSize=15;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="60" y="10" width="830" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- Lifeline headers -->
+    <mxCell id="lh_picoc" value=":Main&#xa;[picocli]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="50" y="50" width="110" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="lh_pic_line" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="105" y="100" as="sourcePoint" />
+        <mxPoint x="105" y="570" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="lh_cmd" value=":ProfileValidateCommand&#xa;[Controller]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="220" y="50" width="160" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="lh_cmd_line" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="300" y="100" as="sourcePoint" />
+        <mxPoint x="300" y="570" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="lh_svc" value=":ProfileValidateService&#xa;[Information Expert]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="450" y="50" width="170" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="lh_svc_line" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="535" y="100" as="sourcePoint" />
+        <mxPoint x="535" y="570" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="lh_loader" value=":YamlProfileLoader&#xa;[Information Expert, Creator]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="690" y="50" width="185" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="lh_loader_line" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="782" y="100" as="sourcePoint" />
+        <mxPoint x="782" y="570" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ===== Messages ===== -->
+
+    <!-- picocli → ProfileValidateCommand: call() -->
+    <mxCell id="m1" value="call()" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="105" y="155" as="sourcePoint" />
+        <mxPoint x="300" y="155" as="targetPoint" />
+        <mxPoint x="0" y="-14" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Activation box ProfileValidateCommand -->
+    <mxCell id="act_cmd" value="" style="fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+      <mxGeometry x="296" y="155" width="8" height="270" as="geometry" />
+    </mxCell>
+
+    <!-- GRASP note: Controller -->
+    <mxCell id="grasp_ctrl" value="GRASP: Controller&#xa;Handles validateProfile&#xa;system event" style="text;html=1;align=left;fontSize=10;strokeColor=#6c8ebf;fillColor=#dae8fc;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="160" y="160" width="130" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ProfileValidateCommand → ProfileValidateService: new + validate(profilePath) -->
+    <mxCell id="m2" value="new ProfileValidateService(new YamlProfileLoader())" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=11;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="304" y="225" as="sourcePoint" />
+        <mxPoint x="535" y="225" as="targetPoint" />
+        <mxPoint x="0" y="-14" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="m3" value="validate(profilePath)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="304" y="270" as="sourcePoint" />
+        <mxPoint x="535" y="270" as="targetPoint" />
+        <mxPoint x="0" y="-14" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Activation box ProfileValidateService -->
+    <mxCell id="act_svc" value="" style="fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+      <mxGeometry x="531" y="270" width="8" height="120" as="geometry" />
+    </mxCell>
+
+    <!-- ProfileValidateService → YamlProfileLoader: load(profilePath) -->
+    <mxCell id="m4" value="load(profilePath)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="539" y="310" as="sourcePoint" />
+        <mxPoint x="782" y="310" as="targetPoint" />
+        <mxPoint x="0" y="-14" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Activation box YamlProfileLoader -->
+    <mxCell id="act_loader" value="" style="fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+      <mxGeometry x="778" y="310" width="8" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- GRASP note: Information Expert + Creator for YamlProfileLoader -->
+    <mxCell id="grasp_ie2" value="GRASP: Information Expert + Creator&#xa;YamlProfileLoader parses YAML and&#xa;creates StyleProfile + ComplianceRule objects" style="text;html=1;align=left;fontSize=10;strokeColor=#9673a6;fillColor=#e1d5e7;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="795" y="313" width="155" height="62" as="geometry" />
+    </mxCell>
+
+    <!-- GRASP note: Low Coupling for ProfileValidateService -->
+    <mxCell id="grasp_lc" value="GRASP: Low Coupling&#xa;Service depends on&#xa;ProfileLoader interface,&#xa;not YamlProfileLoader directly" style="text;html=1;align=left;fontSize=10;strokeColor=#82b366;fillColor=#d5e8d4;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="560" y="270" width="175" height="65" as="geometry" />
+    </mxCell>
+
+    <!-- YamlProfileLoader → ProfileValidateService: StyleProfile -->
+    <mxCell id="m5" value=":StyleProfile" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=11;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="778" y="370" as="sourcePoint" />
+        <mxPoint x="539" y="370" as="targetPoint" />
+        <mxPoint x="0" y="-14" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ProfileValidateService: build ValidateResult -->
+    <mxCell id="self1" value="build ValidateResult(name, ruleIds)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=10;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="539" y="395" as="sourcePoint" />
+        <mxPoint x="539" y="395" as="targetPoint" />
+        <Array as="points">
+          <mxPoint x="580" y="395" />
+          <mxPoint x="580" y="415" />
+        </Array>
+        <mxPoint x="0" y="-10" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ProfileValidateService → ProfileValidateCommand: ValidateResult -->
+    <mxCell id="m6" value=":ValidateResult" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=11;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="531" y="415" as="sourcePoint" />
+        <mxPoint x="304" y="415" as="targetPoint" />
+        <mxPoint x="0" y="-14" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ProfileValidateCommand → out: println(result) -->
+    <mxCell id="m7" value='System.out.println("Profile &apos;name&apos; is valid. Loaded N rule(s): ...")' style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=10;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="296" y="450" as="sourcePoint" />
+        <mxPoint x="105" y="450" as="targetPoint" />
+        <mxPoint x="0" y="-14" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- return 0 to picocli -->
+    <mxCell id="m8" value="return 0" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="296" y="490" as="sourcePoint" />
+        <mxPoint x="105" y="490" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+  </root>
+</mxGraphModel>

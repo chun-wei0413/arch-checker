@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1400" pageHeight="1100" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="title" value="Design Class Diagram — arch-checker  (Iteration II: marked [new] / [mod])" style="text;html=1;align=center;fontStyle=1;fontSize=16;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="60" y="10" width="1260" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- ===================== CLI LAYER ===================== -->
+    <mxCell id="cli_layer" value="&lt;&lt;CLI Layer&gt;&gt;" style="text;html=1;align=left;fontStyle=3;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="60" y="50" width="150" height="22" as="geometry" />
+    </mxCell>
+
+    <!-- Main -->
+    <mxCell id="Main" value="Main" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="60" y="75" width="160" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="Main_body" value="+ main(args: String[]): void" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="65" y="108" width="150" height="32" as="geometry" />
+    </mxCell>
+
+    <!-- CheckCommand -->
+    <mxCell id="CheckCmd" value="CheckCommand" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="240" y="75" width="185" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="CheckCmd_body" value="- projectPath: Path&#xa;- profilePath: Path&#xa;- suppressionFile: Path&#xa;+ call(): Integer" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="245" y="103" width="175" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- SuppressCommand -->
+    <mxCell id="SuppressCmd" value="SuppressCommand" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="440" y="75" width="185" height="105" as="geometry" />
+    </mxCell>
+    <mxCell id="SuppressCmd_body" value="- profilePath: Path&#xa;- ruleId: String&#xa;- filePath: Path&#xa;- lineNumber: int&#xa;- reason: String&#xa;+ call(): Integer" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="445" y="103" width="175" height="68" as="geometry" />
+    </mxCell>
+
+    <!-- ProfileCommand [new] -->
+    <mxCell id="ProfileCmd" value="ProfileCommand [new]" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="645" y="75" width="175" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="ProfileCmd_body" value="+ run(): void" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="650" y="103" width="165" height="22" as="geometry" />
+    </mxCell>
+
+    <!-- ProfileInitCommand [new] -->
+    <mxCell id="ProfileInitCmd" value="ProfileInitCommand [new]" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="840" y="75" width="190" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="ProfileInitCmd_body" value="- outputPath: Path&#xa;+ call(): Integer" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="845" y="103" width="180" height="36" as="geometry" />
+    </mxCell>
+
+    <!-- ProfileValidateCommand [new] -->
+    <mxCell id="ProfileValCmd" value="ProfileValidateCommand [new]" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1050" y="75" width="210" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="ProfileValCmd_body" value="- profilePath: Path&#xa;+ call(): Integer" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1055" y="103" width="200" height="36" as="geometry" />
+    </mxCell>
+
+    <!-- FixCommand [new] -->
+    <mxCell id="FixCmd" value="FixCommand [new]" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1280" y="75" width="185" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="FixCmd_body" value="- projectPath: Path&#xa;- profilePath: Path&#xa;- suppressionFile: Path&#xa;+ call(): Integer" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1285" y="103" width="175" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- ===================== APPLICATION LAYER ===================== -->
+    <mxCell id="app_layer" value="&lt;&lt;Application Layer&gt;&gt;" style="text;html=1;align=left;fontStyle=3;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="60" y="220" width="200" height="22" as="geometry" />
+    </mxCell>
+
+    <!-- ComplianceCheckService -->
+    <mxCell id="CCS" value="ComplianceCheckService" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="60" y="245" width="220" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="CCS_body" value="- codeParser: CodeParser&#xa;- profileLoader: ProfileLoader&#xa;- suppressionStore: SuppressionStore&#xa;+ run(projectPath, profilePath, suppressFile): CheckResult" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="65" y="273" width="210" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- SuppressionService -->
+    <mxCell id="SS" value="SuppressionService" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="300" y="245" width="220" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="SS_body" value="- store: SuppressionStore&#xa;- profileLoader: ProfileLoader&#xa;+ suppress(profilePath, suppressFile,&#xa;    ruleId, filePath, line, reason): Suppression" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="305" y="273" width="210" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- ProfileTemplateService [new] -->
+    <mxCell id="PTS" value="ProfileTemplateService [new]" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="540" y="245" width="210" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="PTS_body" value="- TEMPLATE: String&#xa;+ generateTemplate(outputPath: Path): void" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="545" y="275" width="200" height="36" as="geometry" />
+    </mxCell>
+
+    <!-- ProfileValidateService [new] -->
+    <mxCell id="PVS" value="ProfileValidateService [new]" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="770" y="245" width="215" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="PVS_body" value="- profileLoader: ProfileLoader&#xa;+ validate(profilePath: Path): ValidateResult" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="775" y="275" width="205" height="36" as="geometry" />
+    </mxCell>
+
+    <!-- InteractiveFixer [new] -->
+    <mxCell id="IF" value="InteractiveFixer [new]" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1005" y="245" width="230" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="IF_body" value="- store: SuppressionStore&#xa;- out: PrintStream&#xa;- in: BufferedReader&#xa;+ fix(report, suppressFile, profile): FixResult" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1010" y="273" width="220" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- Interfaces -->
+    <mxCell id="iCodeParser" value="&lt;&lt;interface&gt;&gt;&#xa;CodeParser" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="60" y="380" width="150" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="iCodeParser_body" value="+ parseProject(rootPath): Project" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="65" y="408" width="140" height="18" as="geometry" />
+    </mxCell>
+
+    <mxCell id="iProfileLoader" value="&lt;&lt;interface&gt;&gt;&#xa;ProfileLoader" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="225" y="380" width="155" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="iProfileLoader_body" value="+ load(profilePath): StyleProfile" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="230" y="408" width="145" height="18" as="geometry" />
+    </mxCell>
+
+    <mxCell id="iSupStore" value="&lt;&lt;interface&gt;&gt;&#xa;SuppressionStore" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="395" y="380" width="175" height="68" as="geometry" />
+    </mxCell>
+    <mxCell id="iSupStore_body" value="+ loadAll(file, profile): List&lt;Suppression&gt;&#xa;+ save(file, suppressions): void" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="400" y="408" width="165" height="30" as="geometry" />
+    </mxCell>
+
+    <mxCell id="iReporter" value="&lt;&lt;interface&gt;&gt;&#xa;Reporter" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="590" y="380" width="160" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="iReporter_body" value="+ render(report: ViolationReport): void" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="595" y="408" width="150" height="18" as="geometry" />
+    </mxCell>
+
+    <!-- ===================== DOMAIN LAYER ===================== -->
+    <mxCell id="dom_layer" value="&lt;&lt;Domain Layer&gt;&gt;" style="text;html=1;align=left;fontStyle=3;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="60" y="488" width="200" height="22" as="geometry" />
+    </mxCell>
+
+    <!-- StyleProfile -->
+    <mxCell id="SP" value="StyleProfile" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="60" y="513" width="160" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="SP_body" value="- name: String&#xa;- rules: List&lt;ComplianceRule&gt;&#xa;+ getName(): String&#xa;+ getRules(): List&lt;ComplianceRule&gt;" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="65" y="540" width="150" height="36" as="geometry" />
+    </mxCell>
+
+    <!-- ComplianceCheck -->
+    <mxCell id="CC" value="ComplianceCheck" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="240" y="513" width="200" height="95" as="geometry" />
+    </mxCell>
+    <mxCell id="CC_body" value="- dateTime: LocalDateTime&#xa;- project: Project&#xa;- profile: StyleProfile&#xa;- suppressions: List&lt;Suppression&gt;&#xa;- exitCode: int&#xa;+ run(): ViolationReport&#xa;+ getExitCode(): int" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="245" y="540" width="190" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Violation [mod] -->
+    <mxCell id="Viol" value="Violation [mod]" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="460" y="513" width="200" height="105" as="geometry" />
+    </mxCell>
+    <mxCell id="Viol_body" value="- lineNumber: int&#xa;- message: String&#xa;- file: File&#xa;- rule: ComplianceRule&#xa;- suggestion: String [0..1] [new]&#xa;+ getSuggestion(): String&#xa;+ hasSuggestion(): boolean&#xa;+ describe(): String" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="465" y="540" width="190" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- ViolationReport -->
+    <mxCell id="VR" value="ViolationReport" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="680" y="513" width="195" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="VR_body" value="- checkedFileCount: int&#xa;- suppressedCount: int&#xa;- violations: List&lt;Violation&gt;&#xa;+ addViolation(v): void&#xa;+ getViolations(): List&lt;Violation&gt;&#xa;+ summary(): String" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="685" y="540" width="185" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- Suppression -->
+    <mxCell id="Sup" value="Suppression" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="895" y="513" width="195" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="Sup_body" value="- rule: ComplianceRule&#xa;- filePath: Path&#xa;- lineNumber: int&#xa;- reason: String&#xa;- timestamp: Instant&#xa;+ matches(v: Violation): boolean" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="900" y="540" width="185" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- File -->
+    <mxCell id="FileCls" value="File" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1110" y="513" width="170" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="File_body" value="- filePath: Path&#xa;- packageName: String&#xa;+ getFilePath(): Path&#xa;+ getPackageName(): String&#xa;+ readContent(): String" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1115" y="540" width="160" height="36" as="geometry" />
+    </mxCell>
+
+    <!-- Project -->
+    <mxCell id="Proj" value="Project" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1300" y="513" width="160" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="Proj_body" value="- rootPath: Path&#xa;- files: List&lt;File&gt;&#xa;+ listFiles(): List&lt;File&gt;" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1305" y="540" width="150" height="32" as="geometry" />
+    </mxCell>
+
+    <!-- ComplianceRule (abstract) -->
+    <mxCell id="CR" value="&lt;&lt;abstract&gt;&gt;&#xa;ComplianceRule" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="460" y="660" width="200" height="85" as="geometry" />
+    </mxCell>
+    <mxCell id="CR_body" value="# id: String&#xa;# description: String&#xa;+ getId(): String&#xa;+ validate(files: List&lt;File&gt;): List&lt;Violation&gt;&#xa;# packageMatches(pkg, pattern): boolean" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="465" y="690" width="190" height="48" as="geometry" />
+    </mxCell>
+
+    <!-- NamingRule [mod] -->
+    <mxCell id="NR" value="NamingRule [mod]" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="60" y="810" width="175" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="NR_body" value="- classNamePattern: String&#xa;+ validate(...): List&lt;Violation&gt;" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="65" y="838" width="165" height="24" as="geometry" />
+    </mxCell>
+
+    <!-- DependencyRule [mod] -->
+    <mxCell id="DR" value="DependencyRule [mod]" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="255" y="810" width="190" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="DR_body" value="- sourcePackage: String&#xa;- targetPackage: String&#xa;- isAllowed: boolean&#xa;+ validate(...): List&lt;Violation&gt;" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="260" y="838" width="180" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- SupertypeRule [mod] -->
+    <mxCell id="STR" value="SupertypeRule [mod]" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="465" y="810" width="190" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="STR_body" value="- targetPackage: String&#xa;- requiredSupertype: String&#xa;+ validate(...): List&lt;Violation&gt;" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="470" y="838" width="180" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- PackageRule [mod] -->
+    <mxCell id="PKR" value="PackageRule [mod]" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="675" y="810" width="175" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="PKR_body" value="- packagePattern: String&#xa;+ validate(...): List&lt;Violation&gt;" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="680" y="838" width="165" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- ===================== INFRASTRUCTURE LAYER ===================== -->
+    <mxCell id="inf_layer" value="&lt;&lt;Infrastructure Layer&gt;&gt;" style="text;html=1;align=left;fontStyle=3;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="900" y="640" width="220" height="22" as="geometry" />
+    </mxCell>
+
+    <!-- JavaParserAdapter -->
+    <mxCell id="JPA" value="JavaParserAdapter" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="900" y="665" width="175" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="JPA_body" value="+ parseProject(rootPath: Path): Project" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="905" y="693" width="165" height="22" as="geometry" />
+    </mxCell>
+
+    <!-- YamlProfileLoader -->
+    <mxCell id="YPL" value="YamlProfileLoader" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1090" y="665" width="175" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="YPL_body" value="+ load(profilePath: Path): StyleProfile" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1095" y="693" width="165" height="22" as="geometry" />
+    </mxCell>
+
+    <!-- ConsoleReporter / JsonReporter -->
+    <mxCell id="CR2" value="ConsoleReporter" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="900" y="760" width="175" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="CR2_body" value="+ render(report: ViolationReport): void" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="905" y="788" width="165" height="18" as="geometry" />
+    </mxCell>
+
+    <mxCell id="JR" value="JsonReporter" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1090" y="760" width="175" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="JR_body" value="+ render(report: ViolationReport): void" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1095" y="788" width="165" height="18" as="geometry" />
+    </mxCell>
+
+    <!-- YamlSuppressionStore -->
+    <mxCell id="YSS" value="YamlSuppressionStore" style="shape=mxgraph.uml.classifier;html=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1000" y="855" width="200" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="YSS_body" value="+ loadAll(file, profile): List&lt;Suppression&gt;&#xa;+ save(file, suppressions): void" style="text;html=1;align=left;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1005" y="883" width="190" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- ===================== RELATIONSHIPS ===================== -->
+
+    <!-- Generalization: ComplianceRule ← NamingRule, DependencyRule, SupertypeRule, PackageRule -->
+    <mxCell id="r_cr_nr" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=0;html=1;" edge="1" source="NR" target="CR" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="r_cr_dr" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=0;html=1;" edge="1" source="DR" target="CR" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="r_cr_str" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=0;html=1;" edge="1" source="STR" target="CR" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="r_cr_pkr" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=0;html=1;" edge="1" source="PKR" target="CR" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Interface implementations -->
+    <mxCell id="r_jpa_cp" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=0;dashed=1;html=1;" edge="1" source="JPA" target="iCodeParser" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="r_ypl_pl" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=0;dashed=1;html=1;" edge="1" source="YPL" target="iProfileLoader" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="r_yss_ss" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=0;dashed=1;html=1;" edge="1" source="YSS" target="iSupStore" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="r_cr2_r" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=0;dashed=1;html=1;" edge="1" source="CR2" target="iReporter" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="r_jr_r" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=0;dashed=1;html=1;" edge="1" source="JR" target="iReporter" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Key dependencies (use arrows) -->
+    <mxCell id="r_ccs_cp" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" source="CCS" target="iCodeParser" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="r_ccs_pl" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" source="CCS" target="iProfileLoader" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="r_ccs_sup" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" source="CCS" target="iSupStore" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="r_if_sup" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" source="IF" target="iSupStore" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="r_pvs_pl" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" source="PVS" target="iProfileLoader" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Legend -->
+    <mxCell id="leg_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#888888;" vertex="1" parent="1">
+      <mxGeometry x="60" y="920" width="400" height="120" as="geometry" />
+    </mxCell>
+    <mxCell id="leg_title" value="Legend" style="text;html=1;fontStyle=1;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="80" y="928" width="80" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="leg1" value="Green background = Application layer class" style="text;html=1;fontSize=10;strokeColor=none;fillColor=none;fontColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="80" y="952" width="360" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="leg2" value="Orange background = Domain layer class" style="text;html=1;fontSize=10;strokeColor=none;fillColor=none;fontColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="80" y="972" width="360" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="leg3" value="Purple background = Infrastructure layer class" style="text;html=1;fontSize=10;strokeColor=none;fillColor=none;fontColor=#9673a6;" vertex="1" parent="1">
+      <mxGeometry x="80" y="992" width="360" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="leg4" value="[new] = new in Iteration II   |   [mod] = modified in Iteration II" style="text;html=1;fontSize=10;fontStyle=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="80" y="1012" width="380" height="18" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

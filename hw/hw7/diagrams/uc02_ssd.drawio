@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="600" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="title" value="System Sequence Diagram: UC-02 Define Style Profile" style="text;html=1;align=center;fontStyle=1;fontSize=16;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="80" y="15" width="650" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- Actor: Developer -->
+    <mxCell id="dev_head" value="Developer" style="shape=mxgraph.uml.actor;html=1;whiteSpace=wrap;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="80" y="60" width="50" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="dev_line" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="105" y="130" as="sourcePoint" />
+        <mxPoint x="105" y="560" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- System boundary box -->
+    <mxCell id="sys_box" value="arch-checker" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontStyle=1;fontSize=13;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="480" y="60" width="200" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="sys_line" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="580" y="100" as="sourcePoint" />
+        <mxPoint x="580" y="560" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ===== System Event 1: initProfile ===== -->
+    <!-- Separator label -->
+    <mxCell id="sep1" value="«system event 1»" style="text;html=1;align=left;fontStyle=2;fontSize=11;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="80" y="145" width="200" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- initProfile(outputPath) call -->
+    <mxCell id="e1_call" value="initProfile(outputPath)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="105" y="175" as="sourcePoint" />
+        <mxPoint x="580" y="175" as="targetPoint" />
+        <mxPoint x="0" y="-12" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Activation box on system -->
+    <mxCell id="act1" value="" style="fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+      <mxGeometry x="575" y="175" width="10" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Return: profileTemplateWritten(path) -->
+    <mxCell id="e1_ret" value="Profile template written to: outputPath" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="575" y="225" as="sourcePoint" />
+        <mxPoint x="105" y="225" as="targetPoint" />
+        <mxPoint x="0" y="-12" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Gap label: Developer edits YAML -->
+    <mxCell id="gap1" value="Developer edits the generated YAML template" style="text;html=1;align=center;fontStyle=2;fontSize=10;strokeColor=#999999;fillColor=#f0f0f0;" vertex="1" parent="1">
+      <mxGeometry x="130" y="245" width="330" height="25" as="geometry" />
+    </mxCell>
+
+    <!-- ===== System Event 2: validateProfile ===== -->
+    <mxCell id="sep2" value="«system event 2»" style="text;html=1;align=left;fontStyle=2;fontSize=11;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="80" y="285" width="200" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- validateProfile(yamlPath) call -->
+    <mxCell id="e2_call" value="validateProfile(yamlPath)" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;html=1;fontSize=11;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="105" y="315" as="sourcePoint" />
+        <mxPoint x="580" y="315" as="targetPoint" />
+        <mxPoint x="0" y="-12" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Activation box on system -->
+    <mxCell id="act2" value="" style="fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+      <mxGeometry x="575" y="315" width="10" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Return: validationResult -->
+    <mxCell id="e2_ret" value="Profile 'name' is valid. Loaded N rule(s):&#xa;  - R-NAME-01 (NamingRule)  - R-DEP-01 (DependencyRule) ..." style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="575" y="375" as="sourcePoint" />
+        <mxPoint x="105" y="375" as="targetPoint" />
+        <mxPoint x="0" y="-12" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Alt: Extension 5a - YAML structural error -->
+    <mxCell id="alt_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#888888;dashed=1;" vertex="1" parent="1">
+      <mxGeometry x="115" y="405" width="480" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="alt_label" value="[alt] YAML error" style="text;html=1;fontStyle=1;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="120" y="408" width="120" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="e2_err" value="Validation failed: &lt;error message&gt;  (exit code 2)" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;html=1;fontSize=10;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="575" y="435" as="sourcePoint" />
+        <mxPoint x="115" y="435" as="targetPoint" />
+        <mxPoint x="0" y="-12" as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Note box -->
+    <mxCell id="note" value="Both events are triggered via CLI subcommands:&#xa;  arch-checker profile init &lt;outputPath&gt;&#xa;  arch-checker profile validate &lt;yamlPath&gt;" style="text;html=1;align=left;fontSize=10;strokeColor=#d6b656;fillColor=#fffacd;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="80" y="500" width="350" height="55" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

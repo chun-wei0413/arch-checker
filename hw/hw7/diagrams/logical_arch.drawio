@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="title" value="Logical Architecture — arch-checker" style="text;html=1;align=center;verticalAlign=middle;fontStyle=1;fontSize=18;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="60" y="20" width="600" height="35" as="geometry" />
+    </mxCell>
+
+    <!-- ===== LAYER BOXES (back) ===== -->
+
+    <!-- CLI Layer -->
+    <mxCell id="cli_bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="60" y="80" width="560" height="120" as="geometry" />
+    </mxCell>
+    <mxCell id="cli_lbl" value="&lt;&lt;UI Layer&gt;&gt;  com.archchecker.cli" style="text;html=1;align=left;verticalAlign=top;fontStyle=1;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="70" y="87" width="400" height="22" as="geometry" />
+    </mxCell>
+    <mxCell id="cli_content" value="Main  ·  CheckCommand  ·  FixCommand [new]  ·  SuppressCommand&#xa;ProfileCommand [new]  ·  ProfileInitCommand [new]  ·  ProfileValidateCommand [new]" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="70" y="114" width="540" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Application Layer -->
+    <mxCell id="app_bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="60" y="240" width="560" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="app_lbl" value="&lt;&lt;Application Layer&gt;&gt;  com.archchecker.application" style="text;html=1;align=left;verticalAlign=top;fontStyle=1;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="70" y="247" width="450" height="22" as="geometry" />
+    </mxCell>
+    <mxCell id="app_content" value="ComplianceCheckService  ·  SuppressionService  ·  InteractiveFixer [new]&#xa;ProfileTemplateService [new]  ·  ProfileValidateService [new]&#xa;«interface» CodeParser  ·  ProfileLoader  ·  SuppressionStore  ·  Reporter" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="70" y="270" width="540" height="86" as="geometry" />
+    </mxCell>
+
+    <!-- Domain Layer -->
+    <mxCell id="dom_bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="60" y="420" width="560" height="190" as="geometry" />
+    </mxCell>
+    <mxCell id="dom_lbl" value="&lt;&lt;Domain Layer&gt;&gt;  com.archchecker.domain" style="text;html=1;align=left;verticalAlign=top;fontStyle=1;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="70" y="427" width="450" height="22" as="geometry" />
+    </mxCell>
+
+    <!-- Domain sub-packages -->
+    <mxCell id="dom_codebase" value="codebase&#xa;File · Project" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="75" y="455" width="120" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="dom_compliance" value="compliance&#xa;ComplianceCheck · Violation [mod]&#xa;ViolationReport · Suppression" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="210" y="455" width="170" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="dom_rule" value="rule&#xa;ComplianceRule  NamingRule [mod]&#xa;DependencyRule [mod]  SupertypeRule [mod]&#xa;PackageRule [mod]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="395" y="455" width="210" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="dom_profile" value="profile&#xa;StyleProfile" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="75" y="530" width="120" height="45" as="geometry" />
+    </mxCell>
+
+    <!-- Infrastructure Layer -->
+    <mxCell id="inf_bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="60" y="660" width="560" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="inf_lbl" value="&lt;&lt;Infrastructure Layer&gt;&gt;  com.archchecker.infrastructure" style="text;html=1;align=left;verticalAlign=top;fontStyle=1;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="70" y="667" width="500" height="22" as="geometry" />
+    </mxCell>
+    <mxCell id="inf_parser" value="parser&#xa;JavaParserAdapter" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f3e6ff;strokeColor=#9673a6;fontSize=10;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="75" y="695" width="120" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="inf_profilei" value="profile&#xa;YamlProfileLoader" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f3e6ff;strokeColor=#9673a6;fontSize=10;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="210" y="695" width="120" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="inf_report" value="report&#xa;ConsoleReporter&#xa;JsonReporter" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f3e6ff;strokeColor=#9673a6;fontSize=10;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="345" y="695" width="110" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="inf_sup" value="suppression&#xa;YamlSuppressionStore" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f3e6ff;strokeColor=#9673a6;fontSize=10;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="470" y="695" width="135" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- External Libraries -->
+    <mxCell id="ext_title" value="External Libraries" style="text;html=1;align=center;fontStyle=3;fontSize=11;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="670" y="60" width="140" height="22" as="geometry" />
+    </mxCell>
+    <mxCell id="picocli" value="picocli" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="670" y="90" width="120" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="javaparser" value="JavaParser" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="670" y="680" width="120" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="snakeyaml" value="SnakeYAML" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="670" y="730" width="120" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- Dependency Arrows (draw last so they appear on top) -->
+    <!-- CLI → Application -->
+    <mxCell id="e_cli_app" value="uses" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;fontSize=10;" edge="1" source="cli_bg" target="app_bg" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- CLI → Infrastructure (wiring) -->
+    <mxCell id="e_cli_inf" value="creates" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;fontSize=10;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" edge="1" source="cli_bg" target="inf_bg" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="660" y="200" />
+          <mxPoint x="660" y="660" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <!-- Application → Domain -->
+    <mxCell id="e_app_dom" value="uses" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;fontSize=10;" edge="1" source="app_bg" target="dom_bg" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Infrastructure → Domain (implements interfaces) -->
+    <mxCell id="e_inf_dom" value="implements&#xa;domain interfaces" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;fontSize=10;" edge="1" source="inf_bg" target="dom_bg" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- CLI → picocli -->
+    <mxCell id="e_cli_picocli" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" source="cli_bg" target="picocli" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Infrastructure → JavaParser -->
+    <mxCell id="e_inf_jp" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;fontSize=10;" edge="1" source="inf_parser" target="javaparser" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Infrastructure → SnakeYAML -->
+    <mxCell id="e_inf_sy" value="" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;fontSize=10;" edge="1" source="inf_sup" target="snakeyaml" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Legend -->
+    <mxCell id="legend_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#888888;strokeWidth=1;" vertex="1" parent="1">
+      <mxGeometry x="60" y="830" width="300" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="legend_title" value="Legend" style="text;html=1;fontStyle=1;fontSize=11;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="75" y="838" width="60" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="legend1" value="[new] = new in Iteration II" style="text;html=1;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="75" y="860" width="200" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="legend2" value="[mod] = modified in Iteration II" style="text;html=1;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+      <mxGeometry x="75" y="882" width="220" height="18" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>
