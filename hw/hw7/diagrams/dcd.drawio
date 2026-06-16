@@ -165,7 +165,7 @@
         </mxCell>
 
         <!-- Violation [mod] — suggestion field added in Iteration II -->
-        <mxCell id="c7" value="Violation [mod]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#d5e8d4;strokeColor=#006600;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c7" value="Violation [mod]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="280" y="500" width="240" height="252" as="geometry"/>
         </mxCell>
         <mxCell id="c7_a0" value="- lineNumber: int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="c7">
@@ -228,7 +228,7 @@
         </mxCell>
 
         <!-- Rule subclasses [mod] — now set suggestion on each Violation produced -->
-        <mxCell id="c9" value="NamingRule [mod]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#d5e8d4;strokeColor=#006600;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c9" value="NamingRule [mod]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="120" y="780" width="250" height="92" as="geometry"/>
         </mxCell>
         <mxCell id="c9_a0" value="- classNamePattern: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="c9">
@@ -244,7 +244,7 @@
           <mxGeometry y="68" width="250" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="c10" value="DependencyRule [mod]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#d5e8d4;strokeColor=#006600;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c10" value="DependencyRule [mod]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="400" y="780" width="260" height="172" as="geometry"/>
         </mxCell>
         <mxCell id="c10_a0" value="- sourcePackage: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="c10">
@@ -272,7 +272,7 @@
           <mxGeometry y="148" width="260" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="c11" value="SupertypeRule [mod]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#d5e8d4;strokeColor=#006600;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c11" value="SupertypeRule [mod]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="700" y="780" width="260" height="132" as="geometry"/>
         </mxCell>
         <mxCell id="c11_a0" value="- targetPackage: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="c11">
@@ -294,7 +294,7 @@
           <mxGeometry y="108" width="260" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="c12" value="PackageRule [mod]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#d5e8d4;strokeColor=#006600;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c12" value="PackageRule [mod]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="1000" y="780" width="240" height="92" as="geometry"/>
         </mxCell>
         <mxCell id="c12_a0" value="- packagePattern: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="c12">
@@ -407,11 +407,11 @@
         </mxCell>
 
         <!-- ===== APPLICATION LAYER — Iteration II new classes ===== -->
-        <mxCell id="app_sep" value="Application Layer (Iteration II new classes)" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+        <mxCell id="app_sep" value="Application Layer (Iteration II new classes)" style="text;html=1;strokeColor=#666666;fillColor=#f0f0f0;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="20" y="1010" width="1240" height="28" as="geometry"/>
         </mxCell>
 
-        <mxCell id="ca1" value="InteractiveFixer [new]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=2;swimlaneLine=1;html=1;fillColor=#d5e8d4;strokeColor=#006600;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="ca1" value="InteractiveFixer [new]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=2;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="20" y="1050" width="360" height="152" as="geometry"/>
         </mxCell>
         <mxCell id="ca1_div" value="" style="line;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="ca1">
@@ -426,14 +426,14 @@
         <mxCell id="ca1_o2" value="- prompt(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="ca1">
           <mxGeometry y="68" width="360" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="ca1_inner" value="«inner» FixResult" style="swimlane;fontStyle=1;align=center;startSize=22;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#f9ffe0;strokeColor=#006600;fontSize=11;" vertex="1" parent="ca1">
+        <mxCell id="ca1_inner" value="«inner» FixResult" style="swimlane;fontStyle=1;align=center;startSize=22;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontSize=11;" vertex="1" parent="ca1">
           <mxGeometry x="10" y="96" width="340" height="46" as="geometry"/>
         </mxCell>
         <mxCell id="ca1_ir_o0" value="+ getExitCode(): int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="ca1_inner">
           <mxGeometry y="22" width="340" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="ca2" value="ProfileTemplateService [new]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=2;swimlaneLine=1;html=1;fillColor=#d5e8d4;strokeColor=#006600;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="ca2" value="ProfileTemplateService [new]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=2;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="420" y="1050" width="340" height="72" as="geometry"/>
         </mxCell>
         <mxCell id="ca2_div" value="" style="line;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="ca2">
@@ -446,7 +446,7 @@
           <mxGeometry y="48" width="340" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="ca3" value="ProfileValidateService [new]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=2;swimlaneLine=1;html=1;fillColor=#d5e8d4;strokeColor=#006600;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="ca3" value="ProfileValidateService [new]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=2;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="800" y="1050" width="360" height="112" as="geometry"/>
         </mxCell>
         <mxCell id="ca3_div" value="" style="line;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="ca3">
@@ -455,14 +455,14 @@
         <mxCell id="ca3_o0" value="+ validate(profilePath: Path): ValidateResult" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="ca3">
           <mxGeometry y="28" width="360" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="ca3_inner" value="«inner» ValidateResult" style="swimlane;fontStyle=1;align=center;startSize=22;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#f9ffe0;strokeColor=#006600;fontSize=11;" vertex="1" parent="ca3">
+        <mxCell id="ca3_inner" value="«inner» ValidateResult" style="swimlane;fontStyle=1;align=center;startSize=22;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontSize=11;" vertex="1" parent="ca3">
           <mxGeometry x="10" y="56" width="340" height="46" as="geometry"/>
         </mxCell>
         <mxCell id="ca3_ir_o0" value="+ getRuleCount(): int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="ca3_inner">
           <mxGeometry y="22" width="340" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="legend" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br&gt;━ ▷  inheritance&lt;br&gt;◆━  composition&lt;br&gt;━ ▶  association&lt;br&gt;┄ ▶  dependency / «create» / «param»&lt;br&gt;&lt;font color=&quot;#006600&quot;&gt;&lt;b&gt;[new] = new in Iteration II &amp;nbsp;·&amp;nbsp; [mod] = modified&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;verticalAlign=middle;spacingLeft=8;" vertex="1" parent="1">
+        <mxCell id="legend" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br&gt;━ ▷  inheritance&lt;br&gt;◆━  composition&lt;br&gt;━ ▶  association&lt;br&gt;┄ ▶  dependency / «create» / «param»&lt;br&gt;&lt;b&gt;[new] = new in Iteration II (thick border)  ·  [mod] = modified&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;verticalAlign=middle;spacingLeft=8;" vertex="1" parent="1">
           <mxGeometry x="1080" y="40" width="200" height="120" as="geometry"/>
         </mxCell>
 
