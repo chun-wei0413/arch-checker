@@ -77,13 +77,13 @@
 
         <!-- Loop fragment -->
         <mxCell id="loop_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="170" y="355" width="820" height="200" as="geometry"/>
+          <mxGeometry x="30" y="355" width="1040" height="200" as="geometry"/>
         </mxCell>
         <mxCell id="loop_label" value="loop" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#000000;strokeWidth=2;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="170" y="355" width="44" height="22" as="geometry"/>
+          <mxGeometry x="30" y="355" width="44" height="22" as="geometry"/>
         </mxCell>
         <mxCell id="loop_guard" value="[for each violation]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;" vertex="1" parent="1">
-          <mxGeometry x="220" y="357" width="220" height="18" as="geometry"/>
+          <mxGeometry x="80" y="357" width="220" height="18" as="geometry"/>
         </mxCell>
 
         <mxCell id="m4" value="3.1: displayViolation(msg, suggestion)" style="endArrow=open;html=1;dashed=1;fontSize=11;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=0;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
