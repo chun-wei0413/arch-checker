@@ -37,7 +37,7 @@
         <mxCell id="grasp_svc" value="«by Expert»" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center;verticalAlign=middle;fontStyle=2;" vertex="1" parent="1">
           <mxGeometry x="480" y="108" width="120" height="22" as="geometry"/>
         </mxCell>
-        <mxCell id="grasp_loader" value="«by Creator + Expert»" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center;verticalAlign=middle;fontStyle=2;" vertex="1" parent="1">
+        <mxCell id="grasp_loader" value="«Pure Fabrication»" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center;verticalAlign=middle;fontStyle=2;" vertex="1" parent="1">
           <mxGeometry x="748" y="108" width="134" height="22" as="geometry"/>
         </mxCell>
         <mxCell id="grasp_profile" value="«by Low Coupling»" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center;verticalAlign=middle;fontStyle=2;" vertex="1" parent="1">
@@ -57,7 +57,7 @@
           <mxGeometry x="1059" y="310" width="12" height="40" as="geometry"/>
         </mxCell>
 
-        <mxCell id="m1" value="1: call()" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+        <mxCell id="m1" value="1: validateProfile(yamlPath)" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry"><mxPoint x="70" y="150" as="sourcePoint"/><mxPoint x="265" y="150" as="targetPoint"/></mxGeometry>
         </mxCell>
         <mxCell id="m2" value="2: validate(profilePath)" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
