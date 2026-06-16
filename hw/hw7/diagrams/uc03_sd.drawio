@@ -62,7 +62,7 @@
         </mxCell>
 
         <!-- Messages -->
-        <mxCell id="m1" value="1: call()" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+        <mxCell id="m1" value="1: fix(sourcePath, profilePath)" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry"><mxPoint x="60" y="140" as="sourcePoint"/><mxPoint x="240" y="140" as="targetPoint"/></mxGeometry>
         </mxCell>
         <mxCell id="m2" value="2: checkCompliance(project, profile)" style="endArrow=block;html=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
