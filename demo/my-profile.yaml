@@ -1,0 +1,33 @@
+# arch-checker Style Profile
+# See https://github.com/your-org/arch-checker for full documentation.
+name: my-profile
+rules:
+  # NamingRule: enforce a class name regex pattern
+  - id: R-NAME-01
+    type: naming
+    description: "Service classes must end with 'Service'"
+    classNamePattern: ".*Service"
+
+  # DependencyRule: control allowed/forbidden package dependencies
+  - id: R-DEP-01
+    type: dependency
+    description: "Domain must not depend on infrastructure"
+    sourcePackage: "**.domain.**"
+    targetPackage: "**.infrastructure.**"
+    isAllowed: false
+
+  # SupertypeRule: require classes in a package to extend/implement a type
+  - id: R-SUP-01
+    type: supertype
+    description: "All rule classes must extend ComplianceRule"
+    targetPackage: "**.domain.rule"
+    requiredSupertype: "ComplianceRule"
+
+  # PackageRule: assert a package pattern exists in the project
+  - id: R-PKG-01
+    type: package
+    description: "Domain layer must exist"
+    packagePattern: "**.domain.**"
+
+
+

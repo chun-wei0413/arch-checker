@@ -1,0 +1,9 @@
+PS E:\Coding\arch-checker> arch-checker suppress
+                        demo/demo-profile.yaml
+                        R-NAME-01
+                        demo/sample-project/src/main/java/com/example/service/PaymentManager.java
+                        12
+                        'legacy name; refactor in v2'
+                        --suppress-file demo/.arch-checker-suppress.yaml
+
+Suppressed: R-NAME-01 at demo\sample-project\src\main\java\com\example\service\PaymentManager.java:12
