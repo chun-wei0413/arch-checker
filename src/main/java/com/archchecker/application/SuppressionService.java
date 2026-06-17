@@ -35,9 +35,7 @@ public class SuppressionService {
     /** For FixCommand: Violation and StyleProfile are already in memory. */
     public Suppression suppress(Violation violation, StyleProfile profile,
                                  Path suppressionFile, String reason) {
-        return suppressCore(violation.getRule(),
-                violation.getFile().getFilePath(),
-                violation.getLineNumber(), reason, profile, suppressionFile);
+        return suppressCore(violation.getRule(), violation.getFile().getFilePath(), violation.getLineNumber(), reason, profile, suppressionFile);
     }
 
     private Suppression suppressCore(ComplianceRule rule, Path filePath,
@@ -58,3 +56,5 @@ public class SuppressionService {
         return null;
     }
 }
+
+
