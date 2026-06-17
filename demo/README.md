@@ -121,7 +121,7 @@ echo $?
 
 ```
 --
-Checked 33 file(s); 0 violation(s); 0 suppressed.
+Checked 32 file(s); 0 violation(s); 0 suppressed.
 0
 ```
 
@@ -286,7 +286,11 @@ Profile 'demo-profile' is valid. Loaded 4 rule(s):
 ### Scenario E · UC-03 Check with Interactive Fix Suggestions（fix）
 
 `fix` 指令結合「逐條顯示修正建議」與「互動式 suppress」，讓開發者在終端機上逐筆
-決定是否壓制違規：`y` 立即寫入 suppression 檔，`n` 保留（本次不處理），`q` 停止循環。
+決定是否壓制違規：
+- 按 `y` 後，系統會再詢問 **suppress 理由**（可直接 Enter 跳過，預設填入
+  `Suppressed interactively`）；
+- `n` 保留（本次不處理）；
+- `q` 停止循環。
 
 ```bash
 rm -f demo/.arch-checker-suppress.yaml
@@ -303,36 +307,49 @@ Violation 1/4:
   demo/sample-project/.../service/PaymentManager.java:12 [R-NAME-01] Class 'PaymentManager' violates naming pattern '(?!.*(?:Manager|Helper|Util|Handler)$).*'
   Suggestion: Rename 'PaymentManager' to match pattern '(?!.*(?:Manager|Helper|Util|Handler)$).*'
 Suppress? [y/n/q]: > y
+Reason (Enter to skip): > legacy name; will rename in v2
 
 Violation 2/4:
   demo/sample-project/.../service/ChargeService.java:2 [R-DEP-01] Package 'com.example.service' must not depend on 'com.example.controller' (import: com.example.controller.PaymentController)
   Suggestion: Remove import 'com.example.controller.PaymentController'
-Suppress? [y/n/q]: > n
+Suppress? [y/n/q]: > y
+Reason (Enter to skip): >
 
 Violation 3/4:
   demo/sample-project/.../domain/payment/CashPayment.java:12 [R-SUP-01] Class 'CashPayment' must extend/implement 'Payment'
   Suggestion: Add 'extends Payment' or 'implements Payment' to class declaration
+Suppress? [y/n/q]: > n
+
+Violation 4/4:
+  demo/sample-project/.../controller/PaymentController.java:0 [R-PKG-01] Required package pattern 'com.example.repository' not present in the project
+  Suggestion: Create at least one class in a package matching 'com.example.repository'
 Suppress? [y/n/q]: > q
 
 --
-Checked 7 file(s); 3 violation(s) remaining; 1 suppressed.
+Checked 7 file(s); 2 violation(s) remaining; 2 suppressed.
 ```
 
 `exit code = 1`（仍有殘留違規）。
 
 **互動決策說明：**
 
-| 輸入 | 語意                       | 後續效果                               |
-|------|----------------------------|----------------------------------------|
-| `y`  | 同意壓制此條違規           | 立即寫入 suppression YAML，計入 suppressed |
-| `n`  | 保留（目前不處理）         | 留在 remaining，下次 `fix` 或 `check` 仍會出現 |
-| `q`  | 離開循環                   | 剩餘尚未問答的違規全部列為 remaining   |
+| 輸入 | 語意 | 後續效果 |
+|------|------|----------|
+| `y` | 同意壓制此條違規 | 再提示輸入理由（Enter 跳過 = 自動填 `Suppressed interactively`），寫入 suppression YAML |
+| `n` | 保留（目前不處理）| 留在 remaining，下次 `fix` 或 `check` 仍會出現 |
+| `q` | 離開循環 | 剩餘尚未問答的違規全部列為 remaining |
 
-若想全部壓制，對所有違規回答 `y`，最終輸出為 `0 violation(s) remaining; 4 suppressed; exit 0`。
+`Reason (Enter to skip):` 輸入的文字會寫入 suppression YAML 的 `reason` 欄位，
+便於日後審計「為何當初壓制這筆違規」。空白 Enter 表示快速跳過，理由自動設為
+`Suppressed interactively`。
 
-> UC-03 GRASP：**Controller**（FixCommand）+ **Information Expert**（InteractiveFixer
-> 知道如何展示違規並解讀使用者輸入）+ **Creator**（InteractiveFixer 建立 Suppression
-> 物件並委派 YamlSuppressionStore 持久化）。
+若想全部壓制並填入原因，對所有違規回答 `y` 並輸入理由，最終輸出為
+`0 violation(s) remaining; 4 suppressed; exit 0`。
+
+> UC-03 GRASP：**Controller**（`FixCommand` 接收輸入、呈現違規、讀取 y/n/q 與理由）+
+> **Pure Fabrication**（`SuppressionService` 封裝 loadAll → create Suppression → save
+> 流程，與 `SuppressCommand` 共用，不對應任何 domain 概念）+
+> **Information Expert**（`SuppressionStore` 掌握 suppression YAML 的讀寫）。
 
 ---
 
@@ -592,6 +609,8 @@ suppress <profile-path> <constraint-id> <file-path> <line> <reason> [--suppress-
 | `-s, --suppress-file`   | 否   | suppression 檔案（預設 `.arch-checker-suppress.yaml`）         |
 
 互動期間可輸入 `y`（suppress）、`n`（跳過）、`q`（結束循環）。
+輸入 `y` 後，系統會再提示 `Reason (Enter to skip):` — 輸入理由後 Enter 確認，
+直接 Enter 則自動以 `Suppressed interactively` 作為理由寫入 suppression 檔。
 
 `profile` 子指令群：
 
