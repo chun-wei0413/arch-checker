@@ -1,0 +1,38 @@
+name: arch-checker
+rules:
+
+  # R-NAME-01 · NamingRule
+  #   Avoid vague suffixes that don't communicate responsibility.
+  #   All classes in arch-checker use role-specific names (Service, Command,
+  #   Rule, Reporter, Loader, Store, …).
+  - id: R-NAME-01
+    type: naming
+    description: Avoid vague class name suffixes (Manager, Helper, Util, Handler)
+    classNamePattern: '(?!.*(?:Manager|Helper|Util|Handler)$).*'
+
+  # R-DEP-01 · DependencyRule
+  #   Domain layer must stay infrastructure-agnostic.
+  #   Only stdlib is allowed; no YAML/parser/IO library imports.
+  - id: R-DEP-01
+    type: dependency
+    description: Domain layer must not depend on infrastructure
+    sourcePackage: com.archchecker.domain.**
+    targetPackage: com.archchecker.infrastructure.**
+    isAllowed: false
+
+  # R-SUP-01 · SupertypeRule
+  #   Every output formatter in the report sub-package must implement the
+  #   Reporter application port so CheckCommand can swap them via strategy.
+  - id: R-SUP-01
+    type: supertype
+    description: All Reporter implementations must implement the Reporter port
+    targetPackage: com.archchecker.infrastructure.report
+    requiredSupertype: Reporter
+
+  # R-PKG-01 · PackageRule
+  #   The application service layer (ports + services) must exist; removing
+  #   it would collapse the layered architecture into a two-tier design.
+  - id: R-PKG-01
+    type: package
+    description: Application service layer (com.archchecker.application) must exist
+    packagePattern: com.archchecker.application
