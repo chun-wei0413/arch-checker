@@ -32,12 +32,27 @@ class FixCommandTest {
         SpyStore store = new SpyStore();
         SuppressionService service = new SuppressionService(store, null);
 
-        int[] counts = fixCommandWith("y\n")
+        int[] counts = fixCommandWith("y\n\n")  // y + empty reason
                 .runInteractiveLoop(reportWith(v), profile(rule), service, Paths.get("/s.yaml"));
 
         assertEquals(1, counts[0], "newlySuppressed");
         assertEquals(0, counts[1], "remaining");
         assertEquals(1, store.saved.size());
+        assertEquals("Suppressed interactively", store.saved.get(0).getReason());
+    }
+
+    @Test
+    void actionYWithCustomReasonStoresReason() {
+        StubRule rule = new StubRule("R-NAME-01");
+        Violation v = new Violation(1, "bad name",
+                new File(Paths.get("/x/A.java"), "com.foo"), rule);
+        SpyStore store = new SpyStore();
+        SuppressionService service = new SuppressionService(store, null);
+
+        fixCommandWith("y\ncontroller 層允許此依賴\n")
+                .runInteractiveLoop(reportWith(v), profile(rule), service, Paths.get("/s.yaml"));
+
+        assertEquals("controller 層允許此依賴", store.saved.get(0).getReason());
     }
 
     @Test
@@ -82,7 +97,7 @@ class FixCommandTest {
         SuppressionService service = new SuppressionService(store, null);
 
         FixCommand cmd = new FixCommand(new PrintStream(buf),
-                new BufferedReader(new StringReader("maybe\ny\n")));
+                new BufferedReader(new StringReader("maybe\ny\n\n")));
         cmd.runInteractiveLoop(reportWith(v), profile(rule), service, Paths.get("/s.yaml"));
 
         assertTrue(buf.toString().contains("Invalid input"),

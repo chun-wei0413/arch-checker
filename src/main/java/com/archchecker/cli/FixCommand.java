@@ -97,7 +97,9 @@ public class FixCommand implements Callable<Integer> {
 
             switch (readAction()) {
                 case "y" -> {
-                    service.suppress(v, profile, suppressFile, "Suppressed interactively");
+                    String reason = readReason();
+                    service.suppress(v, profile, suppressFile,
+                            reason.isBlank() ? "Suppressed interactively" : reason);
                     newlySuppressed++;
                 }
                 case "q" -> { remaining++; quit = true; }
@@ -105,6 +107,16 @@ public class FixCommand implements Callable<Integer> {
             }
         }
         return new int[]{newlySuppressed, remaining};
+    }
+
+    private String readReason() {
+        out.print("Reason (Enter to skip): ");
+        try {
+            String line = in.readLine();
+            return line == null ? "" : line.trim();
+        } catch (IOException e) {
+            return "";
+        }
     }
 
     private String readAction() {

@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" modified="2026-06-17T14:00:00.000Z" agent="Claude" version="24.0.0">
   <diagram id="uc03-sd" name="UC-03 SD">
-    <mxGraphModel dx="900" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1080" pageHeight="900" math="0" shadow="0">
+    <mxGraphModel dx="900" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1080" pageHeight="980" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
@@ -42,33 +42,33 @@
 
         <!-- Lifelines -->
         <mxCell id="ll_actor" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="42" y="118" as="sourcePoint"/><mxPoint x="42" y="860" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="42" y="118" as="sourcePoint"/><mxPoint x="42" y="940" as="targetPoint"/></mxGeometry>
         </mxCell>
         <mxCell id="ll_fix" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="180" y="118" as="sourcePoint"/><mxPoint x="180" y="860" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="180" y="118" as="sourcePoint"/><mxPoint x="180" y="940" as="targetPoint"/></mxGeometry>
         </mxCell>
         <mxCell id="ll_ccs" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="393" y="118" as="sourcePoint"/><mxPoint x="393" y="860" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="393" y="118" as="sourcePoint"/><mxPoint x="393" y="940" as="targetPoint"/></mxGeometry>
         </mxCell>
         <mxCell id="ll_svc" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="620" y="118" as="sourcePoint"/><mxPoint x="620" y="860" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="620" y="118" as="sourcePoint"/><mxPoint x="620" y="940" as="targetPoint"/></mxGeometry>
         </mxCell>
         <mxCell id="ll_ss" style="endArrow=none;html=1;dashed=1;strokeColor=#666666;strokeWidth=2;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="835" y="118" as="sourcePoint"/><mxPoint x="835" y="860" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="835" y="118" as="sourcePoint"/><mxPoint x="835" y="940" as="targetPoint"/></mxGeometry>
         </mxCell>
 
         <!-- Activation boxes -->
         <mxCell id="act_fix" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" vertex="1" parent="1">
-          <mxGeometry x="174" y="140" width="12" height="660" as="geometry"/>
+          <mxGeometry x="174" y="140" width="12" height="725" as="geometry"/>
         </mxCell>
         <mxCell id="act_ccs" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" vertex="1" parent="1">
           <mxGeometry x="387" y="188" width="12" height="72" as="geometry"/>
         </mxCell>
         <mxCell id="act_svc" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" vertex="1" parent="1">
-          <mxGeometry x="614" y="472" width="12" height="100" as="geometry"/>
+          <mxGeometry x="614" y="528" width="12" height="100" as="geometry"/>
         </mxCell>
         <mxCell id="act_ss" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" vertex="1" parent="1">
-          <mxGeometry x="829" y="498" width="12" height="55" as="geometry"/>
+          <mxGeometry x="829" y="553" width="12" height="55" as="geometry"/>
         </mxCell>
 
         <!-- m1: fix() -->
@@ -86,9 +86,9 @@
           <mxGeometry relative="1" as="geometry"><mxPoint x="393" y="260" as="sourcePoint"/><mxPoint x="180" y="260" as="targetPoint"/></mxGeometry>
         </mxCell>
 
-        <!-- Loop fragment: y=295 to y=755 -->
+        <!-- Loop fragment: y=295 to y=820 -->
         <mxCell id="loop_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="20" y="295" width="1040" height="460" as="geometry"/>
+          <mxGeometry x="20" y="295" width="1040" height="525" as="geometry"/>
         </mxCell>
         <mxCell id="loop_label" value="loop" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#000000;strokeWidth=2;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="20" y="295" width="44" height="22" as="geometry"/>
@@ -107,9 +107,9 @@
           <mxGeometry relative="1" as="geometry"><mxPoint x="42" y="392" as="sourcePoint"/><mxPoint x="180" y="392" as="targetPoint"/></mxGeometry>
         </mxCell>
 
-        <!-- Alt fragment: y=422 to y=745 -->
+        <!-- Alt fragment: y=422 to y=810 -->
         <mxCell id="alt_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#555555;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="28" y="422" width="1024" height="323" as="geometry"/>
+          <mxGeometry x="28" y="422" width="1024" height="388" as="geometry"/>
         </mxCell>
         <mxCell id="alt_label" value="alt" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#555555;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
           <mxGeometry x="28" y="422" width="38" height="22" as="geometry"/>
@@ -118,40 +118,50 @@
           <mxGeometry x="72" y="424" width="200" height="18" as="geometry"/>
         </mxCell>
 
-        <!-- m5: suppress(v, profile, suppressFile) FixCommand → SuppressionService -->
-        <mxCell id="m5" value="3.3: suppress(v, profile, suppressFile)" style="endArrow=block;html=1;fontSize=11;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="180" y="472" as="sourcePoint"/><mxPoint x="620" y="472" as="targetPoint"/></mxGeometry>
+        <!-- m4b: prompt reason (FixCommand → Developer) -->
+        <mxCell id="m4b" value="3.2.1: &quot;Reason (Enter to skip)&quot;" style="endArrow=open;html=1;dashed=1;fontSize=11;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=0;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="180" y="462" as="sourcePoint"/><mxPoint x="42" y="462" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- m4b_r: reason text (Developer → FixCommand) -->
+        <mxCell id="m4b_r" value="3.2.2: reason (optional)" style="endArrow=block;html=1;fontSize=11;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="42" y="490" as="sourcePoint"/><mxPoint x="180" y="490" as="targetPoint"/></mxGeometry>
+        </mxCell>
+
+        <!-- m5: suppress(v, profile, suppressFile, reason) FixCommand → SuppressionService -->
+        <mxCell id="m5" value="3.3: suppress(v, profile, suppressFile, reason)" style="endArrow=block;html=1;fontSize=11;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="180" y="528" as="sourcePoint"/><mxPoint x="620" y="528" as="targetPoint"/></mxGeometry>
         </mxCell>
 
         <!-- m5a: loadAll(suppressFile) SuppressionService → SuppressionStore -->
         <mxCell id="m5a" value="3.3.1: loadAll(suppressFile)" style="endArrow=block;html=1;fontSize=11;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="620" y="498" as="sourcePoint"/><mxPoint x="835" y="498" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="620" y="553" as="sourcePoint"/><mxPoint x="835" y="553" as="targetPoint"/></mxGeometry>
         </mxCell>
 
         <!-- m5a_r: return list SuppressionStore → SuppressionService -->
         <mxCell id="m5a_r" value="return: List&lt;Suppression&gt;" style="endArrow=open;html=1;dashed=1;fontSize=11;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=0;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="835" y="523" as="sourcePoint"/><mxPoint x="620" y="523" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="835" y="578" as="sourcePoint"/><mxPoint x="620" y="578" as="targetPoint"/></mxGeometry>
         </mxCell>
 
         <!-- m5b: save(suppressFile, updated) SuppressionService → SuppressionStore -->
         <mxCell id="m5b" value="3.3.2: save(suppressFile, updated)" style="endArrow=block;html=1;fontSize=11;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=1;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="620" y="553" as="sourcePoint"/><mxPoint x="835" y="553" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="620" y="608" as="sourcePoint"/><mxPoint x="835" y="608" as="targetPoint"/></mxGeometry>
         </mxCell>
 
         <!-- alt divider line -->
         <mxCell id="alt_divider" value="" style="endArrow=none;html=1;dashed=1;strokeColor=#555555;strokeWidth=1.5;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="28" y="600" as="sourcePoint"/><mxPoint x="1052" y="600" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="28" y="655" as="sourcePoint"/><mxPoint x="1052" y="655" as="targetPoint"/></mxGeometry>
         </mxCell>
         <mxCell id="alt_guard2" value="[else]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;" vertex="1" parent="1">
-          <mxGeometry x="38" y="602" width="100" height="18" as="geometry"/>
+          <mxGeometry x="38" y="657" width="100" height="18" as="geometry"/>
         </mxCell>
         <mxCell id="alt_skip" value="(skip)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontStyle=2;" vertex="1" parent="1">
-          <mxGeometry x="250" y="648" width="360" height="20" as="geometry"/>
+          <mxGeometry x="250" y="700" width="360" height="20" as="geometry"/>
         </mxCell>
 
         <!-- m_exit: exitCode (after loop) -->
         <mxCell id="m_exit" value="4: exitCode" style="endArrow=open;html=1;dashed=1;fontSize=12;strokeWidth=2;labelBackgroundColor=#ffffff;endFill=0;verticalLabelPosition=top;verticalAlign=bottom;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry"><mxPoint x="180" y="810" as="sourcePoint"/><mxPoint x="42" y="810" as="targetPoint"/></mxGeometry>
+          <mxGeometry relative="1" as="geometry"><mxPoint x="180" y="875" as="sourcePoint"/><mxPoint x="42" y="875" as="targetPoint"/></mxGeometry>
         </mxCell>
 
       </root>
