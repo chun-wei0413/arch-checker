@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" modified="2026-06-14T20:00:00.000Z" agent="Claude" version="24.0.0">
   <diagram id="arch-checker-dcd-iter2" name="Design Class Diagram">
-    <mxGraphModel dx="1434" dy="884" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="1300" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="884" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="1400" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
@@ -411,30 +411,8 @@
           <mxGeometry x="20" y="1010" width="1240" height="28" as="geometry"/>
         </mxCell>
 
-        <mxCell id="ca1" value="InteractiveFixer [new]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=2;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="20" y="1050" width="360" height="152" as="geometry"/>
-        </mxCell>
-        <mxCell id="ca1_div" value="" style="line;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="ca1">
-          <mxGeometry y="26" width="360" height="2" as="geometry"/>
-        </mxCell>
-        <mxCell id="ca1_o0" value="+ fix(report: ViolationReport, outFile: Path, profile: StyleProfile): FixResult" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="ca1">
-          <mxGeometry y="28" width="360" height="20" as="geometry"/>
-        </mxCell>
-        <mxCell id="ca1_o1" value="+ suppress(v: Violation, outFile: Path, profile: StyleProfile): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="ca1">
-          <mxGeometry y="48" width="360" height="20" as="geometry"/>
-        </mxCell>
-        <mxCell id="ca1_o2" value="- prompt(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="ca1">
-          <mxGeometry y="68" width="360" height="20" as="geometry"/>
-        </mxCell>
-        <mxCell id="ca1_inner" value="«inner» FixResult" style="swimlane;fontStyle=1;align=center;startSize=22;collapsible=0;rounded=0;shadow=0;strokeWidth=1;swimlaneLine=1;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontSize=11;" vertex="1" parent="ca1">
-          <mxGeometry x="10" y="96" width="340" height="46" as="geometry"/>
-        </mxCell>
-        <mxCell id="ca1_ir_o0" value="+ getExitCode(): int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="ca1_inner">
-          <mxGeometry y="22" width="340" height="20" as="geometry"/>
-        </mxCell>
-
         <mxCell id="ca2" value="ProfileTemplateService [new]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=2;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="420" y="1050" width="340" height="72" as="geometry"/>
+          <mxGeometry x="20" y="1050" width="340" height="72" as="geometry"/>
         </mxCell>
         <mxCell id="ca2_div" value="" style="line;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="ca2">
           <mxGeometry y="26" width="340" height="2" as="geometry"/>
@@ -447,7 +425,7 @@
         </mxCell>
 
         <mxCell id="ca3" value="ProfileValidateService [new]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=2;swimlaneLine=1;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="800" y="1050" width="360" height="112" as="geometry"/>
+          <mxGeometry x="400" y="1050" width="360" height="112" as="geometry"/>
         </mxCell>
         <mxCell id="ca3_div" value="" style="line;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="ca3">
           <mxGeometry y="26" width="360" height="2" as="geometry"/>
@@ -460,6 +438,30 @@
         </mxCell>
         <mxCell id="ca3_ir_o0" value="+ getRuleCount(): int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="ca3_inner">
           <mxGeometry y="22" width="340" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== CLI LAYER — Iteration II new classes ===== -->
+        <mxCell id="cli_sep" value="CLI Layer (Iteration II new class — UC-03 Controller)" style="text;html=1;strokeColor=#666666;fillColor=#dae8fc;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="1190" width="1240" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cc1" value="FixCommand [new]" style="swimlane;fontStyle=1;align=center;startSize=26;collapsible=0;rounded=0;shadow=0;strokeWidth=2;swimlaneLine=1;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="20" y="1230" width="480" height="112" as="geometry"/>
+        </mxCell>
+        <mxCell id="cc1_div" value="" style="line;strokeColor=#6c8ebf;strokeWidth=1;" vertex="1" parent="cc1">
+          <mxGeometry y="26" width="480" height="2" as="geometry"/>
+        </mxCell>
+        <mxCell id="cc1_o0" value="+ call(): Integer" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="cc1">
+          <mxGeometry y="28" width="480" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="cc1_o1" value="~ runInteractiveLoop(report, profile, service, suppressFile): int[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="cc1">
+          <mxGeometry y="48" width="480" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="cc1_o2" value="- readAction(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=11;" vertex="1" parent="cc1">
+          <mxGeometry y="68" width="480" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="cc1_o4" value="«Controller»  ·  handles UC-03 interactive fix loop · delegates suppress to SuppressionService" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;overflow=hidden;html=1;fontSize=10;fontStyle=2;" vertex="1" parent="cc1">
+          <mxGeometry y="88" width="480" height="20" as="geometry"/>
         </mxCell>
 
         <mxCell id="legend" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br&gt;━ ▷  inheritance&lt;br&gt;◆━  composition&lt;br&gt;━ ▶  association&lt;br&gt;┄ ▶  dependency / «create» / «param»&lt;br&gt;&lt;b&gt;[new] = new in Iteration II (thick border)  ·  [mod] = modified&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;verticalAlign=middle;spacingLeft=8;" vertex="1" parent="1">

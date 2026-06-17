@@ -1,99 +1,73 @@
-<mxfile host="app.diagrams.net" modified="2026-06-16T20:00:00.000Z" agent="Claude" version="24.0.0">
+<mxfile host="app.diagrams.net" modified="2026-06-17T10:00:00.000Z" agent="Claude" version="24.0.0">
   <diagram id="uc03-ssd" name="UC-03 SSD">
-    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="820" math="0" shadow="0">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="560" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
 
         <mxCell id="title" value="System Sequence Diagram — UC-03 Check with Interactive Fix Suggestions" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=16;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="60" y="20" width="980" height="40" as="geometry"/>
+          <mxGeometry x="60" y="18" width="980" height="36" as="geometry"/>
         </mxCell>
 
         <mxCell id="actor" value="Developer" style="shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;outlineConnect=0;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="130" y="90" width="40" height="70" as="geometry"/>
+          <mxGeometry x="130" y="80" width="40" height="70" as="geometry"/>
         </mxCell>
         <mxCell id="system" value=":System" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=4;" vertex="1" parent="1">
-          <mxGeometry x="620" y="100" width="140" height="40" as="geometry"/>
+          <mxGeometry x="620" y="90" width="140" height="40" as="geometry"/>
         </mxCell>
 
         <mxCell id="actor_lifeline" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#666666;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="150" y="180" as="sourcePoint"/>
-            <mxPoint x="150" y="730" as="targetPoint"/>
+            <mxPoint x="150" y="168" as="sourcePoint"/>
+            <mxPoint x="150" y="520" as="targetPoint"/>
           </mxGeometry>
         </mxCell>
         <mxCell id="system_lifeline" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#666666;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="690" y="140" as="sourcePoint"/>
-            <mxPoint x="690" y="730" as="targetPoint"/>
+            <mxPoint x="690" y="130" as="sourcePoint"/>
+            <mxPoint x="690" y="520" as="targetPoint"/>
           </mxGeometry>
         </mxCell>
 
-        <!-- System event 1: fix -->
         <mxCell id="msg1" value="1: fix(sourcePath, profilePath)" style="endArrow=block;html=1;rounded=0;fontSize=13;endFill=1;labelBackgroundColor=#ffffff;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="150" y="220" as="sourcePoint"/>
-            <mxPoint x="690" y="220" as="targetPoint"/>
+            <mxPoint x="150" y="200" as="sourcePoint"/>
+            <mxPoint x="690" y="200" as="targetPoint"/>
           </mxGeometry>
         </mxCell>
         <mxCell id="actSystem" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" vertex="1" parent="1">
-          <mxGeometry x="684" y="220" width="12" height="460" as="geometry"/>
+          <mxGeometry x="684" y="200" width="12" height="280" as="geometry"/>
         </mxCell>
 
-        <!-- Loop combined fragment -->
         <mxCell id="loop_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="100" y="280" width="640" height="240" as="geometry"/>
+          <mxGeometry x="100" y="250" width="640" height="180" as="geometry"/>
         </mxCell>
         <mxCell id="loop_label_box" value="loop" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#000000;strokeWidth=2;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="100" y="280" width="50" height="24" as="geometry"/>
+          <mxGeometry x="100" y="250" width="50" height="24" as="geometry"/>
         </mxCell>
-        <mxCell id="loop_guard" value="[for each violation in ViolationReport]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;" vertex="1" parent="1">
-          <mxGeometry x="158" y="282" width="380" height="20" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="msg2" value="1.1: displayViolation(message, suggestion)" style="endArrow=open;html=1;rounded=0;dashed=1;fontSize=13;endFill=0;labelBackgroundColor=#ffffff;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="690" y="330" as="sourcePoint"/>
-            <mxPoint x="150" y="330" as="targetPoint"/>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="decision_note" value="[violation message + suggestion shown to user]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontStyle=2;" vertex="1" parent="1">
-          <mxGeometry x="150" y="340" width="500" height="18" as="geometry"/>
+        <mxCell id="loop_guard" value="[for each violation]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="158" y="252" width="280" height="20" as="geometry"/>
         </mxCell>
 
-        <mxCell id="msg3" value="1.2: handleDecision(decision: f | s | q)" style="endArrow=block;html=1;rounded=0;fontSize=13;endFill=1;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+        <mxCell id="msg2" value="1.1: violation" style="endArrow=open;html=1;rounded=0;dashed=1;fontSize=13;endFill=0;labelBackgroundColor=#ffffff;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="150" y="400" as="sourcePoint"/>
-            <mxPoint x="690" y="400" as="targetPoint"/>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="msg3_note" value="f = fix/suppress  ·  s = skip  ·  q = quit session" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontStyle=2;" vertex="1" parent="1">
-          <mxGeometry x="150" y="408" width="500" height="18" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="alt_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="110" y="435" width="575" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="alt_text" value="[q] break" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;" vertex="1" parent="1">
-          <mxGeometry x="116" y="440" width="120" height="18" as="geometry"/>
-        </mxCell>
-        <mxCell id="alt_break" value="1.3: [session terminated early]" style="endArrow=open;html=1;rounded=0;dashed=1;fontSize=12;endFill=0;labelBackgroundColor=#ffffff;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="684" y="470" as="sourcePoint"/>
-            <mxPoint x="150" y="470" as="targetPoint"/>
+            <mxPoint x="690" y="295" as="sourcePoint"/>
+            <mxPoint x="150" y="295" as="targetPoint"/>
           </mxGeometry>
         </mxCell>
 
-        <!-- Return -->
-        <mxCell id="msg_ret" value="2: fixResult (fixedCount, skippedCount, exitCode)" style="endArrow=open;html=1;rounded=0;dashed=1;fontSize=13;endFill=0;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+        <mxCell id="msg3" value="1.2: action [y | n]" style="endArrow=block;html=1;rounded=0;fontSize=13;endFill=1;labelBackgroundColor=#ffffff;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="690" y="680" as="sourcePoint"/>
-            <mxPoint x="150" y="680" as="targetPoint"/>
+            <mxPoint x="150" y="375" as="sourcePoint"/>
+            <mxPoint x="690" y="375" as="targetPoint"/>
           </mxGeometry>
         </mxCell>
 
-        <mxCell id="note" value="事件說明：UC-03 包含一個系統事件 fix(sourcePath, profilePath)。&#xa;系統先執行 compliance check，對每一筆違規顯示訊息與修正建議（suggestion），&#xa;使用者輸入 f（suppress/fix）、s（skip）或 q（quit），最後回傳修正摘要。" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;align=left;verticalAlign=top;size=14;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
-          <mxGeometry x="60" y="730" width="980" height="70" as="geometry"/>
+        <mxCell id="msg_ret" value="2: exitCode" style="endArrow=open;html=1;rounded=0;dashed=1;fontSize=13;endFill=0;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="480" as="sourcePoint"/>
+            <mxPoint x="150" y="480" as="targetPoint"/>
+          </mxGeometry>
         </mxCell>
 
       </root>
